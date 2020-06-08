@@ -1,0 +1,554 @@
+{{#section 'css'}}
+<style>
+  .rounded {
+    height: 80px;
+    width: 80px;
+    border-style: dotted;
+  }
+
+  .my-price,
+  .bidder-name,
+  .seller-name {
+    display: flex;
+    justify-content: space-between !important;
+
+  }
+
+  .quick-price .price {
+    color: #777777 !important;
+    font-size: 17px !important;
+    font-weight: normal;
+    margin-left: 6px;
+  }
+
+  .quick-price {
+    margin-top: 4px;
+  }
+
+  .bidder-name,
+  .seller-name,
+  .time-left {
+    font-size: 15px;
+    padding-top: 12px;
+    border-top: 1px solid #e5e5e5;
+    margin-bottom: 15px
+  }
+
+  .created-day {
+    font-size: 15px;
+    margin-bottom: 15px
+  }
+
+  .product-cart-option {
+    border-top: 1px solid #e5e5e5;
+    display: inline-block;
+  }
+
+  .wishlist-group {
+    padding-top: 10px !important;
+  }
+
+  .bidder-name h2,
+  .seller-name h2,
+  .created-day h2 {
+    font-size: 15px;
+    text-transform: uppercase;
+    color: #333e48;
+    margin-bottom: 5px;
+    font-weight: bold
+  }
+
+  #customers {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  #customers td,
+  #customers th {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+
+  #customers tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+
+  #customers tr:hover {
+    background-color: #ddd;
+  }
+
+  #customers th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+  }
+</style>
+{{/section}}
+
+{{#section 'js'}}
+
+<!-- flexslider js -->
+<script type="text/javascript" src="/js/jquery.flexslider.js"></script>
+<!--cloud-zoom js -->
+<script type="text/javascript" src="/js/cloud-zoom.js"></script>
+
+<script>
+  function plusBid() {
+    var result = document.getElementById('qty');
+    var qty = parseInt(result.value);
+    if (!isNaN(qty)) {
+      result.value = qty + 100000;
+    }
+    return false;
+  }
+
+  function minusBid() {
+    var result = document.getElementById('qty');
+    var qty = parseInt(result.value);
+    if (!isNaN(qty) && qty > 0)
+      result.value = qty - 100000;
+    return false;
+  }
+
+  function bidValidate() {
+
+    var myAcc = $('.my-acc').text();
+    if (myAcc === 'My Account') {
+      window.location = "../../account/login";
+    }
+    else {
+      if ($('.product-name').attr('data-pro-status') != 1) {
+        alert("Sản phẩm đã hết phiên đấu giá");
+        return false;
+      }
+      if ($('.fa-user').attr('data-id') == $('.bidder-user').attr('data-id')) {
+        alert("Bạn đang là người giữ giá cao nhất");
+        return false;
+      }
+      else {
+        if ($('.fa-user').attr('data-id') == $('.seller-user').attr('data-id')) {
+          alert("Bạn không được ra giá giá cho sản phẩm của mình");
+          return false
+        }
+        else {
+          var a = parseInt($('#current_bid').attr('value'));// giá cao nhât hiện tại
+          var b = parseInt($('#qty').val()); //giá mà người dùng bid
+          if (b <= a || b % 100000 != 0) {
+            alert('Giá đấu phải lớn hơn giá hiện tại và là bội số của 100k');
+            return false;
+          }
+        }
+      }
+    }
+    return true;
+  }
+
+  function formatNumber(num) {
+    return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+  }
+</script>
+
+<script type="text/javascript">
+  jQuery(document).ready(function () {
+    $('.add_to_bid').click(function () {
+      var bidPrice = $('.qty').val();
+      var bidFormat = formatNumber(bidPrice);
+      if (confirm('Bạn có muốn đấu với mức giá ' + bidFormat + 'đ này?')) {
+        //alert('đồng ý');
+        if (bidValidate()) {
+          var idProduct = $(this).attr('data-id');
+          var bidPrice = $('.qty').val();
+          var bidCount = parseInt($('.product-name').attr('data-bid-count'));
+          //console.log(123 % 100000);
+          //console.log(bidPrice);
+          $.ajax({
+            url: '/bidder/bidding',
+            type: 'POST',
+            data: {
+              id: idProduct, // $_POST['id'] = 22
+              action: 'add',
+              bidPrice,
+              bidCount,
+            },
+            dataType: 'JSON',
+            success: function (response) {
+              // response : obj
+              //console.log(response);
+              if (response.success) {
+                $('.modal-title').text(response.message)
+                $('.modal-body ').html("<p> Đấu giá sp " + response.data + " thành công</p>")
+              }
+              else {
+                $('.modal-title').text('Error!')
+                $('.modal-body').text(response.message)
+              }
+              $('#myMessage').modal('show');
+              $('.reload_page_button').click(function () { window.location = '/products/' + response.data; });
+
+            }
+          })
+        }
+      } else {
+        // Do nothing!
+      }
+    });
+
+    $('.banned_bidder').click(function () {
+      var idProduct = $('.product-name').attr('data-pro-id');
+      var idBidder = $(this).attr('data-bidder-id');
+      var idHis = $(this).attr('data-his-id');
+      var bidCount = parseInt($('.product-name').attr('data-bid-count'));
+      console.log(idProduct);
+      console.log(idBidder);
+      $.ajax({
+        url: '/bidder/bidding',
+        type: 'POST',
+        data: {
+          idProduct, // $_POST['id'] = 22
+          action: 'banned',
+          idBidder,
+          idHis,
+          bidCount,
+        },
+        dataType: 'JSON',
+        success: function (response) {
+          // response : obj
+          //console.log(response);
+          if (response.success) {
+            $('.modal-title').text(response.message)
+            $('.modal-body ').html("<p>Cấm thành công</p>")
+          }
+          else {
+            $('.modal-title').text('Error!')
+            $('.modal-body').text(response.message)
+          }
+          $('#myMessage').modal('show');
+          $('.reload_page_button').click(function () { window.location = '/products/' + response.data; });
+
+        }
+      })
+
+    });
+  })
+</script>
+{{/section}}
+
+<!-- Main Container -->
+<div class="main-container col1-layout">
+  <div class="container">
+    <div class="row">
+      <div class="col-main">
+        <div class="product-view-area">
+          <div class="product-big-image col-xs-12 col-sm-5 col-lg-5 col-md-5">
+            {{#if this.product.is_new}}
+            <div class="icon-sale-label sale-left">NEW</div>
+            {{/if}}
+            <div class="large-image"> <a href="/images/products-images/{{this.product.image}}" class="cloud-zoom"
+                id="zoom1" rel="useWrapper: false, adjustY:0, adjustX:20" style="position: relative; display: block;">
+                <img class="zoom-img" src="/images/products-images/{{this.product.image}}" alt="products"
+                  style="display: block; visibility: visible;"> </a> </div>
+            <div class="flexslider flexslider-thumb">
+
+              <div class="flex-viewport" style="overflow: hidden; position: relative;">
+                <ul class="previews-list slides"
+                  style="width: 1000%; transition-duration: 0s; transform: translate3d(0px, 0px, 0px);">
+                  <li style="width: 100px; float: left; display: block;"><a
+                      href="/images/products-images/{{this.product.image}}" class="cloud-zoom-gallery"
+                      rel="useZoom: 'zoom1', smallImage: '/images/products-images/{{this.product.image}}' "><img
+                        src="/images/products-images/{{this.product.image}}" alt="Thumbnail 2" draggable="false"></a>
+                  </li>
+                  {{#if this.subImages}}
+                  {{#each this.subImages}}
+                  <li style="width: 100px; float: left; display: block;"><a href="/images/products-images/{{image}}"
+                      class="cloud-zoom-gallery"
+                      rel="useZoom: 'zoom1', smallImage: '/images/products-images/{{image}}' "><img
+                        src="/images/products-images/{{image}}" alt="Thumbnail 2" draggable="false"></a>
+                  </li>
+                  {{/each}}
+                  {{/if}}
+
+                </ul>
+              </div>
+              <ul class="flex-direction-nav">
+                <li><a class="flex-prev flex-disabled" href="#" tabindex="-1"></a></li>
+                <li><a class="flex-next" href="#"></a></li>
+              </ul>
+            </div>
+
+            <!-- end: more-images -->
+
+          </div>
+          <div class="col-xs-12 col-sm-7 col-lg-7 col-md-7 product-details-area">
+
+            <div class="product-name" data-pro-status="{{this.product.p_status}}" data-pro-id="{{this.product.id}}"
+              data-bid-count="{{this.product.bid_count}}">
+              <h1>{{this.product.p_name}}</h1>
+            </div>
+            <div class="price-box">
+              <div class="my-price">
+                <p class="special-price">
+                  <label>Giá cao nhất: </label>
+                  <span class="price current_bid" id="current_bid" value="{{this.product.current_bid}}">
+                    {{format this.product.current_bid}} đ </span>
+                </p>
+                {{#if this.product.purchase_bid}}
+                <span class="quick-price">
+                  <label>Mua ngay: </label>
+                  <span class="price"> {{format this.product.purchase_bid}} đ </span>
+                </span>
+                {{/if}}
+              </div>
+            </div>
+
+            <div class="bidder-name">
+              <span>
+                <label>Người mua:</label>
+                {{#if this.bidder}}
+                <span class="bidder-user" data-id="{{this.bidder.id}}">
+                  <a href="/bidder/{{this.bidder.id}}/publicComment">{{this.bidder.bidder_name}}</a>
+                </span>
+                {{else}}
+                <span>Chưa có ai mua</span>
+                {{/if}}
+              </span>
+              <span>
+                {{#if this.bidder}}
+                <i class="far fa-heart" style="color: crimson;
+                                               font-size: 20px; 
+                                               font-weight: bold;"></i> {{this.bidder.chiSoVuiVe}}
+                {{/if}}
+              </span>
+            </div>
+            <div class="seller-name">
+              <span>
+                <label>Người bán:</label>
+                <span class="seller-user" data-id="{{this.seller.id}}">
+                  <a href="/bidder/{{this.seller.id}}/publicComment">{{this.seller.seller_name}}</a>
+                </span>
+              </span>
+              <span>
+                <i class="far fa-heart" style="color: rgb(44, 5, 216); font-size: 20px;"></i> {{this.seller.chiSoVuiVe}}
+              </span>
+            </div>
+
+            <div class="product-variation">
+              <form action="#" method="post">
+                <div class="cart-plus-minus">
+                  <label for="qty">Số tiền:</label>
+                  <div class="numbers-row">
+                    <div onclick="return minusBid()" class="dec qtybutton"><i class="fa fa-minus">&nbsp;</i></div>
+                    <input type="text" class="qty" title="Qty" value="{{this.product.advise_bid}}" maxlength="12"
+                      id="qty" name="qty">
+                    <div onclick="return plusBid()" class="inc qtybutton"><i class="fa fa-plus">&nbsp;</i></div>
+                  </div>
+                </div>
+                <button class="button pro-add-to-cart add_to_bid" data-id="{{this.product.id}}" title="Add to Cart"
+                  type="button"><span><i class="fa fa-shopping-cart"></i>RA GIÁ<span></button>
+              </form>
+            </div>
+            <div class="created-day">
+              <span>
+                <label>Ngày đăng: </label>
+                <span class="seller-user">{{this.product.f_created_at}}</span>
+              </span>
+
+            </div>
+            <div hidden class="current_time" content="{{current_time}}"></div>
+            <div class="upload-date">
+              <span style="float: left;">CÒN: </span>
+              <div class="countbox_1 jtv-timer-grid count_{{this.product.id}}" value="count_{{this.product.id}}"
+                timerun="{{this.product.f_expired_at}}" style="  display: flex;
+                  flex-direction: row;
+                  justify-content: space-around;
+                  margin-bottom: 10px;
+                  width: 400px; 
+                  float: left;">
+                <div class="day box-time-date"><span class="time-num time-day">00</span>Days</div>
+                <div class="hour box-time-date"><span class="time-num">00</span>Hrs</div>
+                <div class="min box-time-date"><span class="time-num">00</span>Mins</div>
+                <div class="sec box-time-date"><span class="time-num">00</span>Secs</div>
+              </div>
+            </div>
+
+            <div class="product-cart-option">
+              <ul class="wishlist-group">
+                <li class="add_to_wishlist wish_{{this.product.id}}" data-id="{{this.product.id}}"><a
+                    href="javascript:;"><i class="fa fa-heart "></i><span>Add to Wishlist</span></a></li>
+
+                <li><a href="#"><i class="fa fa-envelope"></i><span>Email to a Friend</span></a></li>
+              </ul>
+
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="product-overview-tab">
+        <div class="container">
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="product-tab-inner">
+                <ul id="product-detail-tab" class="nav nav-tabs product-tabs">
+                  <li class="active"> <a href="#description" data-toggle="tab"> Mô tả chi tiết </a> </li>
+                  <li> <a href="#reviews" data-toggle="tab">Lịch sử </a> </li>
+
+                </ul>
+                <div id="productTabContent" class="tab-content">
+                  <div class="tab-pane fade in active" id="description">
+                    <div class="std" style="height: 500px; 
+                                                                  background-color: rgb(242, 243, 237);
+                                                                    overflow: auto;
+                                                                    margin-top:10px;
+                                                                    margin-bottom:5px">
+                      {{{this.product.detail}}}
+                    </div>
+                  </div>
+
+
+                  <div id="reviews" class="tab-pane fade">
+                    <div class="col-sm-12 col-lg-12 col-md-12">
+                      <table id="customers" style="margin: auto; width: 75%;">
+                        <tr>
+                          <th>Người mua</th>
+                          <th>Thời điểm</th>
+                          <th>Giá</th>
+                          {{#if this.is_the_owner}}
+                          <th>CẤM</th>
+                          {{/if}}
+                        </tr>
+                        {{#if this.empty_his}}
+
+                        {{else}}
+                        {{#if this.is_the_owner}}
+                        {{#each this.history}}
+                        <tr>
+                          <td><span>***</span>{{fullname}}</td>
+                          <td>{{time}}</td>
+                          <td> {{format bidPrice}} đ</td>
+                          <td><i class="fas fa-share-square banned_bidder" data-bidder-id='{{id_bidder}}'
+                              data-his-id='{{id_his}}'></i></td>
+                        </tr>
+                        {{/each}}
+                        {{else}}
+                        {{#each this.history}}
+                        <tr>
+                          <td><span>***</span>{{fullname}}</td>
+                          <td>{{time}}</td>
+                          <td> {{format bidPrice}} đ</td>
+                        </tr>
+                        {{/each}}
+
+                        {{/if}}
+
+
+                        {{/if}}
+
+
+                      </table>
+                    </div>
+                  </div>
+
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+
+
+    </div>
+  </div>
+</div>
+<!-- Main Container End -->
+
+<!-- Related Product Slider -->
+<section class="upsell-product-area">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12">
+
+        <div class="page-header">
+          <h2>Sản phẩm liên quan</h2>
+        </div>
+        <div class="slider-items-products">
+          <div id="upsell-product-slider" class="product-flexslider hidden-buttons">
+            <div class="slider-items slider-width-col4">
+                {{#each this.relevantPro}}
+          
+                 <div class="product-item">
+                  <div class="item-inner">
+                    <div class="product-thumbnail">
+                      {{#if is_new}}
+                      <div class="icon-hot-label hot-right">NEW</div>
+                      {{/if}}
+                      <div class="pr-img-area"> <a title="Ipsums Dolors Untra" href="/products/{{id}}">
+                          <figure> <img class="first-img" src="/images/products-images/{{image}}" alt="html template">
+                            <img class="hover-img" src="/images/products-images/{{image}}" alt="html template"></figure>
+                        </a>
+
+                      </div>
+                      <div class="jtv-box-timer">
+                        <div class="countbox_1 jtv-timer-grid count_{{id}}" value="count_{{id}}" timerun="{{f_expired_at}}" style="margin-bottom: 50px;">
+                          <div class="day box-time-date"><span class="time-num time-day">00</span>Days</div>
+                          <div class="hour box-time-date"><span class="time-num">00</span>Hrs</div>
+                          <div class="min box-time-date"><span class="time-num">00</span>Mins</div>
+                          <div class="sec box-time-date"><span class="time-num">00</span>Secs</div>
+                        </div>
+                      </div>
+                      <div class="pr-info-area">
+                        <div class="pr-button">
+                          <div class="mt-button add_to_compare" style="visibility: hidden;"> <a href="compare.html"> <i class="fa fa-signal"></i>
+                            </a> </div>
+                          <div class="mt-button add_to_wishlist wish_{{id}}" data-id="{{id}}"> <a href="javascript:;"> <i class="fa fa-heart"></i>
+                            </a> </div>
+                          
+                        </div>
+                      </div>
+                    </div>
+                    <div class="item-info">
+                      <div class="info-inner">
+                        <div class="item-title">
+                          <a title="Ipsums Dolors Untra" href="/products/{{id}}"> {{p_name}} </a> </div>
+                        <div class="item-content">
+
+                          <div class="item-price">
+                            <div class="price-box"> <span class="regular-price"><label>Giá cao nhất: </label> <span
+                                  class="price">{{format current_bid}} đ</span>
+                              </span> </div>
+                          </div>
+                        </div>
+                        <div class="item-brief" style="text-align: left;">
+                          <label>MBidder: </label>
+                          <span>{{bidder_name}}</span>
+                          {{#if purchase_bid}}
+                          <br>
+                          <label>Mua ngay: </label>
+                          <span class="price">{{purchase_bid}} đ</span>
+                          {{/if}}
+                          <br>
+                          <label>Số lượt ra giá: &nbsp; </label><span style="font-weight: bold;">{{bid_count}}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            {{/each}}
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Related Product Slider End -->
