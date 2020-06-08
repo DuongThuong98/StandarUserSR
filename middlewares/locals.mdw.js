@@ -11,7 +11,6 @@ module.exports = function (app) {
     // console.log(rows[0].mangcap2);
     res.locals.lcCategories = rows;
     
-   
     next();
   })
 };

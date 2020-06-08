@@ -57,8 +57,16 @@
                 </div>
               </div>
             </div>
+             {{#if this.empty}}
+          <div class="card-body">
+            <p class="card-text">
+              Không có dữ liệu.
+            </p>
+          </div>
+          {{else}}
             <div class="product-grid-area">
               <ul class="products-grid">
+                {{#each this.documents}}
                 <li class="item col-lg-3 col-md-4 col-sm-6 col-xs-6 ">
                   <div class="product-item">
                     <div class="item-inner">
@@ -101,361 +109,48 @@
                     </div>
                   </div>
                 </li>
-                <li class="item col-lg-3 col-md-4 col-sm-6 col-xs-6 ">
-                  <div class="product-item">
-                    <div class="item-inner">
-                      <div class="product-thumbnail">
-                        <div class="icon-sale-label sale-left">Sale</div>
-                        <div class="icon-new-label new-right">New</div>
-                        <div class="pr-img-area"> <a title="Ipsums Dolors Untra" href="single_product.html">
-                            <figure> <img class="first-img" src="/images/products/mau1.jpg" alt="html template"> <img
-                                class="hover-img" src="/images/products/mau1.jpg" alt="html template"></figure>
-                          </a>
-                          <button type="button" class="add-to-cart-mt"> <i class="fa fa-shopping-cart"></i><span> Tìm hiểu
-                              thêm</span> </button>
-                        </div>
-  
-                        <div class="pr-info-area">
-                          <div class="pr-button">
-                            <div class="mt-button add_to_wishlist"> <a href="wishlist.html"> <i class="fa fa-heart"></i>
-                              </a> </div>
-                           
-                            
-                          </div>
-                        </div>
-  
-                      </div>
-                      <div class="item-info">
-                        <div class="info-inner">
-                          <div class="item-title"> <a title="Ipsums Dolors Untra" href="single_product.html">IELTS Listening: Dạng câu hỏi Flowcharts, Notes, Tables, Summaries And Forms </a> </div>
-                          <div class="item-content">
-                            <div class="rating" >
-                            <div class="view_talk">
-                              <span class="fa fa-eye" style="padding-top: 4px;"> 28924 &nbsp;&nbsp;</span>  
-                              <span class="comment-count"> <i class="fa fa-comment"></i>&nbsp; 3 </span>
-                            </div>
-                              <i style="margin-bottom: 5px;">April, 12, 2016</i>
-                            </div>
-                            
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                
-                <li class="item col-lg-3 col-md-4 col-sm-6 col-xs-6 ">
-                  <div class="product-item">
-                    <div class="item-inner">
-                      <div class="product-thumbnail">
-                        <div class="icon-sale-label sale-left">Sale</div>
-                        <div class="icon-new-label new-right">New</div>
-                        <div class="pr-img-area"> <a title="Ipsums Dolors Untra" href="single_product.html">
-                            <figure> <img class="first-img" src="/images/products/mau1.jpg" alt="html template"> <img
-                                class="hover-img" src="/images/products/mau1.jpg" alt="html template"></figure>
-                          </a>
-                          <button type="button" class="add-to-cart-mt"> <i class="fa fa-shopping-cart"></i><span> Tìm hiểu
-                              thêm</span> </button>
-                        </div>
-  
-                        <div class="pr-info-area">
-                          <div class="pr-button">
-                            <div class="mt-button add_to_wishlist"> <a href="wishlist.html"> <i class="fa fa-heart"></i>
-                              </a> </div>
-                           
-                            
-                          </div>
-                        </div>
-  
-                      </div>
-                      <div class="item-info">
-                        <div class="info-inner">
-                          <div class="item-title"> <a title="Ipsums Dolors Untra" href="single_product.html">IELTS Listening: Dạng câu hỏi Flowcharts, Notes, Tables, Summaries And Forms </a> </div>
-                          <div class="item-content">
-                            <div class="rating" >
-                            <div class="view_talk">
-                              <span class="fa fa-eye" style="padding-top: 4px;"> 28924 &nbsp;&nbsp;</span>  
-                              <span class="comment-count"> <i class="fa fa-comment"></i>&nbsp; 3 </span>
-                            </div>
-                              <i style="margin-bottom: 5px;">April, 12, 2016</i>
-                            </div>
-                            
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                
-                <li class="item col-lg-3 col-md-4 col-sm-6 col-xs-6 ">
-                  <div class="product-item">
-                    <div class="item-inner">
-                      <div class="product-thumbnail">
-                        <div class="icon-sale-label sale-left">Sale</div>
-                        <div class="icon-new-label new-right">New</div>
-                        <div class="pr-img-area"> <a title="Ipsums Dolors Untra" href="single_product.html">
-                            <figure> <img class="first-img" src="/images/products/mau1.jpg" alt="html template"> <img
-                                class="hover-img" src="/images/products/mau1.jpg" alt="html template"></figure>
-                          </a>
-                          <button type="button" class="add-to-cart-mt"> <i class="fa fa-shopping-cart"></i><span> Tìm hiểu
-                              thêm</span> </button>
-                        </div>
-  
-                        <div class="pr-info-area">
-                          <div class="pr-button">
-                            <div class="mt-button add_to_wishlist"> <a href="wishlist.html"> <i class="fa fa-heart"></i>
-                              </a> </div>
-                           
-                            
-                          </div>
-                        </div>
-  
-                      </div>
-                      <div class="item-info">
-                        <div class="info-inner">
-                          <div class="item-title"> <a title="Ipsums Dolors Untra" href="single_product.html">IELTS Listening: Dạng câu hỏi Flowcharts, Notes, Tables, Summaries And Forms </a> </div>
-                          <div class="item-content">
-                            <div class="rating" >
-                            <div class="view_talk">
-                              <span class="fa fa-eye" style="padding-top: 4px;"> 28924 &nbsp;&nbsp;</span>  
-                              <span class="comment-count"> <i class="fa fa-comment"></i>&nbsp; 3 </span>
-                            </div>
-                              <i style="margin-bottom: 5px;">April, 12, 2016</i>
-                            </div>
-                            
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                
-                <li class="item col-lg-3 col-md-4 col-sm-6 col-xs-6 ">
-                  <div class="product-item">
-                    <div class="item-inner">
-                      <div class="product-thumbnail">
-                        <div class="icon-sale-label sale-left">Sale</div>
-                        <div class="icon-new-label new-right">New</div>
-                        <div class="pr-img-area"> <a title="Ipsums Dolors Untra" href="single_product.html">
-                            <figure> <img class="first-img" src="/images/products/mau1.jpg" alt="html template"> <img
-                                class="hover-img" src="/images/products/mau1.jpg" alt="html template"></figure>
-                          </a>
-                          <button type="button" class="add-to-cart-mt"> <i class="fa fa-shopping-cart"></i><span> Tìm hiểu
-                              thêm</span> </button>
-                        </div>
-  
-                        <div class="pr-info-area">
-                          <div class="pr-button">
-                            <div class="mt-button add_to_wishlist"> <a href="wishlist.html"> <i class="fa fa-heart"></i>
-                              </a> </div>
-                           
-                            
-                          </div>
-                        </div>
-  
-                      </div>
-                      <div class="item-info">
-                        <div class="info-inner">
-                          <div class="item-title"> <a title="Ipsums Dolors Untra" href="single_product.html">IELTS Listening: Dạng câu hỏi Flowcharts, Notes, Tables, Summaries And Forms </a> </div>
-                          <div class="item-content">
-                            <div class="rating" >
-                            <div class="view_talk">
-                              <span class="fa fa-eye" style="padding-top: 4px;"> 28924 &nbsp;&nbsp;</span>  
-                              <span class="comment-count"> <i class="fa fa-comment"></i>&nbsp; 3 </span>
-                            </div>
-                              <i style="margin-bottom: 5px;">April, 12, 2016</i>
-                            </div>
-                            
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                
-                <li class="item col-lg-3 col-md-4 col-sm-6 col-xs-6 ">
-                  <div class="product-item">
-                    <div class="item-inner">
-                      <div class="product-thumbnail">
-                        <div class="icon-sale-label sale-left">Sale</div>
-                        <div class="icon-new-label new-right">New</div>
-                        <div class="pr-img-area"> <a title="Ipsums Dolors Untra" href="single_product.html">
-                            <figure> <img class="first-img" src="/images/products/mau1.jpg" alt="html template"> <img
-                                class="hover-img" src="/images/products/mau1.jpg" alt="html template"></figure>
-                          </a>
-                          <button type="button" class="add-to-cart-mt"> <i class="fa fa-shopping-cart"></i><span> Tìm hiểu
-                              thêm</span> </button>
-                        </div>
-  
-                        <div class="pr-info-area">
-                          <div class="pr-button">
-                            <div class="mt-button add_to_wishlist"> <a href="wishlist.html"> <i class="fa fa-heart"></i>
-                              </a> </div>
-                           
-                            
-                          </div>
-                        </div>
-  
-                      </div>
-                      <div class="item-info">
-                        <div class="info-inner">
-                          <div class="item-title"> <a title="Ipsums Dolors Untra" href="single_product.html">IELTS Listening: Dạng câu hỏi Flowcharts, Notes, Tables, Summaries And Forms </a> </div>
-                          <div class="item-content">
-                            <div class="rating" >
-                            <div class="view_talk">
-                              <span class="fa fa-eye" style="padding-top: 4px;"> 28924 &nbsp;&nbsp;</span>  
-                              <span class="comment-count"> <i class="fa fa-comment"></i>&nbsp; 3 </span>
-                            </div>
-                              <i style="margin-bottom: 5px;">April, 12, 2016</i>
-                            </div>
-                            
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                
-                <li class="item col-lg-3 col-md-4 col-sm-6 col-xs-6 ">
-                  <div class="product-item">
-                    <div class="item-inner">
-                      <div class="product-thumbnail">
-                        <div class="icon-sale-label sale-left">Sale</div>
-                        <div class="icon-new-label new-right">New</div>
-                        <div class="pr-img-area"> <a title="Ipsums Dolors Untra" href="single_product.html">
-                            <figure> <img class="first-img" src="/images/products/mau1.jpg" alt="html template"> <img
-                                class="hover-img" src="/images/products/mau1.jpg" alt="html template"></figure>
-                          </a>
-                          <button type="button" class="add-to-cart-mt"> <i class="fa fa-shopping-cart"></i><span> Tìm hiểu
-                              thêm</span> </button>
-                        </div>
-  
-                        <div class="pr-info-area">
-                          <div class="pr-button">
-                            <div class="mt-button add_to_wishlist"> <a href="wishlist.html"> <i class="fa fa-heart"></i>
-                              </a> </div>
-                           
-                            
-                          </div>
-                        </div>
-  
-                      </div>
-                      <div class="item-info">
-                        <div class="info-inner">
-                          <div class="item-title"> <a title="Ipsums Dolors Untra" href="single_product.html">IELTS Listening: Dạng câu hỏi Flowcharts, Notes, Tables, Summaries And Forms </a> </div>
-                          <div class="item-content">
-                            <div class="rating" >
-                            <div class="view_talk">
-                              <span class="fa fa-eye" style="padding-top: 4px;"> 28924 &nbsp;&nbsp;</span>  
-                              <span class="comment-count"> <i class="fa fa-comment"></i>&nbsp; 3 </span>
-                            </div>
-                              <i style="margin-bottom: 5px;">April, 12, 2016</i>
-                            </div>
-                            
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                
-                <li class="item col-lg-3 col-md-4 col-sm-6 col-xs-6 ">
-                  <div class="product-item">
-                    <div class="item-inner">
-                      <div class="product-thumbnail">
-                        <div class="icon-sale-label sale-left">Sale</div>
-                        <div class="icon-new-label new-right">New</div>
-                        <div class="pr-img-area"> <a title="Ipsums Dolors Untra" href="single_product.html">
-                            <figure> <img class="first-img" src="/images/products/mau1.jpg" alt="html template"> <img
-                                class="hover-img" src="/images/products/mau1.jpg" alt="html template"></figure>
-                          </a>
-                          <button type="button" class="add-to-cart-mt"> <i class="fa fa-shopping-cart"></i><span> Tìm hiểu
-                              thêm</span> </button>
-                        </div>
-  
-                        <div class="pr-info-area">
-                          <div class="pr-button">
-                            <div class="mt-button add_to_wishlist"> <a href="wishlist.html"> <i class="fa fa-heart"></i>
-                              </a> </div>
-                           
-                            
-                          </div>
-                        </div>
-  
-                      </div>
-                      <div class="item-info">
-                        <div class="info-inner">
-                          <div class="item-title"> <a title="Ipsums Dolors Untra" href="single_product.html">IELTS Listening: Dạng câu hỏi Flowcharts, Notes, Tables, Summaries And Forms </a> </div>
-                          <div class="item-content">
-                            <div class="rating" >
-                            <div class="view_talk">
-                              <span class="fa fa-eye" style="padding-top: 4px;"> 28924 &nbsp;&nbsp;</span>  
-                              <span class="comment-count"> <i class="fa fa-comment"></i>&nbsp; 3 </span>
-                            </div>
-                              <i style="margin-bottom: 5px;">April, 12, 2016</i>
-                            </div>
-                            
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                
-                <li class="item col-lg-3 col-md-4 col-sm-6 col-xs-6 ">
-                  <div class="product-item">
-                    <div class="item-inner">
-                      <div class="product-thumbnail">
-                        <div class="icon-sale-label sale-left">Sale</div>
-                        <div class="icon-new-label new-right">New</div>
-                        <div class="pr-img-area"> <a title="Ipsums Dolors Untra" href="single_product.html">
-                            <figure> <img class="first-img" src="/images/products/mau1.jpg" alt="html template"> <img
-                                class="hover-img" src="/images/products/mau1.jpg" alt="html template"></figure>
-                          </a>
-                          <button type="button" class="add-to-cart-mt"> <i class="fa fa-shopping-cart"></i><span> Tìm hiểu
-                              thêm</span> </button>
-                        </div>
-  
-                        <div class="pr-info-area">
-                          <div class="pr-button">
-                            <div class="mt-button add_to_wishlist"> <a href="wishlist.html"> <i class="fa fa-heart"></i>
-                              </a> </div>
-                           
-                            
-                          </div>
-                        </div>
-  
-                      </div>
-                      <div class="item-info">
-                        <div class="info-inner">
-                          <div class="item-title"> <a title="Ipsums Dolors Untra" href="single_product.html">IELTS Listening: Dạng câu hỏi Flowcharts, Notes, Tables, Summaries And Forms </a> </div>
-                          <div class="item-content">
-                            <div class="rating" >
-                            <div class="view_talk">
-                              <span class="fa fa-eye" style="padding-top: 4px;"> 28924 &nbsp;&nbsp;</span>  
-                              <span class="comment-count"> <i class="fa fa-comment"></i>&nbsp; 3 </span>
-                            </div>
-                              <i style="margin-bottom: 5px;">April, 12, 2016</i>
-                            </div>
-                            
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                
+              
+                {{/each}}
 
               </ul>
             </div>
-            <div class="pagination-area ">
-              <ul>
-                <li><a class="active" href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
-              </ul>
-            </div>
+            {{/if}}
+             <div class="pagination-area ">
+            <ul>
+              {{#if this.is_not_start}}
+              <li><a href="?page=1">Đầu</a></li>
+              <li>
+                <a href="?page={{prev_value}}">
+                  <i class="fa fa-angle-left"></i>
+                </a>
+              </li>
+              {{/if}}
+
+              {{#each this.page_numbers}}
+              {{#if isCurrentPage}}
+
+              <li>
+                <a class="active" href="javascript:;">{{value}}</a>
+              </li>
+              {{else}}
+             
+              <li>
+                <a href="?page={{value}}">{{value}}</a>
+              </li>
+              {{/if}}
+              {{/each}}
+              
+              {{#if this.is_not_last}}
+              <li>
+                <a href="?page={{next_value}}">
+                  <i class="fa fa-angle-right"></i>
+                </a>
+              </li>
+              <li><a href="?page={{this.nPages}}">Cuối</a></li>
+              {{/if}}
+
+            </ul>
+          </div>
           </div>
         </div>
       </div>

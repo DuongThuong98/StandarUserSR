@@ -28,8 +28,6 @@ module.exports = {
     }
     return mangBu;
   },
-
-
-
+ 
 
 };
