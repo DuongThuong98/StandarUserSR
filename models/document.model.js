@@ -9,10 +9,8 @@ module.exports = {
     result = [];
     isLevelOne = await categoryModel.isLevelOne(catId);
     haveChildren =  await categoryModel.haveChildren(catId);
-    // console.log(isLevelOne)
-    // console.log(haveChildren)
-    if (!isLevelOne||
-      (isLevelOne && !haveChildren)) {
+
+    if (!isLevelOne|| (isLevelOne && !haveChildren)) {
       await db.Document.find({ categoryId: catId }).then(data => result = data)
      
     }
@@ -56,8 +54,14 @@ module.exports = {
 
     // console.log(result);
     return result;
-  }
+  },
 
+  findById: async (docId) =>{
+    result = [];
+   await db.Document.find({_id: docId})
+          .then(data => result = data)
+    return result;
+  }
 
 
 };
