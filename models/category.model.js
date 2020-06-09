@@ -29,5 +29,25 @@ module.exports = {
     return mangBu;
   },
  
+  isLevelOne: async (catId)=>{
+    const data = await db.Category.find({_id: catId,level: "0"});
+    if(data.length>0) return true;
+    return false;
+  },
+
+  haveChildren: async (catId)=>{
+    const data = await db.Category.find({level: catId});
+    // console.log(data)
+    if(data.length>0) return true;
+    return false;
+  },
+
+  takeChildren:async (catId) => {
+    const data = await db.Category.find({level: catId});
+    return data;
+  }
+
+
+
 
 };

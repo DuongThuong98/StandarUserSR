@@ -1,15 +1,65 @@
 const db = require("../scheme_model/index");
+const categoryModel = require('../models/category.model');
 // const Document = require("../scheme_model/document.model");
 const config = require('../config/default.json');
+
 module.exports = {
 
-  countByCat:  async catId => {return await db.Document.find({categoryId:catId}).count()},
-  pageByCat: async (catId, offset) =>{ temp = await db.Document.find({categoryId:catId})
-                        .limit(config.paginate.limit)
-                        .skip(offset)
-                      console.log(temp);
-                    return temp;}
-                                        
+  countByCat: async catId => {
+    result = [];
+    isLevelOne = await categoryModel.isLevelOne(catId);
+    haveChildren =  await categoryModel.haveChildren(catId);
+    // console.log(isLevelOne)
+    // console.log(haveChildren)
+    if (!isLevelOne||
+      (isLevelOne && !haveChildren)) {
+      await db.Document.find({ categoryId: catId }).then(data => result = data)
+     
+    }
+    else{//là cấp 1 nhưng có thêm con
+      cateChildren = await categoryModel.takeChildren(catId);
+      temp = [];
+      cateChildren.forEach(child => {
+        temp.push(child._id)
+      });
+      await db.Document.find({ categoryId: { $in: temp } }).then(data => result = data)
+    }
+    // console.log(result);
+    return result.length;
+    // return await db.Document.find({ categoryId: catId }).countDocuments()
+   },
+  pageByCat: async (catId, offset) => {
+    result = [];
+  
+    isLevelOne = await categoryModel.isLevelOne(catId);
+    haveChildren =  await categoryModel.haveChildren(catId);
+    // console.log(isLevelOne)
+    // console.log(haveChildren)
+    if (!isLevelOne||
+      (isLevelOne && !haveChildren)) {
+      await db.Document.find({ categoryId: catId })
+        .limit(config.paginate.limit)
+        .skip(offset).then(data => result = data)
+        // console.log("test: ",result);
+    }
+    else{//là cấp 1 nhưng có thêm con
+      cateChildren = await categoryModel.takeChildren(catId);
+      temp = [];
+      cateChildren.forEach(child => {
+        temp.push(child._id)
+      });
+      await db.Document.find({ categoryId: { $in: temp } })
+        .limit(config.paginate.limit)
+        .skip(offset).then(data => result = data)
+      console.log("test: ",result);
+    }
+
+    // console.log(result);
+    return result;
+  }
+
+
+
 };
 
 // exports.findAll = async(req, res) => {
