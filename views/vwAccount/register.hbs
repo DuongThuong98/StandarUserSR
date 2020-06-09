@@ -1,0 +1,202 @@
+{{#section 'css'}}
+<link rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+
+<style>
+  .page-title {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .checkbox>label {
+    font-weight: bold;
+    margin-left: 15px;
+  }
+
+  /* .password-group{
+        display: none; */
+  /* } */
+
+  .box-authentication {
+    width: 550px;
+    margin-left: 70px !important;
+  }
+
+  .page-content {
+    width: 40%;
+    margin: auto;
+  }
+
+  label.error {
+    display: inline-block;
+    color: red;
+    width: 200px;
+  }
+</style>
+
+{{/section}}
+
+{{#section 'js'}}
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+<script>
+  $('#txtDOB').datetimepicker({
+    // format: 'd/m/Y H:i'
+    format: 'd/m/Y',
+    timepicker: false,
+    mask: true,
+  });
+
+  function validate() {
+    if ($('#txtPassword').val() == "" ||
+      $('#txtPassword').val() !== $('#txtConfirm').val()) {
+      alert("Password và RePassword không khớp ")
+      return false;
+    }
+    return true;
+  };
+
+  $(document).ready(function () {
+    $("#frmRegister").validate({
+      rules: {
+        username: "required",
+        raw_password: {
+          required: true,
+          minlength: 2,
+        },
+
+      },
+      messages: {
+        username: "Vui lòng nhập tên user",
+        raw_password: {
+          required: "Vui lòng nhập password",
+          minlength: "Mật kẩu quá ngắn",
+        },
+      }
+    });
+  });
+</script>
+{{/section}}
+
+
+<!-- Main Container -->
+<section class="main-container col1-layout">
+  <div class="main container">
+    <div class="page-content">
+      <div class="account-login">
+        <div class="box-authentication">
+
+          {{#if this.success_message}}
+          <div class="alert alert-success alert-dismissible" style="width:300px">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Thành công!</strong> {{success_message}}
+          </div>
+          {{/if}}
+
+          {{#if this.err_message}}
+          <div class="alert alert-danger alert-dismissible" style="width:300px">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Lỗi!</strong> {{err_message}}
+          </div>
+          {{/if}}
+
+          <h2 style="font-weight: bold;">ĐĂNG KÝ TÀI KHOẢN</h2>
+          <form onsubmit="return validate();" method="POST" id="frmRegister" name="frmRegister">
+           
+
+            <div class="form-group">
+              <label for="txtUsername">Username</label>
+              <input type="text" class="form-control" id="txtUsername" name="username" placeholder="john" autofocus>
+            </div>
+            <div class="form-group">
+              <label for="txtPassword">Password</label>
+              <input type="password" class="form-control" id="txtPassword" name="raw_password">
+            </div>
+            <div class="form-group">
+              <label for="txtConfirm">Confirm</label>
+              <input type="password" class="form-control" id="txtConfirm">
+            </div>
+
+            <hr class="mb-4">
+            <h5 class="mb-3">Information</h5>
+            <div class="form-group">
+              <label for="txtName">Name</label>
+              <input type="text" class="form-control" id="txtName" name="fullname" placeholder="John Witch">
+            </div>
+            <div class="form-group">
+              <label for="txtEmail">Email</label>
+              <input type="text" class="form-control" id="txtEmail" name="email" placeholder="jw@movie.db">
+            </div>
+            <div class="form-group">
+              <label for="txtDOB">Date of Birth</label>
+              <input type="text" class="form-control" id="txtDOB" name="dob">
+            </div>
+
+            <div class="g-recaptcha" data-sitekey="6LcjNswUAAAAAP41Ew0r-yzS4K__xHX3APgs3yHk" name="capcha"></div>
+            <button type="submit" class="btn btn-warning" style="margin-top: 10px;">
+              <i class="fa fa-check" aria-hidden="true"></i>ĐĂNG KÝ
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+<!-- Main Container End -->
+
+
+
+
+
+
+
+
+
+
+
+{{!-- biên giớiiiiiiiiiiiii --}}
+{{!-- <div class="card shadow mb-4">
+  <h4 class="card-header">
+    Register
+  </h4>
+  <div class="card-body">
+    <form onsubmit="return validate();" method="POST" novalidate id="frmRegister" name="frmRegister">
+      <h5 class="mb-3">Account</h5>
+      <div class="form-group">
+        <label for="txtUsername">Username</label>
+        <input type="text" class="form-control" id="txtUsername" name="f_Username" placeholder="john" autofocus>
+      </div>
+      <div class="form-group">
+        <label for="txtPassword">Password</label>
+        <input type="password" class="form-control" id="txtPassword" name="raw_password">
+      </div>
+      <div class="form-group">
+        <label for="txtConfirm">Confirm</label>
+        <input type="password" class="form-control" id="txtConfirm">
+      </div>
+
+      <hr class="mb-4">
+      <h5 class="mb-3">Information</h5>
+      <div class="form-group">
+        <label for="txtName">Name</label>
+        <input type="text" class="form-control" id="txtName" name="f_Name" placeholder="John Witch">
+      </div>
+      <div class="form-group">
+        <label for="txtEmail">Email</label>
+        <input type="text" class="form-control" id="txtEmail" name="f_Email" placeholder="jw@movie.db">
+      </div>
+      <div class="form-group">
+        <label for="txtDOB">Date of Birth</label>
+        <input type="text" class="form-control" id="txtDOB" name="dob">
+      </div>
+      <button type="submit" class="btn btn-outline-success">
+        <i class="fa fa-check" aria-hidden="true"></i>
+        Register
+      </button>
+    </form>
+  </div>
+  <div class="card-footer text-muted">
+    Footer
+  </div>
+</div> --}}
