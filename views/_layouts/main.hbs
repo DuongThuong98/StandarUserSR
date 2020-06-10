@@ -373,7 +373,8 @@
                       <div class="shoppingcart-inner hidden-xs"><span class="cart-title">{{authUser.username}}</span>
                         <span class="cart-total"> Tài khoản</span></div>
                     </a></div>
-                    
+
+                  <form id="frmLogout" method="post" action="/account/logout"></form>
                   <div>
                     <div class="top-cart-content">
                       <ul class="nav" style="width: 200px; ; text-align: left; margin-left: -1px;">
@@ -387,15 +388,16 @@
                       </ul>
                       <div class="top-subtotal">Điểm: <span class="price">152</span></div>
                       <div class="actions">
-                        <button class="btn-checkout" type="button"><i class="fa fa-check"></i><span>Đăng
-                            suất</span></button>
+                        <a class="btn-checkout" type="button" href="javascript: $('#frmLogout').submit();">
+                          <i class="fa fa-check"></i><span>Đăng
+                            suất</span></a>
 
                       </div>
                     </div>
 
 
                   </div>
-                 {{/if}}
+                  {{/if}}
                 </div>
               </div>
             </div>

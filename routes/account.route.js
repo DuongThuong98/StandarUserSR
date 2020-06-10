@@ -65,13 +65,13 @@ router.post('/login', async (req, res) => {
 })
 
 // //tại sao chỗ này phải là post quên rồi?
-// router.post('/logout', (req, res) => {
-//   req.session.isAuthenticated = false;
-//   req.session.authUser = null;
-//   req.session.wishlistLength = 0;
-//   req.session.u_role = null;
-//   res.redirect(req.headers.referer);
-// });
+router.post('/logout', (req, res) => {
+  req.session.isAuthenticated = false;
+  req.session.authUser = null;
+  req.session.wishlistLength = 0;
+  req.session.u_role = null;
+  res.redirect(req.headers.referer);
+});
 
 
 
