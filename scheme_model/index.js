@@ -18,5 +18,5 @@ module.exports = {
     Teacher: require("./teacher.model"),
     Submit: require("./submit.model"),
     TestList: require("./testlist.model"),
-    //User: require("./user.model"),
+    User: require("./user.model"),
 };

@@ -1,53 +1,54 @@
 const db = require("../scheme_model/index");
-
+const bcrypt = require('bcryptjs');
 module.exports = {
-  cap1: async() => {
-    const data = await db.Category.find({level: "0"});
-
-    return data;
+  all: async () => {
+    result = [];
+    await db.User.find()
+      .then(data => result = data)
+    if (result.length === 0)
+      return null
+    return result;
   },
-  cap2: async () => {
-    var mangBu = [];
-    const rows = await db.Category.find({level: "0"});
-    for (i = 0; i < rows.length; i++) {
-     
-      const row2 = await db.Category.find({level: rows[i]._id});
+  single: async id => {
+    result = [];
+    await db.User.find({ _id: id })
+      .then(data => result = data)
+    if (result.length === 0)
+      return null
+    return result;
+  },
 
-      var mangCap2 = [];
-      for (n = 0; n < row2.length; n++) {
-        mangCap2.push({
-          cap2_id: row2[n]._id,
-          cap2_name: row2[n].name
-        });
-      }
-      var item = {
-        cap1: rows[i],
-        mangcap2: mangCap2
-      };
-      mangBu.push(item);
+  singleByUsername: async (username) => {
+    result = [];
+    await db.User.find({ username: username })
+      .then(data => result = data)
+    console.log("MOdel User : ", result)
+    if (result.length === 0)
+      return null
+    return result;
+  },
+
+  add: async entity => {
+    const user = new db.User({
+      username: entity.username,
+      email: entity.email,
+      passwordHash: bcrypt.hashSync(entity.password, 8),
+      password: entity.password
+    });
+
+    const result = await user.save();
+    console.log(result)
+    if (!result) {
+      console.log("data null");
+      return null;
     }
-    return mangBu;
+    return result
   },
- 
-  isLevelOne: async (catId)=>{
-    const data = await db.Category.find({_id: catId,level: "0"});
-    if(data.length>0) return true;
-    return false;
-  },
-
-  haveChildren: async (catId)=>{
-    const data = await db.Category.find({level: catId});
-    // console.log(data)
-    if(data.length>0) return true;
-    return false;
-  },
-
-  takeChildren:async (catId) => {
-    const data = await db.Category.find({level: catId});
-    return data;
-  }
-
-
-
-
+  // del: u_id => db.del('users', { id: u_id }),
+  // patch: entity => {
+  //   const condition = { id: entity.id };
+  //   //delete entity.id;
+  //   // console.log(condition, entity);
+  //   return db.patch('users', entity, condition);
+  // },
 };

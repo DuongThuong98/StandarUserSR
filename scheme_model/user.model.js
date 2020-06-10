@@ -1,25 +1,27 @@
 const EUserType = require("../enums/EUserTypes");
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
+var validator = require("validator");
 
 const saltRounds = 10;
 
 const UserSchema = mongoose.Schema({
-    displayName: {
+    username: {
         type: String,
         required: true,
+        unique: true,
         trim: true,
     },
     email: {
         type: String,
-        required: true,
-        unique: true,
-        lowercase: true,
-        validate: (value) => {
-            if (!validator.isEmail(value)) {
-                throw new Error({ error: "Invalid Email address" });
-            }
-        },
+        // required: true,
+        // unique: false,
+        // lowercase: true,
+        // validate: (value) => {
+        //     if (!validator.isEmail(value)) {
+        //         throw new Error({ error: "Invalid Email address" });
+        //     }
+        // },
     },
     password: { type: String, required: true, minLength: 7 },
     passwordHash: String,
@@ -31,7 +33,7 @@ const UserSchema = mongoose.Schema({
     adress: String,
     typeID: {
         type: Number,
-        default: EUserType.STUDENT,
+        default: EUserType.STANDARD,
     },
     gender: String,
     isBlock: {

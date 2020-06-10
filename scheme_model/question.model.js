@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 
 const saltRounds = 10;
 
-const UserSchema = mongoose.Schema(
+const QuestionSchema = mongoose.Schema(
   {
     email: String,
     password: String,
@@ -31,15 +31,6 @@ const UserSchema = mongoose.Schema(
   }
 );
 
-UserSchema.methods.setPasswordHash = function(password) {
-  this.passwordHash = bcrypt.hashSync(password, saltRounds);
-};
 
-UserSchema.methods.validatePassword = function(password) {
-  if (!this.passwordHash) {
-    return false;
-  }
-  return bcrypt.compareSync(password, this.passwordHash);
-};
 
-module.exports = mongoose.model('User', UserSchema);
+module.exports = mongoose.model('Question', QuestionSchema);

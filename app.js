@@ -46,6 +46,9 @@ app.set('view engine', 'hbs');
 
 
 //connecting to the database
+mongoose.set('useNewUrlParser', true);
+mongoose.set('useFindAndModify', false);
+mongoose.set('useCreateIndex', true);
 mongoose.Promise = global.Promise;
 mongoose
     .connect(dbConfig.url, {

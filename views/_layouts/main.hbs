@@ -295,7 +295,7 @@
                 <div class="links">
                   <div class="myaccount"><a title="My Account" href="account_page.html"><i class="fa fa-user"></i><span
                         class="hidden-xs">My Account</span></a></div>
-                  
+
                   <div class="login"><a href="/account/login"><i class="fa fa-unlock-alt"></i><span
                         class="hidden-xs">Log In</span></a></div>
                 </div>
@@ -366,18 +366,16 @@
             <div class="col-lg-3 col-xs-3 top-cart">
               <div class="top-cart-contain">
                 <div class="mini-cart">
-
+                  {{#if isAuthenticated}}
                   <div data-toggle="dropdown" data-hover="dropdown" class="basket dropdown-toggle"> <a
                       href="my_account.html">
                       <div class="cart-icon"><i class="fa fa-user"></i></div>
-                      <div class="shoppingcart-inner hidden-xs"><span class="cart-title">Dương Thưởng</span>
+                      <div class="shoppingcart-inner hidden-xs"><span class="cart-title">{{authUser.username}}</span>
                         <span class="cart-total"> Tài khoản</span></div>
                     </a></div>
-
-
+                    
                   <div>
                     <div class="top-cart-content">
-
                       <ul class="nav" style="width: 200px; ; text-align: left; margin-left: -1px;">
                         <li><a href="my_account.html"> <i class="icon fa fa-gamepad fa-fw"></i> <span>Thông tin cá
                               nhân</span></a></li>
@@ -386,12 +384,7 @@
                         <li><a href="my_account.html"> <i class="icon fa fa-pen fa-fw"></i> <span>Bài test đã làm</span>
                           </a></li>
                         <li><a href="my_account.html"><span> Nâng cấp học viên </span> </a></li>
-
-
                       </ul>
-
-
-
                       <div class="top-subtotal">Điểm: <span class="price">152</span></div>
                       <div class="actions">
                         <button class="btn-checkout" type="button"><i class="fa fa-check"></i><span>Đăng
@@ -402,6 +395,7 @@
 
 
                   </div>
+                 {{/if}}
                 </div>
               </div>
             </div>
@@ -426,7 +420,7 @@
                   <h3>DANH MỤC TÀI LIỆU</h3>
                 </div>
                 <div class="mega-menu-category">
-                   <ul class="nav">
+                  <ul class="nav">
                     {{#each lcCategories}}
                     {{#if mangcap2}}
                     <li>
@@ -928,7 +922,7 @@
   <script src="/js/bootstrap.min.js"></script>
 
 
- 
+
   <!-- bxslider js -->
   <script src="/js/jquery.bxslider.js"></script>
 
@@ -984,7 +978,7 @@
   <!-- countdown js -->
   <script src="/js/countdown.js"></script>
 
- {{{_sections.js}}}
+  {{{_sections.js}}}
 
   <!-- Hot Deals Timer 1-->
   <script>
