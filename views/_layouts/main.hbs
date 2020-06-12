@@ -378,7 +378,7 @@
                   <div>
                     <div class="top-cart-content">
                       <ul class="nav" style="width: 200px; ; text-align: left; margin-left: -1px;">
-                        <li><a href="my_account.html"> <i class="icon fa fa-gamepad fa-fw"></i> <span>Thông tin cá
+                        <li><a href="/users/"> <i class="icon fa fa-gamepad fa-fw"></i> <span>Thông tin cá
                               nhân</span></a></li>
                         <li><a href="my_account.html"> <i class="icon fa fa-phone fa-fw"></i> <span>Bài đọc yêu
                               thích</span></a></li>
@@ -918,85 +918,48 @@
   <!-- JS -->
 
   <!-- jquery js -->
-  <script src="/js/jquery.min.js"></script>
+  <script type="text/javascript" src="/js/jquery.min.js"></script>
+
+  {{!-- jquery validate --}}
+  <script type="text/javascript"
+    src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
 
   <!-- bootstrap js -->
-  <script src="/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/js/bootstrap.min.js"></script>
 
 
+  <!-- owl.carousel.min js -->
+  <script type="text/javascript" src="/js/owl.carousel.min.js"></script>
 
   <!-- bxslider js -->
-  <script src="/js/jquery.bxslider.js"></script>
+  <script type="text/javascript" src="/js/jquery.bxslider.js"></script>
 
   <!-- Slider Js -->
-  <script src="/js/revolution-slider.js"></script>
-
-
+  <script type="text/javascript" src="/js/revolution-slider.js"></script>
 
   <!-- megamenu js -->
-  <script src="/js/megamenu.js"></script>
-  <script>
+  <script type="text/javascript" src="/js/megamenu.js"></script>
+  <script type="text/javascript">
     /* <![CDATA[ */
     var mega_menu = '0';
 
-    jQuery(document).ready(function () {
-      $('.mega-menu-category').hide();
-    });
     /* ]]> */
   </script>
 
-  <script type="text/javascript">
-
-    jQuery(document).ready(function () {
-      $('.password-group').hide();
-      $('.my-sub-comment-group').hide();
-      // console.log('a');
-    });
-    jQuery(document).ready(function () {
-
-      $('.respone').click(function () {
-
-        $('.my-sub-comment-group').toggle(500);
-        //append("<li class='my-sub-comment'><div class='avartar'> <img src='images/avatar.png' alt='Avatar'></div><div class='comment-body'><div class='my-comment-form'>  <textarea name='message' id='message' rows='8' class='form-control'></textarea>    <button class='button'> <span>Post Comment</span></button><button class='button cancel'><span>Hủy</span></button>  </div> </div> </li>")
-        // alert("fdf");
-      })
-
-      $('.comment-count').click(function () {
-        $('.my-sub-comment-group').toggle(500);
-      })
-
-    });
-  </script>
-
   <!-- jquery.mobile-menu js -->
-  <script src="/js/mobile-menu.js"></script>
+  <script type="text/javascript" src="/js/mobile-menu.js"></script>
 
   <!--jquery-ui.min js -->
-  <script src="/js/jquery-ui.js"></script>
+  <script type="text/javascript" src="/js/jquery-ui.js"></script>
 
   <!-- main js -->
-  <script src="/js/main.js"></script>
+  <script type="text/javascript" src="/js/main.js"></script>
 
   <!-- countdown js -->
-  <script src="/js/countdown.js"></script>
-
+  <script type="text/javascript" src="/js/countdown.js"></script>
   {{{_sections.js}}}
 
-  <!-- Hot Deals Timer 1-->
-  <script>
-    var dthen1 = new Date("12/25/20 11:59:00 PM");
-    start = "06/04/18 03:02:11 AM";
-    start_date = Date.parse(start);
-    var dnow1 = new Date(start_date);
-    if (CountStepper > 0)
-      ddiff = new Date((dnow1) - (dthen1));
-    else
-      ddiff = new Date((dthen1) - (dnow1));
-    gsecs1 = Math.floor(ddiff.valueOf() / 1000);
-
-    var iid1 = "countbox_1";
-    CountBack_slider(gsecs1, "countbox_1", 1);
-  </script>
+ 
 
 
 </body>

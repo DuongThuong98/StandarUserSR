@@ -6,7 +6,7 @@ module.exports = function (app) {
   app.use('/documents', require('../routes/document.route'));
   // app.use('/authemail', require('../routes/authEmail.route'));
  
-  // app.use('/bidder',restrict.bidder ,require('../routes/bidder/bidding.route'));
+  app.use('/users',restrict.user ,require('../routes/user/info.route'));
 
   // app.use('/seller/product',restrict.seller ,require('../routes/seller/product.route'));
   // app.use('/seller/soldlist',restrict.seller ,require('../routes/seller/soldlist.route'));
