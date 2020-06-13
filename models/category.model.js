@@ -45,8 +45,13 @@ module.exports = {
   takeChildren:async (catId) => {
     const data = await db.Category.find({level: catId});
     return data;
-  }
+  },
 
+  isMockTest: async (catId)=>{
+    const data = await db.Category.find({_id: catId,typeID: 2})
+    if(data.length>0) return true;
+    return false;
+  },
 
 
 
