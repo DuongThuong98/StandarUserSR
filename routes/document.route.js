@@ -10,11 +10,17 @@ router.get('/:id', async (req, res) => {
   const rows = await documentModel.findById(docId).then(data => data);
   console.log(rows);
 
+  if (rows.length > 0) {
+    await documentModel.upDateView(docId)
+  }
+
+  
+
   var isMockTest = await categoryModel.isMockTest(rows[0].categoryId)
   console.log(isMockTest)
   if (!isMockTest) {
     res.render('vwDocuments/detail', {
-      // product: rows,
+      document: rows[0],
     });
   }
   else {
