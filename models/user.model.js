@@ -45,10 +45,25 @@ module.exports = {
     return result
   },
   // del: u_id => db.del('users', { id: u_id }),
-  // patch: entity => {
-  //   const condition = { id: entity.id };
-  //   //delete entity.id;
-  //   // console.log(condition, entity);
-  //   return db.patch('users', entity, condition);
-  // },
+  patch: async entity => {
+    const { _id, username, email, passwordHash } = entity
+    const user = await db.User.findOne({ _id })
+    if (user) {
+        const result = await db.User.findOneAndUpdate({ _id }, 
+                              { username: username || user.username,
+                                email: email || user.email,
+                                passwordHash: passwordHash || user.passwordHash,
+                                                                    })
+        if (result) {
+            const data = await db.User.findOne({ _id: result._id })
+            if (data) {
+                return data;
+            }
+            else{
+              return null;
+            }
+        }
+    }
+    return null;
+  },
 };

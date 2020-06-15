@@ -5,10 +5,10 @@ module.exports = {
     next();
   },
 
-  seller: (req, res, next) => {
+  teacher: (req, res, next) => {
     if(req.session.isAuthenticated === false||
       typeof(req.session.u_role) === 'undefined' || 
-      req.session.u_role !== 1)
+      req.session.u_role !== "teacher")
       return res.redirect(`/account/login?retUrl=${req.originalUrl}`);
     next();
   },

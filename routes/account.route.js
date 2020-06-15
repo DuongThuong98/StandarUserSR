@@ -42,7 +42,10 @@ router.get('/login', (req, res) => {
 router.post('/login', async (req, res) => {
   const user = await userModel.singleByUsername(req.body.username).then(data => data);
   if (user === null)
-    throw new Error('Invalid username or password.');
+  return res.render('vwAccount/login', {
+    layout: false,
+    err_message: 'Không tồn tại tài khoản này'
+  });
 
     console.log(user)
   const rs = bcrypt.compareSync(req.body.password, user[0].passwordHash);
@@ -59,7 +62,7 @@ router.post('/login', async (req, res) => {
   // req.session.wishlistLength = wishlist.length;
   req.session.isAuthenticated = true;
   req.session.authUser = user[0];
-  req.session.u_role = user[0].typeID;
+  req.session.u_role = user[0].role;
   const url = req.query.retUrl || '/';
   res.redirect(url);
 })

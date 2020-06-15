@@ -37,5 +37,6 @@ const DocumentSchema = mongoose.Schema({
     timestamps: true,
 });
 
+DocumentSchema.index( { name: "text", contents: "text" } );
 const Document = mongoose.model("Document", DocumentSchema);
 module.exports = Document;

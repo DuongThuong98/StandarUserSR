@@ -25,9 +25,9 @@ router.get('/:id/documents', async (req, res) => {
     }
   }
   const arrange = req.session.arrange;
-  console.log(arrange);
-  console.log(typeof (req.session.arrange))
-  console.log(typeof (req.query.arrange))
+  // console.log(arrange);
+  // console.log(typeof (req.session.arrange))
+  // console.log(typeof (req.query.arrange))
 
   const catId = req.params.id;
   const limit = config.paginate.limit;

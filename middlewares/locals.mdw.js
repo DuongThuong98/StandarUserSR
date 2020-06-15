@@ -18,7 +18,28 @@ module.exports = function (app) {
     res.locals.isAuthenticated = req.session.isAuthenticated;
     res.locals.authUser = req.session.authUser;
 
-    console.log("local: ", req.session.authUser)
+    // console.log("local: ", req.session.authUser)
+
+    //Có phải là seller hay không
+    if(typeof(req.session.u_role) !== 'undefined' && req.session.u_role === "Teacher")
+    {
+      res.locals.isTeacher = true;
+    }
+    else
+    {
+      res.locals.isTeacher = false;
+    }
+
+
+    // //có phải là admin không
+    // if(typeof(req.session.u_role) === 'undefined' || req.session.u_role !== 0)
+    // {
+    //   res.locals.isAdmin = false;
+    // }
+    // else
+    // {
+    //   res.locals.isAdmin = true;
+    // }
     next();
   })
 };
