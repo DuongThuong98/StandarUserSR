@@ -161,6 +161,23 @@ module.exports = {
     return result;
   },
 
+
+  allByIDTeacher: async (id) =>{
+    result = await db.Document.find({ authorID: id })
+   console.log(result);
+    return result;
+  },
+
+  add: async (entity) => {
+      const doc = new db.Document(entity)
+      const result = await doc.save();
+      if (result) {
+        return result ;
+    } else {
+        return null;
+    }
+  }
+  
   
 };
 

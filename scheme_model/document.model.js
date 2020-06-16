@@ -11,7 +11,7 @@ const DocumentSchema = mongoose.Schema({
 
     name: String,
     shortDesc: String,
-    contents: String,
+    content: String,
     image : String,
     categoryId: {
         type: mongoose.Schema.Types.ObjectId,
@@ -24,11 +24,8 @@ const DocumentSchema = mongoose.Schema({
     comments: [{
         content: String,
     }, ],
-    isRecommend: Boolean,
-    upload: {
-        type: Date,
-        default: Date,
-    },
+    isRecommended: Boolean,
+    isNovel:  { type: Boolean, default: true },
     authorID: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",

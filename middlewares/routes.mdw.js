@@ -8,7 +8,9 @@ module.exports = function (app) {
  
   app.use('/users',restrict.user ,require('../routes/user/info.route'));
 
-  // app.use('/seller/product',restrict.seller ,require('../routes/seller/product.route'));
+  app.use('/teacher',restrict.teacher ,require('../routes/teacher/info.route'));
+
+  app.use('/teacher/documents',restrict.teacher ,require('../routes/teacher/document.route'));
   // app.use('/seller/soldlist',restrict.seller ,require('../routes/seller/soldlist.route'));
 
   // app.use('/admin/users',restrict.admin ,require('../routes/admin/users.route'));

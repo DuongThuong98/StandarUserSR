@@ -1,0 +1,267 @@
+{{#section 'css'}}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.3/css/fileinput.min.css" media="all"
+    rel="stylesheet" type="text/css" />
+<link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+
+<style>
+    .page-title {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .checkbox>label {
+        font-weight: bold;
+        margin-left: 15px;
+    }
+
+    /* .password-group{
+        display: none; */
+    /* } */
+
+    .box-authentication {
+        width: 550px;
+        margin-left: 70px !important;
+    }
+
+    .page-content {
+        width: 90%;
+        margin: auto;
+    }
+</style>
+
+{{/section}}
+
+{{#section 'js'}}
+
+{{!-- Textarea cho mô tả chi tiết --}}
+<script
+    src="https://cloud.tinymce.com/5/tinymce.min.js?apiKey=ezd73nxbzc7bu6e86g2l82jbbffke0mwevwrnyvc5q8h89j6"></script>
+<script>
+    tinymce.init({
+        selector: '#txtFullDes',
+        height: 600,
+        plugins: 'paste image link autolink lists table media',
+        menubar: false,
+        toolbar: [
+            'undo redo | bold italic underline strikethrough | numlist bullist | alignleft aligncenter alignright',
+            'forecolor backcolor',
+            'table link image media',
+        ],
+    });
+</script>
+
+{{!-- NGÀY THÁNG NĂM --}}
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+<script>
+    $('#txtDOE').datetimepicker({
+        //format: 'd/m/Y H:s'
+        format: 'd/m/Y H:m:s',
+        timepicker: true,
+        mask: true,
+    });
+
+    function validate() {
+        return true;
+    }
+</script>
+
+{{!-- upload file --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.3/js/fileinput.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.3/themes/fa/theme.min.js"></script>
+<script>
+    $('#fuMain').fileinput({
+        theme: 'fa',
+        dropZoneEnabled: false,
+        allowedFileExtensions: ['png', 'jpg', 'gif', 'pdf'],
+    });
+    $('#fuMain-ques').fileinput({
+        theme: 'fa',
+        dropZoneEnabled: false,
+        allowedFileExtensions: ['pdf'],
+    });
+    $('#fuMain-key').fileinput({
+        theme: 'fa',
+        dropZoneEnabled: false,
+        allowedFileExtensions: ['pdf'],
+    });
+    $('#fuMain-audio').fileinput({
+        theme: 'fa',
+        dropZoneEnabled: false,
+        allowedFileExtensions: ['pdf'],
+    });
+</script>
+{{/section}}
+
+
+<!-- Main Container -->
+<div class="main-container col1-layout">
+    <div class="container">
+        <div class="row">
+            <div class="col-main">
+            </div>
+            <div class="product-overview-tab">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="product-tab-inner">
+                                <ul id="product-detail-tab" class="nav nav-tabs product-tabs" style="  display: flex;">
+                                    <li class="active"> <a href="#description" data-toggle="tab"> Section 1</a>
+                                    </li>
+                                    <li> <a href="#reviews" data-toggle="tab">Section 2</a> </li>
+                                </ul>
+
+                                <div id="productTabContent" class="tab-content">
+                                    <div class="tab-pane fade in active" id="description">
+                                        <div class="std" style="margin-left: 30px;">
+
+                                            <div class="page-title">
+                                                <h2>Thêm sản phẩm đấu giá</h2>
+                                            </div>
+                                            <form method="POST" name="frmAddProduct" novalidate
+                                                enctype="multipart/form-data">
+                                                <div class="box-border">
+                                                    <ul style="list-style-type:none;">
+                                                        <li class="row">
+                                                            <div class="col-sm-6">
+                                                                <label for="first_name" class="required">Tên tài liệu:
+                                                                </label>
+                                                                <input type="text" class="input form-control"
+                                                                    name="name" id="first_name">
+                                                            </div>
+
+                                                        </li>
+                                                        <li class="row">
+                                                            <div class="col-sm-3">
+                                                                <label class="required">Loại:</label>
+                                                                <select class="input form-control" name="categoryId">
+                                                                    <option selected="true" disabled="disabled">Chọn
+                                                                    </option>
+                                                                    {{#each lcCategories}}
+                                                                    {{#if mangcap2}}
+                                                                    <option value="{{cap1._id}}">{{cap1.name}}</option>
+                                                                    {{#each mangcap2}}
+                                                                    <option value="{{cap2_id}}">
+                                                                        &nbsp;&nbsp;&nbsp;{{cap2_name}} </option>
+                                                                    {{/each}}
+                                                                    {{else}}
+                                                                    <option value="{{cap1._id}}">{{cap1.name}}</option>
+                                                                    {{/if}}
+                                                                    {{/each}}
+                                                                </select>
+                                                            </div>
+
+                                                            <div class="col-sm-3">
+                                                                <label class="required">Đề xuất đọc:</label>
+                                                                <select class="input form-control" name="isRecommended">
+                                                                    <option selected="true" value="0">Không </option>
+                                                                    <option value="1">Có </option>
+                                                                </select>
+                                                            </div>
+
+                                                            <div class="col-sm-6">
+                                                                <label for="fuMain" class="required">Ảnh: </label>
+                                                                <input id="fuMain" name="fuMain" type="file" multiple>
+                                                            </div>
+                                                        </li>
+
+                                                        <li class="row">
+                                                            <div class="col-xs-12">
+                                                                <label for="txtFullDes" class="required">Mô tả chi
+                                                                    tiết</label>
+                                                                <textarea class="form-control" id="txtFullDes"
+                                                                    name="content"></textarea>
+
+                                                            </div>
+
+
+                                                        </li><!-- / .row -->
+                                                        <li>
+                                                            <a class="continue-btn" href="/seller/product"><i
+                                                                    class="fa fa-arrow-left">
+                                                                </i>&nbsp;
+                                                                Trở về
+                                                                list</a>&nbsp;
+                                                            <button class="button"><i class="fa fa-check "></i>&nbsp;
+                                                                <span>THÊM</span></button>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </form>
+
+
+                                        </div>
+                                    </div>
+
+                                    <div id="reviews" class="tab-pane fade">
+                                        <div class="std" style="margin-left: 30px;">
+                                            <div class="page-title">
+                                                <h2>Thêm sản phẩm đấu giá</h2>
+                                            </div>
+                                            <form method="POST" name="frmAddProduct" novalidate
+                                                enctype="multipart/form-data">
+                                                <div class="box-border">
+                                                    <ul style="list-style-type:none;">
+                                                        <li class="row">
+                                                            <div class="col-sm-6">
+                                                                <label for="first_name" class="required">Tên bài kiểm
+                                                                    tra:
+                                                                </label>
+                                                                <input type="text" class="input form-control"
+                                                                    name="name" id="first_name">
+                                                            </div>
+                                                            <div class="col-sm-6">
+                                                                <label for="fuMain-audio" class="required">Audio: </label>
+                                                                <input id="fuMain-audio" name="fuMain-audio" type="file"
+                                                                    multiple>
+                                                            </div>
+                                                        </li>
+
+
+                                                        <li class="row">
+                                                            <div class="col-sm-6">
+                                                                <label for="fuMain-key" class="required">Đề test: </label>
+                                                                <input id="fuMain-key" name="fuMain-key" type="file"
+                                                                    multiple>
+                                                            </div>
+
+                                                            <div class="col-sm-6">
+                                                                <label for="fuMain-ques" class="required">Đáp án chi tiết: </label>
+                                                                <input id="fuMain-ques" name="fuMain-ques" type="file"
+                                                                    multiple>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <a class="continue-btn" href="/seller/product"><i
+                                                                    class="fa fa-arrow-left">
+                                                                </i>&nbsp;
+                                                                Trở về
+                                                                list</a>&nbsp;
+                                                            <button class="button"><i class="fa fa-check "></i>&nbsp;
+                                                                <span>THÊM</span></button>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+        </div>
+    </div>
+</div>

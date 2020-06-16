@@ -368,11 +368,15 @@
                   <div>
                     <div class="top-cart-content">
                       <ul class="nav" style="width: 200px; ; text-align: left; margin-left: -1px;">
+
+                        {{#if isTeacher}}
+                        <li><a href="/teacher/info"> <i class="icon fa fa-gamepad fa-fw"></i> <span>Thông tin cá
+                              nhân</span></a></li>
+                        <li><a href="/teacher/documents"> <i class="icon fa fa-phone fa-fw"></i> <span>Quản lý tài
+                              liệu</span></a></li>
+                        {{else}}
                         <li><a href="/users/"> <i class="icon fa fa-gamepad fa-fw"></i> <span>Thông tin cá
                               nhân</span></a></li>
-                        {{#if isTeacher}}
-                        <li><a href="/teachers/"> <i class="icon fa fa-phone fa-fw"></i> <span>Quản lý tài liệu</span></a></li>
-                        {{else}}
                         <li><a href="/users/wishlist"> <i class="icon fa fa-phone fa-fw"></i> <span>Bài đọc yêu
                               thích</span></a></li>
                         <li><a href="/users/done-mocktest"> <i class="icon fa fa-pen fa-fw"></i> <span>Bài test đã

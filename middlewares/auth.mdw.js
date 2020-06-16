@@ -8,7 +8,7 @@ module.exports = {
   teacher: (req, res, next) => {
     if(req.session.isAuthenticated === false||
       typeof(req.session.u_role) === 'undefined' || 
-      req.session.u_role !== "teacher")
+      req.session.u_role !== "Teacher")
       return res.redirect(`/account/login?retUrl=${req.originalUrl}`);
     next();
   },

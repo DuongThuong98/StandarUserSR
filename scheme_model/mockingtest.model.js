@@ -2,8 +2,10 @@ const mongoose = require("mongoose");
 
 const MockingTestSchema = mongoose.Schema({
     name: String,
-    contents: String,
-    audioLink: String,
+    questionKeyLink: String,
+    audioLink:  { type: Array, default: [] },
+    answerKeyLink: String,
+    
 }, {
     timestamps: true,
 });
