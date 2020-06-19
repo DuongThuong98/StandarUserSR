@@ -2,10 +2,15 @@ const mongoose = require("mongoose");
 
 const MockingTestSchema = mongoose.Schema({
     name: String,
-    questionKeyLink: String,
-    audioLink:  { type: Array, default: [] },
+    questionLink: String,
+    audioLinks:  { type: Array, default: [] },
     answerKeyLink: String,
-    
+    answerKeys: { type: Array, default: [] },
+    authorID : {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+    },
+    mocktestType :String,//"listening"//"reading"
 }, {
     timestamps: true,
 });

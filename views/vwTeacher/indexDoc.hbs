@@ -70,24 +70,20 @@
                 <table class="table table-bordered cart_summary">
                   <thead>
                     <tr>
-                      <th class="cart_product">ẢNH</th>
+              
                       <th>Tên</th>
-                      <th>Gía hiện tại</th>
-                      <th>Gía mua ngay</th>
-                      <th>Thời gian kết thúc</th>
-                      <th>Lượt đấu</th>
+                      <th>Loại</th>
                       <th  class="action">Sửa</th>
                     </tr>
                   </thead>
                   <tbody>
-                      {{#each this.products}}
+                      {{#each this.mocktests}}
                     <tr>
-                      <td class="cart_product"><a href="#"><img src="/images/products-images/{{image}}" alt="Product"></a></td>
-                      <td class="cart_description"><p class="product-name"><a href="#">{{p_name}} </a></p></td>
-                      <td class="price"><span>{{format current_bid}}</span></td>
-                      <td class="price"><span>{{format purchase_bid}}</span></td>
-                      <td class="availability in-stock"><span class="label">In stock</span></td>
-                      <td class="qty"><input class="form-control input-sm" type="text" value="{{bid_count}}"></td>
+                      
+                      <td class="cart_description"><p class="product-name"><a href="#"> {{name}} </a></p></td>
+                     
+                      <td class="availability in-stock"><span class="label">{{mocktestType}}</span></td>
+                    
                       <td class="action"><a href="/seller/product/edit/{{id}}"><i class="fa fa-edit"></i></a></td>
                     </tr>
                    {{/each}}

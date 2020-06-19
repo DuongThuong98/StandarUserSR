@@ -7,6 +7,7 @@ module.exports = function (app) {
   // app.use('/authemail', require('../routes/authEmail.route'));
  
   app.use('/users',restrict.user ,require('../routes/user/info.route'));
+  app.use('/user/mocktest',restrict.user ,require('../routes/user/mocktest.route'));
 
   app.use('/teacher',restrict.teacher ,require('../routes/teacher/info.route'));
 

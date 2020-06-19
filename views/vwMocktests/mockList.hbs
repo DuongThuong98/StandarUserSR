@@ -1,0 +1,104 @@
+{{#section 'css'}}
+  <!-- style CSS -->
+  <link rel="stylesheet" type="text/css" href="/css/blog.css" media="all">
+<style>
+  .item-brief {
+    padding-left: 3px;
+
+  }
+
+  .product-item {
+    /* margin-top: 10px; */
+    /* background-color: rgb(245, 240, 139); */
+    border-style: groove;
+    /* border-color: honeydew; */
+    border-width: 1px;
+  }
+
+  .form-control {
+    width: 200px;
+  }
+
+  .page-title {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .form-group {
+    width: fit-content;
+  }
+
+  td {
+    margin: auto;
+    vertical-align: middle;
+  }
+
+  .th-delete {
+    font-size: x-large;
+  }
+</style>
+{{/section}}
+
+{{#section 'js'}}
+
+
+{{/section}}
+
+<!-- Main Container -->
+<section class="main-container col1-right-layout">
+  <div class="main container">
+    <div class="row cart">
+      <div class="col-main col-sm-9 col-xs-12">
+        <div class="my-account cart">
+          <div class="page-title">
+            <h2>Sản phẩm của tôi</h2>
+            <a class="btn btn-success" href="/teacher/documents/add" role="button" style="margin-left: 1px;">
+            <i class="fa fa-plus" aria-hidden="true"></i>
+            Add Product
+          </a>
+          </div>
+          {{#if this.empty}}
+          <div class="card-body">
+           <p style="color:#fed700; font-size:25px">Danh sách rỗng</p>
+              <a class="continue-btn" href="/"><i class="fa fa-arrow-left"> </i>&nbsp; Về trang chủ</a>
+          </div>
+          {{else}}
+
+        
+        <div class="order-detail-content">
+              <div class="table-responsive">
+                <table class="table table-bordered cart_summary">
+                  <thead>
+                    <tr>
+              
+                      <th>Tên</th>
+                      <th>Loại</th>
+                      <th  class="action">Sửa</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                      {{#each this.mocktests}}
+                    <tr>
+                      
+                      <td class="cart_description"><p class="product-name"><a href="#"> {{name}} </a></p></td>
+                     
+                      <td class="availability in-stock"><span class="label">{{mocktestType}}</span></td>
+                    
+                      <td class="action"><a href="/seller/product/edit/{{id}}"><i class="fa fa-edit"></i></a></td>
+                    </tr>
+                   {{/each}}
+                  </tbody>
+                 
+                </table>
+              </div>
+            </div>
+
+        {{/if}}
+         </div>
+      </div>
+    
+    </div>
+  </div>
+</section>
+<!-- Main Container End -->
+

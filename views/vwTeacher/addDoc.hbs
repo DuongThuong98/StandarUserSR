@@ -51,22 +51,6 @@
     });
 </script>
 
-{{!-- NGÀY THÁNG NĂM --}}
-<script
-    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
-<script>
-    $('#txtDOE').datetimepicker({
-        //format: 'd/m/Y H:s'
-        format: 'd/m/Y H:m:s',
-        timepicker: true,
-        mask: true,
-    });
-
-    function validate() {
-        return true;
-    }
-</script>
-
 {{!-- upload file --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.3/js/fileinput.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.3/themes/fa/theme.min.js"></script>
@@ -88,8 +72,50 @@
     });
     $('#fuMain-audio').fileinput({
         theme: 'fa',
+        showPreview: false,
+        showUpload: false,
+        elErrorContainer: '#kartik-file-errors',
         dropZoneEnabled: false,
-        allowedFileExtensions: ['pdf'],
+        allowedFileExtensions: ['mp3'],
+    });
+</script>
+
+
+<script type="text/javascript">
+
+  jQuery(document).ready(function () {
+        $('.audio-area').hide();
+         console.log('a');
+    });
+    jQuery(document).ready(function () {
+        $('.mocktest-type').change(function () {
+            {{!-- console.log($('.mocktest-type').val()) --}}
+            if($('.mocktest-type').val()==1)
+            {$('.audio-area').toggle(500);}
+            else{
+                $('.audio-area').hide();
+            }
+            // alert("fdf");
+        })
+    });
+
+    jQuery(document).ready(function () {
+        var rows = 40;
+        for (var i = 1; i <= rows; i++) {
+            if (i % 4 == 1) {
+                $('.answers-input').append(" <li class='row'>");
+            }
+
+            $('.answers-input').append("<div class='col-sm-3'>"
+                + i + ".<input type='text' class='input form-control' name='answerKeys'" + 
+                "id = 'answer-key' ></div > ");
+           
+            if (i % 4 == 1) {
+                $('.answers-input').append('</li>');
+            }
+
+        }
+
     });
 </script>
 {{/section}}
@@ -107,9 +133,9 @@
                         <div class="col-xs-12">
                             <div class="product-tab-inner">
                                 <ul id="product-detail-tab" class="nav nav-tabs product-tabs" style="  display: flex;">
-                                    <li class="active"> <a href="#description" data-toggle="tab"> Section 1</a>
+                                    <li class="active"> <a href="#description" data-toggle="tab"> Thêm tài liệu</a>
                                     </li>
-                                    <li> <a href="#reviews" data-toggle="tab">Section 2</a> </li>
+                                    <li> <a href="#reviews" data-toggle="tab"> Thêm Mocktest</a> </li>
                                 </ul>
 
                                 <div id="productTabContent" class="tab-content">
@@ -125,7 +151,8 @@
                                                     <ul style="list-style-type:none;">
                                                         <li class="row">
                                                             <div class="col-sm-6">
-                                                                <label for="first_name" class="required">Tên tài liệu:
+                                                                <label for="first_name" class="required">Tên tài
+                                                                    liệu:
                                                                 </label>
                                                                 <input type="text" class="input form-control"
                                                                     name="name" id="first_name">
@@ -140,13 +167,15 @@
                                                                     </option>
                                                                     {{#each lcCategories}}
                                                                     {{#if mangcap2}}
-                                                                    <option value="{{cap1._id}}">{{cap1.name}}</option>
+                                                                    <option value="{{cap1._id}}">{{cap1.name}}
+                                                                    </option>
                                                                     {{#each mangcap2}}
                                                                     <option value="{{cap2_id}}">
                                                                         &nbsp;&nbsp;&nbsp;{{cap2_name}} </option>
                                                                     {{/each}}
                                                                     {{else}}
-                                                                    <option value="{{cap1._id}}">{{cap1.name}}</option>
+                                                                    <option value="{{cap1._id}}">{{cap1.name}}
+                                                                    </option>
                                                                     {{/if}}
                                                                     {{/each}}
                                                                 </select>
@@ -155,7 +184,8 @@
                                                             <div class="col-sm-3">
                                                                 <label class="required">Đề xuất đọc:</label>
                                                                 <select class="input form-control" name="isRecommended">
-                                                                    <option selected="true" value="0">Không </option>
+                                                                    <option selected="true" value="0">Không
+                                                                    </option>
                                                                     <option value="1">Có </option>
                                                                 </select>
                                                             </div>
@@ -205,35 +235,57 @@
                                                     <ul style="list-style-type:none;">
                                                         <li class="row">
                                                             <div class="col-sm-6">
-                                                                <label for="first_name" class="required">Tên bài kiểm
+                                                                <label for="first_name" class="required">Tên bài
+                                                                    kiểm
                                                                     tra:
                                                                 </label>
                                                                 <input type="text" class="input form-control"
                                                                     name="name" id="first_name">
                                                             </div>
-                                                            <div class="col-sm-6">
-                                                                <label for="fuMain-audio" class="required">Audio: </label>
+                                                            <div class="col-sm-3">
+                                                                <label class="required">Loại test</label>
+                                                                <select class="input form-control mocktest-type" name="mocktest_type">
+                                                                    <option selected="true" value="0">Reading
+                                                                    </option>
+                                                                    <option value="1">Listening </option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-sm-3 audio-area" >
+                                                                <label for="fuMain-audio" class="required">Audio:
+                                                                </label>
                                                                 <input id="fuMain-audio" name="fuMain-audio" type="file"
                                                                     multiple>
                                                             </div>
+                                                            
                                                         </li>
+
+                                                        
 
 
                                                         <li class="row">
                                                             <div class="col-sm-6">
-                                                                <label for="fuMain-key" class="required">Đề test: </label>
+                                                                <label for="fuMain-key" class="required">Đề test:
+                                                                </label>
                                                                 <input id="fuMain-key" name="fuMain-key" type="file"
                                                                     multiple>
                                                             </div>
 
                                                             <div class="col-sm-6">
-                                                                <label for="fuMain-ques" class="required">Đáp án chi tiết: </label>
+                                                                <label for="fuMain-ques" class="required">Đáp án chi
+                                                                    tiết: </label>
                                                                 <input id="fuMain-ques" name="fuMain-ques" type="file"
                                                                     multiple>
                                                             </div>
                                                         </li>
+
+                                                        <div class="answers-input">
+
+                                                        </div>
+                                
+
+
                                                         <li>
-                                                            <a class="continue-btn" href="/seller/product"><i
+                                                            <a class="continue-btn" href="/teacher/info"><i
                                                                     class="fa fa-arrow-left">
                                                                 </i>&nbsp;
                                                                 Trở về
