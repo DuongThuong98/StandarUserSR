@@ -8,7 +8,6 @@ const mocktestModel = require('../../models/mocktest.model');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-  const docId = req.params.id;
   const rows = await mocktestModel.all();
   console.log(rows);
 
@@ -20,7 +19,24 @@ router.get('/', async (req, res) => {
 
 
 
+});
+
+router.get('/:id', async (req, res) => {
+  const mockId = req.params.id;
+  const row = await mocktestModel.single(mockId);
+  console.log(row);
+
+
+  res.render('vwMocktests/detailMocktest', {
+    mocktest: row,
+    empty: row === null
+  });
+
+
+
 })
+
+
 
 
 

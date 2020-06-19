@@ -1,0 +1,311 @@
+{{#section 'css'}}
+<style>
+  .rounded {
+    height: 80px;
+    width: 80px;
+    border-style: dotted;
+  }
+
+  .my-price,
+  .bidder-name,
+  .seller-name {
+    display: flex;
+    justify-content: space-between !important;
+
+  }
+
+  .quick-price .price {
+    color: #777777 !important;
+    font-size: 17px !important;
+    font-weight: normal;
+    margin-left: 6px;
+  }
+
+  .quick-price {
+    margin-top: 4px;
+  }
+
+  .bidder-name,
+  .seller-name,
+  .time-left {
+    font-size: 15px;
+    padding-top: 12px;
+    border-top: 1px solid #e5e5e5;
+    margin-bottom: 15px
+  }
+
+  .created-day {
+    font-size: 15px;
+    margin-bottom: 15px
+  }
+
+  .product-cart-option {
+    border-top: 1px solid #e5e5e5;
+    display: inline-block;
+  }
+
+  .wishlist-group {
+    padding-top: 10px !important;
+  }
+
+  .bidder-name h2,
+  .seller-name h2,
+  .created-day h2 {
+    font-size: 15px;
+    text-transform: uppercase;
+    color: #333e48;
+    margin-bottom: 5px;
+    font-weight: bold
+  }
+
+  #customers {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  #customers td,
+  #customers th {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+
+  #customers tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+
+  #customers tr:hover {
+    background-color: #ddd;
+  }
+
+  #customers th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+  }
+</style>
+{{/section}}
+
+{{#section 'js'}}
+
+<!-- flexslider js -->
+<script type="text/javascript" src="/js/jquery.flexslider.js"></script>
+
+<script>
+  var dthen1 = new Date("12/25/20 11:59:00 PM");
+  start = "12/25/20 07:00:00 PM";
+  start_date = Date.parse(start);
+  var dnow1 = new Date(start_date);
+  if (CountStepper > 0)
+    ddiff = new Date((dnow1) - (dthen1));
+  else
+    ddiff = new Date((dthen1) - (dnow1));
+  gsecs1 = Math.floor(ddiff.valueOf() / 1000);
+
+  var iid1 = "countbox_1";
+  CountBack_slider(gsecs1, "countbox_1", 1);
+</script>
+
+
+<script type="text/javascript">
+  jQuery(document).ready(function () {
+    var rows = 40;
+    for (var i = 1; i <= rows; i++) {
+
+
+      $('.answer-area').append(i + ".<input type='text' class='input form-control' name='answerKeys'" +
+        "id = 'answer-key' >");
+
+    }
+
+  });
+</script>
+
+{{/section}}
+
+<!-- Main Container -->
+<div class="main-container col1-layout">
+  <div class="container">
+    <div class="row">
+      <div class="col-main">
+
+      </div>
+      <div class="product-overview-tab">
+        <div class="container">
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="product-tab-inner">
+                <ul id="product-detail-tab" class="nav nav-tabs product-tabs" style="  display: flex;">
+                  <li class="active"> <a href="#description" data-toggle="tab"> Bài làm</a>
+                  </li>
+                  <li> <a href="#reviews" data-toggle="tab">Section 2</a> </li>
+                  <li><a href="#product_tags" data-toggle="tab">Section 3</a></li>
+                  <li> <a href="#custom_tabs" data-toggle="tab">Section 4</a> </li>
+                </ul>
+
+                <div id="productTabContent" class="tab-content">
+                  <div class="tab-pane fade in active" id="description">
+                    <div class="std" style="margin-left: 30px;">
+
+
+                      <div id="tab-a6bfee399f4791567a15c5309524f5ac" class="tab-content current">
+                        <!-- thời gian còn lại/ -->
+                        <div class="upload-date" style="display: grid;">
+                          <span style="float: left;">THỜI GIAN CÒN LẠI: </span>
+                          <div class="countbox_1 jtv-timer-grid count_2" value="count_2"
+                            timerun="01/03/2020 12:00:00 AM" style="  display: flex;
+                                                            flex-direction: row;
+                                                            justify-content: space-around;
+                                                            margin-bottom: 10px;
+                                                            width: 200px; 
+                                                            float: left;
+                                                            background-color: pink;">
+
+                            <div class="hour box-time-date"><span class="time-num">00</span>Hrs</div>
+                            <div class="min box-time-date"><span class="time-num">00</span>Mins</div>
+                            <div class="sec box-time-date"><span class="time-num">00</span>Secs</div>
+                          </div>
+                        </div>
+                        <audio
+                          src="http://static.ielts-fighter.com/uploads/2019/test%20listening/14/test-14-section-1.mp3"
+                          controls=""></audio>
+                        <!--End-->
+
+
+                        <ul class="questions col-md-12 col-sm-12 col-xs-12">
+                          <h3><span>Questions</span></h3>
+                          <div class="col-sm-3 answer-area" height="500" style=" height: 500px;
+                                                                        overflow: scroll;">
+                            <label class="required">Loại test</label>
+
+                          </div>
+
+                          <div class="col-sm-9">
+                            <iframe src="/pdf/documents/{{this.mocktest.questionLink}}" height="500"
+                              width="100%"></iframe>
+                          </div>
+
+                        </ul>
+                        <!--End-->
+                      </div>
+                    </div>
+                  </div>
+
+
+
+                </div>
+                <button type="submit" class="btn btn-warning" style="margin-top: 10px;">
+                  <i class="fa fa-check" aria-hidden="true"></i>ĐĂNG KÝ
+                </button>
+
+                <button type="button" class="btn btn-primary" style="margin-top: 10px;">Primary</button>
+                <button type="button" class="btn btn-secondary" style="margin-top: 10px;">Secondary</button>
+                <button type="button" class="btn btn-success" style="margin-top: 10px;">Success</button>
+                <button type="button" class="btn btn-danger" style="margin-top: 10px;">Danger</button>
+                <button type="button" class="btn btn-warning" style="margin-top: 10px;">Warning</button>
+                <button type="button" class="btn btn-info" style="margin-top: 10px;">Info</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+
+
+    </div>
+  </div>
+</div>
+
+<!-- Main Container End -->
+
+
+<!-- Related Product Slider -->
+<section class="upsell-product-area">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12">
+
+        <div class="page-header">
+          <h2>Sản phẩm liên quan</h2>
+        </div>
+        <div class="slider-items-products">
+          <div id="upsell-product-slider" class="product-flexslider hidden-buttons">
+            <div class="slider-items slider-width-col4">
+              {{#each this.relevantPro}}
+
+              <div class="product-item">
+                <div class="item-inner">
+                  <div class="product-thumbnail">
+                    {{#if is_new}}
+                    <div class="icon-hot-label hot-right">NEW</div>
+                    {{/if}}
+                    <div class="pr-img-area"> <a title="Ipsums Dolors Untra" href="/products/{{id}}">
+                        <figure> <img class="first-img" src="/images/products-images/{{image}}" alt="html template">
+                          <img class="hover-img" src="/images/products-images/{{image}}" alt="html template"></figure>
+                      </a>
+
+                    </div>
+                    <div class="jtv-box-timer">
+                      <div class="countbox_1 jtv-timer-grid count_{{id}}" value="count_{{id}}"
+                        timerun="{{f_expired_at}}" style="margin-bottom: 50px;">
+                        <div class="day box-time-date"><span class="time-num time-day">00</span>Days</div>
+                        <div class="hour box-time-date"><span class="time-num">00</span>Hrs</div>
+                        <div class="min box-time-date"><span class="time-num">00</span>Mins</div>
+                        <div class="sec box-time-date"><span class="time-num">00</span>Secs</div>
+                      </div>
+                    </div>
+                    <div class="pr-info-area">
+                      <div class="pr-button">
+                        <div class="mt-button add_to_compare" style="visibility: hidden;"> <a href="compare.html"> <i
+                              class="fa fa-signal"></i>
+                          </a> </div>
+                        <div class="mt-button add_to_wishlist wish_{{id}}" data-id="{{id}}"> <a href="javascript:;"> <i
+                              class="fa fa-heart"></i>
+                          </a> </div>
+
+                      </div>
+                    </div>
+                  </div>
+                  <div class="item-info">
+                    <div class="info-inner">
+                      <div class="item-title">
+                        <a title="Ipsums Dolors Untra" href="/products/{{id}}"> {{p_name}} </a> </div>
+                      <div class="item-content">
+
+                        <div class="item-price">
+                          <div class="price-box"> <span class="regular-price"><label>Giá cao nhất: </label> <span
+                                class="price">{{format current_bid}} đ</span>
+                            </span> </div>
+                        </div>
+                      </div>
+                      <div class="item-brief" style="text-align: left;">
+                        <label>MBidder: </label>
+                        <span>{{bidder_name}}</span>
+                        {{#if purchase_bid}}
+                        <br>
+                        <label>Mua ngay: </label>
+                        <span class="price">{{purchase_bid}} đ</span>
+                        {{/if}}
+                        <br>
+                        <label>Số lượt ra giá: &nbsp; </label><span style="font-weight: bold;">{{bid_count}}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {{/each}}
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Related Product Slider End -->

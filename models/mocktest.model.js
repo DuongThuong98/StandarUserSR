@@ -94,13 +94,19 @@ module.exports = {
 
   allByIDTeacher: async (id) =>{
     result = await db.MockingTest.find({ authorID: id })
-   console.log(result);
+  //  console.log(result);
     return result;
   },
 
   all: async () =>{
     result = await db.MockingTest.find()
-   console.log(result);
+  //  console.log(result);
+    return result;
+  },
+
+  single: async (id) =>{
+    result = await db.MockingTest.findOne({_id: id})
+  //  console.log(result);
     return result;
   },
 
