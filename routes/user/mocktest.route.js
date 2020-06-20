@@ -25,6 +25,7 @@ router.get('/:id', async (req, res) => {
   const mockId = req.params.id;
   const row = await mocktestModel.single(mockId);
   // console.log(row);
+  // console.log("lala")
 
   timeLeft = 3600;
   timeStart = moment().unix();
@@ -34,6 +35,48 @@ router.get('/:id', async (req, res) => {
     empty: row === null,
     timeLeft,
     timeStart
+  });
+});
+
+router.get('/pending/:id', async (req, res) => {
+  const mockId = req.params.id;
+  const row = await mocktestModel.single(mockId);
+
+  authUser = req.session.authUser;
+  mockTests = authUser.tests;
+  var pendingMock = {};
+  if (mockTests.length > 0) {//nếu có tồn tại bài đã làm rồi
+    mockTests.every(mock => {
+      if (mock._id == mockId) {
+        pendingMock = mock
+        return false;
+      }
+    });
+  }
+
+  timeLeft = pendingMock.timeLeft;
+  timeStart = moment().unix();
+
+  //tạo list câu trả lời mà có số
+  numberedAnswers = [];
+  for (i = 0; i < 40; i++) {
+    temp = {
+      index: i + 1,
+      answer: pendingMock.answers[i]
+    };
+    numberedAnswers.push(temp);
+  }
+  console.log(numberedAnswers)
+
+  pendingMock.questionLink = row.questionLink;
+  console.log("time start pending:", pendingMock);
+  // console.log("time start pending:", pendingMock);
+  res.render('vwMocktests/pendingDetailMocktest', {
+    mocktest: pendingMock,
+    empty: pendingMock === null,
+    timeLeft,
+    timeStart,
+    numberedAnswers,
   });
 });
 
@@ -51,7 +94,7 @@ router.post('/ajax', async (req, res) => {
   oldTimeLeft = 3600;
 
   item.isExisted = false;
-  if (mockTests.length > 0) {
+  if (mockTests.length > 0) {//nếu có tồn tại bài đã làm rồi
     mockTests.every(mock => {
       if (mock._id == item._id) {
 
@@ -78,7 +121,6 @@ router.post('/ajax', async (req, res) => {
       authUser.tests.push(item);
     }
     else {
-
       authUser.tests = authUser.tests.map(obj => {
         if (obj._id === item._id)
           console.log("lala")
@@ -95,9 +137,9 @@ router.post('/ajax', async (req, res) => {
       _id: authUser._id,
       tests: authUser.tests
     }
-    // temp = await userModel.patchMocktest(entity)
+    temp = await userModel.patchMocktest(entity)
 
-    // console.log(temp);
+    console.log(temp);
 
     res.json({
       success: true,
@@ -111,6 +153,8 @@ router.post('/ajax', async (req, res) => {
       message: 'Không save được'
     });
   }
+
+  
 
 
 })

@@ -110,6 +110,7 @@ module.exports = {
     return result;
   },
 
+
   add: async (entity) => {
       const doc = new db.MockingTest(entity)
       const result = await doc.save();
