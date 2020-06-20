@@ -94,16 +94,9 @@
 <script type="text/javascript" src="/js/jquery.flexslider.js"></script>
 
 <script>
-  var dthen1 = new Date("12/25/20 11:59:00 PM");
-  start = "12/25/20 07:00:00 PM";
-  start_date = Date.parse(start);
-  var dnow1 = new Date(start_date);
-  if (CountStepper > 0)
-    ddiff = new Date((dnow1) - (dthen1));
-  else
-    ddiff = new Date((dthen1) - (dnow1));
-  gsecs1 = Math.floor(ddiff.valueOf() / 1000);
 
+  var timeLeft = $('.timeLeft').attr('content');
+  gsecs1 = parseInt(timeLeft);
   var iid1 = "countbox_1";
   CountBack_slider(gsecs1, "countbox_1", 1);
 </script>
@@ -113,14 +106,60 @@
   jQuery(document).ready(function () {
     var rows = 40;
     for (var i = 1; i <= rows; i++) {
-
-
-      $('.answer-area').append(i + ".<input type='text' class='input form-control' name='answerKeys'" +
+      $('.answer-area').append(i + ".<input type='text' class='input form-control my-form' name='answerKeys'" +
         "id = 'answer-key' >");
 
     }
 
   });
+</script>
+
+<script>
+  jQuery(document).ready(function () {
+    $('#save').click(function () {
+      var answers = $('#answer-key').val();
+      //console.log(answers);
+      var l = $('.my-form').length;
+      //console.log(l)
+      var result = [];
+      for (i = 0; i < l; i++) {
+        result.push($('.my-form').eq(i).val());
+      }
+      console.log(result);
+      var mockID = $(this).attr('mockID');
+      var timeStart = $('#timeStart').val();
+      console.log(timeStart)
+      $.ajax({
+        url: '/user/mocktest/ajax',
+        type: 'POST',
+        data: {
+          _id: mockID, // $_POST['id'] = 22
+          action: 'save',
+          answers: result,
+          timeStart: timeStart
+        },
+        dataType: 'JSON',
+        success: function (response) {
+          // response : obj
+          console.log(response);
+          if (response.success) {
+            $('.modal-title').text(response.message)
+            $('.modal-body ').html(response.data + "<p>Lưu thành công</p>")
+          }
+          else {
+            $('.modal-title').text('Error!')
+            $('.modal-body').text(response.message)
+          }
+          {{!-- $('#myMessage').modal('show') --}}
+          // $('.reload_page_button').click(function () { window.location = '/products/' + response.data; });
+
+        }
+      });
+    })
+
+
+  });
+
 </script>
 
 {{/section}}
@@ -138,11 +177,35 @@
             <div class="col-xs-12">
               <div class="product-tab-inner">
                 <ul id="product-detail-tab" class="nav nav-tabs product-tabs" style="  display: flex;">
+                  <div hidden class="timeLeft" content="{{timeLeft}}"></div>
+                  <input type="hidden" name="timeStart" value="{{timeStart}}" id="timeStart">
                   <li class="active"> <a href="#description" data-toggle="tab"> Bài làm</a>
                   </li>
-                  <li> <a href="#reviews" data-toggle="tab">Section 2</a> </li>
-                  <li><a href="#product_tags" data-toggle="tab">Section 3</a></li>
-                  <li> <a href="#custom_tabs" data-toggle="tab">Section 4</a> </li>
+
+                  <li><button type="button" class="btn btn-primary" id="save" mockID="{{this.mocktest._id}}" >Lưu lại</button></li>
+                  <li><button type="button" class="btn btn-primary">Nộp bài</button></li>
+                  <li><button type="button" class="btn btn-primary">Bài giải chi tiết</button></li>
+
+                  <!-- thời gian còn lại/ -->
+                  <li>
+                    <div class="upload-date" style="display: grid;">
+                      <div class="countbox_1 jtv-timer-grid count_2" value="count_2" timerun="01/03/2020 12:00:00 AM"
+                        style="  display: flex;
+                                                            flex-direction: row;
+                                                            justify-content: space-around;
+                                                            margin-bottom: 10px;
+                                                            width: 200px; 
+                                                            float: left;
+                                                            background-color: pink;">
+
+                        <div class="hour box-time-date"><span class="time-num">00</span>Hrs</div>
+                        <div class="min box-time-date"><span class="time-num">00</span>Mins</div>
+                        <div class="sec box-time-date"><span class="time-num">00</span>Secs</div>
+                      </div>
+                    </div>
+
+                  </li>
+
                 </ul>
 
                 <div id="productTabContent" class="tab-content">
@@ -151,23 +214,7 @@
 
 
                       <div id="tab-a6bfee399f4791567a15c5309524f5ac" class="tab-content current">
-                        <!-- thời gian còn lại/ -->
-                        <div class="upload-date" style="display: grid;">
-                          <span style="float: left;">THỜI GIAN CÒN LẠI: </span>
-                          <div class="countbox_1 jtv-timer-grid count_2" value="count_2"
-                            timerun="01/03/2020 12:00:00 AM" style="  display: flex;
-                                                            flex-direction: row;
-                                                            justify-content: space-around;
-                                                            margin-bottom: 10px;
-                                                            width: 200px; 
-                                                            float: left;
-                                                            background-color: pink;">
 
-                            <div class="hour box-time-date"><span class="time-num">00</span>Hrs</div>
-                            <div class="min box-time-date"><span class="time-num">00</span>Mins</div>
-                            <div class="sec box-time-date"><span class="time-num">00</span>Secs</div>
-                          </div>
-                        </div>
                         <audio
                           src="http://static.ielts-fighter.com/uploads/2019/test%20listening/14/test-14-section-1.mp3"
                           controls=""></audio>
@@ -176,11 +223,13 @@
 
                         <ul class="questions col-md-12 col-sm-12 col-xs-12">
                           <h3><span>Questions</span></h3>
-                          <div class="col-sm-3 answer-area" height="500" style=" height: 500px;
+                          <form method="POST" name="frmAddProduct" novalidate>
+                            <div class="col-sm-3 answer-area" height="500" style=" height: 500px;
                                                                         overflow: scroll;">
-                            <label class="required">Loại test</label>
+                              {{!-- 40 CÂU TRẢ LỜI --}}
 
-                          </div>
+                            </div>
+                          </form>
 
                           <div class="col-sm-9">
                             <iframe src="/pdf/documents/{{this.mocktest.questionLink}}" height="500"

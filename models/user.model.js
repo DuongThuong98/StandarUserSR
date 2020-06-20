@@ -66,4 +66,24 @@ module.exports = {
     }
     return null;
   },
+
+  patchMocktest: async entity => {
+    const { _id, tests } = entity
+    const user = await db.User.findOne({ _id })
+    if (user) {
+        const result = await db.User.findOneAndUpdate({ _id }, 
+                              { tests: tests || user.tests
+                                                                    })
+        if (result) {
+            const data = await db.User.findOne({ _id: result._id })
+            if (data) {
+                return data;
+            }
+            else{
+              return -1;//lỗi kô htêm được
+            }
+        }
+    }
+    return -2;//lỗi ko tìm thấy user
+  },
 };

@@ -61,17 +61,18 @@ const UserSchema = mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: "MockingTest",
         },
-        timein: {
-            type: Date,
-            default: new Date(),
+        timeLeft: {
+            type: Number,
+            default: 3600,
         },
-        timeout: {
-            type: Date,
+        status: {
+            type: Number,
+            default: 0,
         },
-        isDone: {
-            type: Boolean,
-            default: false,
-        },
+        answers: {
+            type: Array,
+            default: [],
+        }
     }, ],
     interestedItems: [{
         _id: {
