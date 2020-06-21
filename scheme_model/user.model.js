@@ -61,6 +61,10 @@ const UserSchema = mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: "MockingTest",
         },
+        grades: {
+            type: Number,
+            default: 0
+        },
         timeLeft: {
             type: Number,
             default: 3600,
@@ -73,6 +77,7 @@ const UserSchema = mongoose.Schema({
             type: Array,
             default: [],
         }
+      
     }, ],
     interestedItems: [{
         _id: {

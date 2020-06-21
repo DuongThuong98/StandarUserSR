@@ -38,6 +38,7 @@ router.get('/:id', async (req, res) => {
   });
 });
 
+
 router.get('/pending/:id', async (req, res) => {
   const mockId = req.params.id;
   const row = await mocktestModel.single(mockId);
@@ -45,7 +46,7 @@ router.get('/pending/:id', async (req, res) => {
   authUser = req.session.authUser;
   mockTests = authUser.tests;
   var pendingMock = {};
-  if (mockTests.length > 0) {//nếu có tồn tại bài đã làm rồi
+  if (mockTests.length > 0) {//nếu có tồn tại bài đã làm rồi (ở đây là chắn chắn)
     mockTests.every(mock => {
       if (mock._id == mockId) {
         pendingMock = mock
@@ -62,7 +63,7 @@ router.get('/pending/:id', async (req, res) => {
   for (i = 0; i < 40; i++) {
     temp = {
       index: i + 1,
-      answer: pendingMock.answers[i]
+      answer: pendingMock.answerKeys[i]
     };
     numberedAnswers.push(temp);
   }
@@ -78,6 +79,127 @@ router.get('/pending/:id', async (req, res) => {
     timeStart,
     numberedAnswers,
   });
+});
+
+function isEmpty(obj) {
+  return Object.keys(obj).length === 0;
+}
+
+router.get('/done/:id', async (req, res) => {
+  const mockId = req.params.id;
+  const row = await mocktestModel.single(mockId);
+
+  authUser = req.session.authUser;
+  mockTests = authUser.tests;
+  var pendingMock = {};
+  if (mockTests.length > 0) {//nếu có tồn tại bài đã làm rồi
+    mockTests.every(mock => {
+      if (mock._id == mockId && mock.status == 1) {
+        pendingMock = mock
+        return false;
+      }
+    });
+  }
+
+  if (isEmpty(pendingMock)) {//mnếu là bài test CHƯA LÀM hoặc CHƯA LÀM XONG
+    res.redirect("/");
+  }
+  else {
+    //tạo list câu trả lời mà có số
+    numberedAnswers = [];
+    for (i = 0; i < 40; i++) {
+      temp = {
+        index: i + 1,
+        answer: pendingMock.answers[i]
+      };
+      numberedAnswers.push(temp);
+    }
+    console.log(numberedAnswers)
+
+    pendingMock.questionLink = row.questionLink;
+    console.log("time start pending:", pendingMock);
+    // console.log("time start pending:", pendingMock);
+    res.render('vwMocktests/doneDetailMocktest', {
+      mocktest: pendingMock,
+      empty: pendingMock === null,
+      numberedAnswers,
+    });
+  }
+});
+
+//ruote nộp bài
+router.post('/submit', async (req, res) => {
+  item = req.body;
+  // console.log(item);
+  const row = await mocktestModel.single(item._id);
+  console.log(row);
+
+  authUser = req.session.authUser;
+
+  mockTests = authUser.tests;
+  oldTimeLeft = 3600;
+
+  item.isExisted = false;
+  if (mockTests.length > 0) {//nếu có tồn tại bài đã làm rồi thì lấy bài đó
+    mockTests.every(mock => {
+      if (mock._id == item._id) {
+        item = mock;
+        item.isExisted = true;
+        oldTimeLeft = mock.timeLeft;
+        return false;
+      }
+    });
+  }
+
+  timeStart = parseInt(item.timeStart);
+  timeNow = moment().unix();
+  timeUsed = timeNow - timeStart;
+
+  item.timeLeft = oldTimeLeft - timeUsed;
+
+  item.status = 1; //1: DONE, 0: PENDING, -1:DELETED
+
+  console.log("Item submited: ",item);
+  for(i=0;i<40;i++)
+  {
+    if(item.answerKeys[i]==row.answerKeys[i])
+    {
+      item.grades++;
+    }
+  }
+
+  delete item.action;
+  delete item.timeStart;
+
+  if (item.isExisted == false) {
+    authUser.tests.push(item);
+  }
+  else {
+    authUser.tests = authUser.tests.map(obj => {
+      if (obj._id === item._id)
+        return item;
+      return obj
+    });
+    // console.log("TEMP: ", temp);
+  }
+
+  console.log("TESTS ajax:", authUser.tests);
+
+  entity = {
+    _id: authUser._id,
+    tests: authUser.tests
+  }
+  // temp = await userModel.patchMocktest(entity)
+
+  // console.log(item);
+
+  res.render('vwMocktests/doneDetailMocktest', {
+    mocktest: item,
+    empty: item === null,
+    numberedAnswers,
+  });
+
+
 });
 
 
@@ -97,7 +219,7 @@ router.post('/ajax', async (req, res) => {
   if (mockTests.length > 0) {//nếu có tồn tại bài đã làm rồi
     mockTests.every(mock => {
       if (mock._id == item._id) {
-
+        item.grades = mock.grades;
         item.isExisted = true;
         oldTimeLeft = mock.timeLeft;
         return false;
@@ -123,8 +245,8 @@ router.post('/ajax', async (req, res) => {
     else {
       authUser.tests = authUser.tests.map(obj => {
         if (obj._id === item._id)
-          console.log("lala")
-        return item
+          return item
+        return obj;
       });
 
       // console.log("TEMP: ", temp);
@@ -154,7 +276,7 @@ router.post('/ajax', async (req, res) => {
     });
   }
 
-  
+
 
 
 })

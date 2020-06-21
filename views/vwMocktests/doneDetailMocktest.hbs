@@ -170,29 +170,10 @@
                   <li class="active"> <a href="#description" data-toggle="tab"> Bài làm</a>
                   </li>
 
-                  <li><button type="button" class="btn btn-primary" id="save" mockID="{{this.mocktest._id}}" >Lưu lại</button></li>
-                  <li><a type="button" class="btn btn-primary"  href="javascript: $('#frmCompletedTest').submit();">Nộp bài</a></li>
-    
+                  <li><button type="button" class="btn btn-primary" id="save" mockID="{{this.mocktest._id}}" >Điểm số</button></li>
+                  <li><button type="button" class="btn btn-primary">Bài giải chi tiết</button></li>
 
-                  <!-- thời gian còn lại/ -->
-                  <li>
-                    <div class="upload-date" style="display: grid;">
-                      <div class="countbox_1 jtv-timer-grid count_2" value="count_2" timerun="01/03/2020 12:00:00 AM"
-                        style="  display: flex;
-                                                            flex-direction: row;
-                                                            justify-content: space-around;
-                                                            margin-bottom: 10px;
-                                                            width: 200px; 
-                                                            float: left;
-                                                            background-color: pink;">
-
-                        <div class="hour box-time-date"><span class="time-num">00</span>Hrs</div>
-                        <div class="min box-time-date"><span class="time-num">00</span>Mins</div>
-                        <div class="sec box-time-date"><span class="time-num">00</span>Secs</div>
-                      </div>
-                    </div>
-
-                  </li>
+                 
 
                 </ul>
 
@@ -211,9 +192,7 @@
 
                         <ul class="questions col-md-12 col-sm-12 col-xs-12">
                           <h3><span>Questions</span></h3>
-                          <form method="POST" name="frmAddProduct" novalidate 
-                                action="/user/mocktest/submit" id="frmCompletedTest">
-                                <input type="hidden" name="_id" value="{{this.mocktest._id}}">
+                          <form method="POST" name="frmAddProduct" novalidate>
                             <div class="col-sm-3 answer-area" height="500" style=" height: 500px;
                                                                         overflow: scroll;">
                               {{!-- 40 CÂU TRẢ LỜI --}}

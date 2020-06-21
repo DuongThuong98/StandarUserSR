@@ -10,7 +10,8 @@ const MockingTestSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
     },
-    mocktestType :String,//"listening"//"reading"
+    mocktestType :String,//"listening"//"reading",
+    
 }, {
     timestamps: true,
 });
