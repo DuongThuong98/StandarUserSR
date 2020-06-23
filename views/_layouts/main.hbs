@@ -468,7 +468,7 @@
                     <li class="menu-item depth-1">
                       <div class="title"> <a href="index.html"><span>Home Version 1</span></a></div>
                     </li>
-                 
+
 
                   </ul>
                 </li>
@@ -604,7 +604,7 @@
                     </a></div>
                 </li>
 
-                 {{#if isAuthenticated}}
+                {{#if isAuthenticated}}
                 <li class="mt-root demo_custom_link_cms">
                   <div class="mt-root-item"><a href="/user/mocktest">
                       <div class="title title_font"><span class="title-text">MockTest</span></div>
@@ -616,15 +616,16 @@
                     <li class="menu-item depth-1">
                       <div class="title"> <a href="/mocktest/reading"> Reading</a></div>
                     </li>
-            
+
                   </ul>
                 </li>
                 {{/if}}
                 <li class="mt-root">
                   <div class="mt-root-item">
-                    <div class="title title_font"><span class="title-text" style="visibility: hidden;">Bạn đọc gần đây</span></div>
+                    <div class="title title_font"><span class="title-text" style="visibility: hidden;">Bạn đọc gần
+                        đây</span></div>
                   </div>
-                
+
                 </li>
               </ul>
             </div>
@@ -767,7 +768,7 @@
     <!--End of Newsletter Popup-->
   </div>
 
-<div id="myMessage" class="modal fade" role="dialog">
+  <div id="myMessage" class="modal fade" role="dialog">
     <div class="modal-dialog modal-md">
 
       <!-- Modal content-->
@@ -831,7 +832,16 @@
   {{{_sections.js}}}
 
 
+  <script type="text/javascript">
+   
 
+    window.addEventListener("beforeunload", function (e) {
+      var confirmationMessage = "\o/";
+
+      (e || window.event).returnValue = confirmationMessage; //Gecko + IE
+      return confirmationMessage;                            //Webkit, Safari, Chrome
+    });
+  </script>
 
 </body>
 

@@ -115,9 +115,37 @@
 </script>
 
 <script>
+  var mockID = $(this).attr('mockID');
+  var timeLeft = $('.timeLeft').attr('content');
+  function run() {
+    
+      timeLeft = timeLeft - 10;
+      console.log(timeLeft)
+
+      $.ajax({
+        url: '/user/mocktest/ajax',
+        type: 'POST',
+        data: {
+          _id: mockID, // $_POST['id'] = 22
+          action: 'changeTimeLeft',
+          timeLeft: timeLeft
+        },
+        dataType: 'JSON',
+        success: function (response) {
+  
+          console.log(response);
+        }
+      });
+    }
+  
+    timer = setInterval(run, 10000);
+
+</script>
+
+<script>
   jQuery(document).ready(function () {
     $('#save').click(function () {
-      var answerKeys = $('#answer-key').val();
+      //var answerKeys = $('#answer-key').val();
       //console.log(answers);
       var l = $('.my-form').length;
       //console.log(l)

@@ -141,18 +141,19 @@ router.post('/submit', async (req, res) => {
   mockTests = authUser.tests;
 
   timeStart = parseInt(item.timeStart);
-  oldTimeLeft = 3600;
-
+  oldTimeLeft = 3600; //mặc định 
+  
+  item.grades = 0; //mặc định 
   item.isExisted = false;
   if (mockTests.length > 0) {//nếu có tồn tại bài đã làm rồi thì lấy bài đó
-    mockTests.every(mock => {
-      if (mock._id == item._id) {
-        item = mock;
-        item.isExisted = true;
-        oldTimeLeft = mock.timeLeft;
-        return false;
-      }
-    });
+    index = mockTests.findIndex(mock => mock._id == item._id && mock.status == 0 );
+    if(index!=-1)
+    {
+      item = mockTests[index];
+      item.isExisted = true;
+      oldTimeLeft = mockTests[index].timeLeft;
+    }
+   
   }
 
  
@@ -217,7 +218,6 @@ router.post('/ajax', async (req, res) => {
 
   item.isExisted = false;
   if (mockTests.length > 0) {//nếu có tồn tại bài đã làm rồi
-
     index = mockTests.findIndex(mock => mock._id == item._id && mock.status == 0 );
     if(index!=-1)
     {
@@ -270,6 +270,45 @@ router.post('/ajax', async (req, res) => {
     })
   }
   else {
+
+    if (item.action == "changeTimeLeft") {
+      item.timeLeft
+  
+      item.status = 0; //1: DONE, 0: PENDING, -1:DELETED
+  
+      delete item.action;
+      
+      console.log("Item",item);
+      if (item.isExisted == false) {
+        authUser.tests.push(item);
+      }
+      else {
+        authUser.tests = authUser.tests.map(obj => {
+          if (obj._id === item._id)
+            return item
+          return obj;
+        });
+  
+        // console.log("TEMP: ", temp);
+  
+      }
+  
+      // console.log("TESTS ajax:", authUser.tests);
+  
+      entity = {
+        _id: authUser._id,
+        tests: authUser.tests
+      }
+      temp = await userModel.patchMocktest(entity)
+  
+      console.log(temp);
+  
+      res.json({
+        success: true,
+        message: 'Lưu thành công',
+      })
+    }
+    else
     res.json({
       success: false,
       message: 'Không save được'
