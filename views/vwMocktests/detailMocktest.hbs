@@ -117,7 +117,7 @@
 <script>
   jQuery(document).ready(function () {
     $('#save').click(function () {
-      var answers = $('#answer-key').val();
+      var answerKeys = $('#answer-key').val();
       //console.log(answers);
       var l = $('.my-form').length;
       //console.log(l)
@@ -135,7 +135,7 @@
         data: {
           _id: mockID, // $_POST['id'] = 22
           action: 'save',
-          answers: result,
+          answerKeys: result,
           timeStart: timeStart
         },
         dataType: 'JSON',

@@ -38,47 +38,52 @@ router.get('/:id', async (req, res) => {
   });
 });
 
-
 router.get('/pending/:id', async (req, res) => {
   const mockId = req.params.id;
   const row = await mocktestModel.single(mockId);
 
+  console.log(mockId);
+  
   authUser = req.session.authUser;
   mockTests = authUser.tests;
   var pendingMock = {};
   if (mockTests.length > 0) {//nếu có tồn tại bài đã làm rồi (ở đây là chắn chắn)
-    mockTests.every(mock => {
-      if (mock._id == mockId) {
-        pendingMock = mock
-        return false;
-      }
+    index = mockTests.findIndex(mock => mock._id == mockId && mock.status == 0 );
+    if(index!=-1)
+    {
+      pendingMock = mockTests[index]
+    }
+  }
+
+  if (isEmpty(pendingMock)) {//mnếu là bài test CHƯA LÀM hoặc CHƯA LÀM XONG
+    res.redirect("/");
+  }
+  else {
+    timeLeft = pendingMock.timeLeft;
+    timeStart = moment().unix();
+
+    //tạo list câu trả lời mà có số
+    numberedAnswers = [];
+    for (i = 0; i < 40; i++) {
+      temp = {
+        index: i + 1,
+        answer: pendingMock.answerKeys[i]
+      };
+      numberedAnswers.push(temp);
+    }
+    console.log(numberedAnswers)
+
+    pendingMock.questionLink = row.questionLink;
+    console.log("time start pending:", pendingMock);
+    // console.log("time start pending:", pendingMock);
+    res.render('vwMocktests/pendingDetailMocktest', {
+      mocktest: pendingMock,
+      empty: pendingMock === null,
+      timeLeft,
+      timeStart,
+      numberedAnswers,
     });
   }
-
-  timeLeft = pendingMock.timeLeft;
-  timeStart = moment().unix();
-
-  //tạo list câu trả lời mà có số
-  numberedAnswers = [];
-  for (i = 0; i < 40; i++) {
-    temp = {
-      index: i + 1,
-      answer: pendingMock.answerKeys[i]
-    };
-    numberedAnswers.push(temp);
-  }
-  console.log(numberedAnswers)
-
-  pendingMock.questionLink = row.questionLink;
-  console.log("time start pending:", pendingMock);
-  // console.log("time start pending:", pendingMock);
-  res.render('vwMocktests/pendingDetailMocktest', {
-    mocktest: pendingMock,
-    empty: pendingMock === null,
-    timeLeft,
-    timeStart,
-    numberedAnswers,
-  });
 });
 
 function isEmpty(obj) {
@@ -130,13 +135,12 @@ router.get('/done/:id', async (req, res) => {
 //ruote nộp bài
 router.post('/submit', async (req, res) => {
   item = req.body;
-  // console.log(item);
   const row = await mocktestModel.single(item._id);
-  console.log(row);
 
   authUser = req.session.authUser;
-
   mockTests = authUser.tests;
+
+  timeStart = parseInt(item.timeStart);
   oldTimeLeft = 3600;
 
   item.isExisted = false;
@@ -151,19 +155,16 @@ router.post('/submit', async (req, res) => {
     });
   }
 
-  timeStart = parseInt(item.timeStart);
+ 
   timeNow = moment().unix();
   timeUsed = timeNow - timeStart;
-
   item.timeLeft = oldTimeLeft - timeUsed;
 
   item.status = 1; //1: DONE, 0: PENDING, -1:DELETED
 
-  console.log("Item submited: ",item);
-  for(i=0;i<40;i++)
-  {
-    if(item.answerKeys[i]==row.answerKeys[i])
-    {
+  console.log("Item submited: ", item);
+  for (i = 0; i < 40; i++) {
+    if (item.answerKeys[i] == row.answerKeys[i]) {
       item.grades++;
     }
   }
@@ -189,24 +190,23 @@ router.post('/submit', async (req, res) => {
     _id: authUser._id,
     tests: authUser.tests
   }
-  // temp = await userModel.patchMocktest(entity)
 
-  // console.log(item);
+  temp = await userModel.patchMocktest(entity)
+
 
   res.render('vwMocktests/doneDetailMocktest', {
     mocktest: item,
     empty: item === null,
     numberedAnswers,
   });
-
-
+   
 });
 
 
 router.post('/ajax', async (req, res) => {
 
   item = req.body;
-  console.log(item);
+  // console.log(item);
   const row = await mocktestModel.single(item._id);
   // console.log(row);
 
@@ -217,14 +217,15 @@ router.post('/ajax', async (req, res) => {
 
   item.isExisted = false;
   if (mockTests.length > 0) {//nếu có tồn tại bài đã làm rồi
-    mockTests.every(mock => {
-      if (mock._id == item._id) {
-        item.grades = mock.grades;
-        item.isExisted = true;
-        oldTimeLeft = mock.timeLeft;
-        return false;
-      }
-    });
+
+    index = mockTests.findIndex(mock => mock._id == item._id && mock.status == 0 );
+    if(index!=-1)
+    {
+      item.grades = mockTests[index].grades;
+      item.isExisted = true;
+      oldTimeLeft = mockTests[index].timeLeft;
+    }
+   
   }
 
   if (item.action == "save") {
@@ -238,7 +239,7 @@ router.post('/ajax', async (req, res) => {
 
     delete item.action;
     delete item.timeStart;
-
+    console.log("Item",item);
     if (item.isExisted == false) {
       authUser.tests.push(item);
     }
@@ -266,7 +267,6 @@ router.post('/ajax', async (req, res) => {
     res.json({
       success: true,
       message: 'Lưu thành công',
-
     })
   }
   else {
@@ -280,8 +280,6 @@ router.post('/ajax', async (req, res) => {
 
 
 })
-
-
 
 
 

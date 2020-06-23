@@ -73,7 +73,7 @@ const UserSchema = mongoose.Schema({
             type: Number,
             default: 0,
         },
-        answers: {
+        answerKeys: {
             type: Array,
             default: [],
         }
