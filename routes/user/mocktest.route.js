@@ -27,7 +27,7 @@ router.get('/:id', async (req, res) => {
   // console.log(row);
   // console.log("lala")
 
-  timeLeft = 3600;
+  timeLeft = 30;
   timeStart = moment().unix();
   console.log("time start:", timeStart);
   res.render('vwMocktests/detailMocktest', {
@@ -98,12 +98,13 @@ router.get('/done/:id', async (req, res) => {
   mockTests = authUser.tests;
   var pendingMock = {};
   if (mockTests.length > 0) {//nếu có tồn tại bài đã làm rồi
-    mockTests.every(mock => {
-      if (mock._id == mockId && mock.status == 1) {
-        pendingMock = mock
-        return false;
-      }
-    });
+    index = mockTests.findIndex(mock => mock._id == mockId && mock.status == 1 );
+    if(index!=-1)
+    {
+      pendingMock  = mockTests[index];
+    
+    }
+   
   }
 
   if (isEmpty(pendingMock)) {//mnếu là bài test CHƯA LÀM hoặc CHƯA LÀM XONG
@@ -115,7 +116,7 @@ router.get('/done/:id', async (req, res) => {
     for (i = 0; i < 40; i++) {
       temp = {
         index: i + 1,
-        answer: pendingMock.answers[i]
+        answer: pendingMock.answerKeys[i]
       };
       numberedAnswers.push(temp);
     }
@@ -194,12 +195,12 @@ router.post('/submit', async (req, res) => {
 
   temp = await userModel.patchMocktest(entity)
 
-
-  res.render('vwMocktests/doneDetailMocktest', {
-    mocktest: item,
-    empty: item === null,
-    numberedAnswers,
-  });
+  res.redirect(`/user/mocktest/done/${item._id}`)
+  // res.render('vwMocktests/doneDetailMocktest', {
+  //   mocktest: item,
+  //   empty: item === null,
+  //   numberedAnswers,
+  // });
    
 });
 
