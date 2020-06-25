@@ -210,7 +210,7 @@ router.post('/ajax', async (req, res) => {
   // console.log(item);
   const row = await mocktestModel.single(item._id);
   // console.log(row);
-
+  
   authUser = req.session.authUser;
 
   mockTests = authUser.tests;
@@ -221,6 +221,7 @@ router.post('/ajax', async (req, res) => {
     index = mockTests.findIndex(mock => mock._id == item._id && mock.status == 0 );
     if(index!=-1)
     {
+      
       item.grades = mockTests[index].grades;
       item.isExisted = true;
       oldTimeLeft = mockTests[index].timeLeft;
@@ -278,7 +279,7 @@ router.post('/ajax', async (req, res) => {
   
       delete item.action;
       
-      console.log("Item",item);
+      // console.log("Item",item);
       if (item.isExisted == false) {
         authUser.tests.push(item);
       }
@@ -288,9 +289,7 @@ router.post('/ajax', async (req, res) => {
             return item
           return obj;
         });
-  
         // console.log("TEMP: ", temp);
-  
       }
   
       // console.log("TESTS ajax:", authUser.tests);
@@ -301,7 +300,7 @@ router.post('/ajax', async (req, res) => {
       }
       temp = await userModel.patchMocktest(entity)
   
-      console.log(temp);
+      // console.log(temp);
   
       res.json({
         success: true,
@@ -314,10 +313,6 @@ router.post('/ajax', async (req, res) => {
       message: 'Không save được'
     });
   }
-
-
-
-
 })
 
 

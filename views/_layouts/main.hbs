@@ -833,11 +833,9 @@
 
 
   <script type="text/javascript">
-   
-
     window.addEventListener("beforeunload", function (e) {
       var confirmationMessage = "\o/";
-
+      console.log(confirmationMessage)
       (e || window.event).returnValue = confirmationMessage; //Gecko + IE
       return confirmationMessage;                            //Webkit, Safari, Chrome
     });

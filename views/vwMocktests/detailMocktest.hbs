@@ -115,12 +115,21 @@
 </script>
 
 <script>
-  var mockID = $(this).attr('mockID');
+  var mockID = $('#save').attr('mockID');
+  var timeStart = parseInt($('#timeStart').val());
   var timeLeft = $('.timeLeft').attr('content');
   function run() {
-    
+      timeStart = timeStart + 10;
       timeLeft = timeLeft - 10;
       console.log(timeLeft)
+      $('#timeStart').attr('value',timeStart);
+      
+
+       var l = $('.my-form').length;
+      var result = [];
+      for (i = 0; i < l; i++) {
+        result.push($('.my-form').eq(i).val());
+      }
 
       $.ajax({
         url: '/user/mocktest/ajax',
@@ -128,6 +137,7 @@
         data: {
           _id: mockID, // $_POST['id'] = 22
           action: 'changeTimeLeft',
+          answerKeys: result,
           timeLeft: timeLeft
         },
         dataType: 'JSON',
@@ -206,7 +216,7 @@
               <div class="product-tab-inner">
                 <ul id="product-detail-tab" class="nav nav-tabs product-tabs" style="  display: flex;">
                   <div hidden class="timeLeft" content="{{timeLeft}}"></div>
-                  <input type="hidden" name="timeStart" value="{{timeStart}}" id="timeStart">
+                  
                   <li class="active"> <a href="#description" data-toggle="tab"> Bài làm</a>
                   </li>
 
@@ -252,6 +262,7 @@
                         <ul class="questions col-md-12 col-sm-12 col-xs-12">
                           <h3><span>Questions</span></h3>
                           <form method="POST" name="frmAddProduct" novalidate>
+                            <input type="hidden" name="timeStart" value="{{timeStart}}" id="timeStart">
                             <div class="col-sm-3 answer-area" height="500" style=" height: 500px;
                                                                         overflow: scroll;">
                               {{!-- 40 CÂU TRẢ LỜI --}}
