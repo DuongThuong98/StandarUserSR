@@ -150,6 +150,7 @@ router.get('/done/:id', async (req, res) => {
     console.log(numberedAnswers)
 
     pendingMock.questionLink = row.questionLink;
+    pendingMock.audioLinks = row.audioLinks;
     console.log("time start pending:", pendingMock);
     // console.log("time start pending:", pendingMock);
     res.render('vwMocktests/doneDetailMocktest', {

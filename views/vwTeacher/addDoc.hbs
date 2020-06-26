@@ -83,16 +83,15 @@
 
 <script type="text/javascript">
 
-  jQuery(document).ready(function () {
+    jQuery(document).ready(function () {
         $('.audio-area').hide();
-         console.log('a');
+        console.log('a');
     });
     jQuery(document).ready(function () {
         $('.mocktest-type').change(function () {
-            {{!-- console.log($('.mocktest-type').val()) --}}
-            if($('.mocktest-type').val()==1)
-            {$('.audio-area').toggle(500);}
-            else{
+            { { !--console.log($('.mocktest-type').val()) --} }
+            if ($('.mocktest-type').val() == 1) { $('.audio-area').toggle(500); }
+            else {
                 $('.audio-area').hide();
             }
             // alert("fdf");
@@ -107,9 +106,9 @@
             }
 
             $('.answers-input').append("<div class='col-sm-3'>"
-                + i + ".<input type='text' class='input form-control' name='answerKeys'" + 
+                + i + ".<input type='text' class='input form-control' name='answerKeys'" +
                 "id = 'answer-key' ></div > ");
-           
+
             if (i % 4 == 1) {
                 $('.answers-input').append('</li>');
             }
@@ -244,27 +243,25 @@
                                                             </div>
                                                             <div class="col-sm-3">
                                                                 <label class="required">Loại test</label>
-                                                                <select class="input form-control mocktest-type" name="mocktest_type">
+                                                                <select class="input form-control mocktest-type"
+                                                                    name="mocktest_type">
                                                                     <option selected="true" value="0">Reading
                                                                     </option>
                                                                     <option value="1">Listening </option>
                                                                 </select>
                                                             </div>
-                                                            <div class="col-sm-3 audio-area" >
+                                                            <div class="col-sm-3 audio-area">
                                                                 <label for="fuMain-audio" class="required">Audio:
                                                                 </label>
                                                                 <input id="fuMain-audio" name="fuMain-audio" type="file"
                                                                     multiple>
                                                             </div>
-                                                            
+
                                                         </li>
-
-                                                        
-
-
                                                         <li class="row">
-                                                             <div class="col-sm-6">
-                                                                <label for="fuMain-ques" class="required">Đề test: </label>
+                                                            <div class="col-sm-6">
+                                                                <label for="fuMain-ques" class="required">Đề test:
+                                                                </label>
                                                                 <input id="fuMain-ques" name="fuMain-ques" type="file"
                                                                     multiple>
                                                             </div>
@@ -277,13 +274,13 @@
                                                                     multiple>
                                                             </div>
 
-                                                           
+
                                                         </li>
 
                                                         <div class="answers-input">
 
                                                         </div>
-                                
+
 
 
                                                         <li>

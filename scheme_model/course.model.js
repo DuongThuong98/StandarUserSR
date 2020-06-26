@@ -12,7 +12,6 @@ const CourseSchema = mongoose.Schema({
     // "tuition": 1000000,
    
 
-
     name: String,
     shortDesc: String,
     content: String,
