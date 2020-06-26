@@ -375,11 +375,11 @@
                         <li><a href="/teacher/documents"> <i class="icon fa fa-phone fa-fw"></i> <span>Quản lý tài
                               liệu</span></a></li>
                         {{else}}
-                        <li><a href="/users/"> <i class="icon fa fa-gamepad fa-fw"></i> <span>Thông tin cá
+                        <li><a href="/user/"> <i class="icon fa fa-gamepad fa-fw"></i> <span>Thông tin cá
                               nhân</span></a></li>
-                        <li><a href="/users/wishlist"> <i class="icon fa fa-phone fa-fw"></i> <span>Bài đọc yêu
+                        <li><a href="/user/wishlist"> <i class="icon fa fa-phone fa-fw"></i> <span>Bài đọc yêu
                               thích</span></a></li>
-                        <li><a href="/users/done-mocktest"> <i class="icon fa fa-pen fa-fw"></i> <span>Bài test đã
+                        <li><a href="/user/done-mocktest"> <i class="icon fa fa-pen fa-fw"></i> <span>Bài test đã
                               làm</span>
                           </a></li>
                         <li><a href="my_account.html"><span> Nâng cấp học viên </span> </a></li>
@@ -854,7 +854,7 @@
           url: '/user/wishlist/ajax',
           type: 'POST',
           data: {
-            id: 0, // $_POST['id'] = 22
+            _id: idProduct, // $_POST['id'] = 22
             action: 'add'
           },
           dataType: 'JSON',

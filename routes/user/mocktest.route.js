@@ -10,7 +10,28 @@ const userModel = require('../../models/user.model');
 
 const router = express.Router();
 
+
 router.get('/', async (req, res) => {
+  authUser = req.session.authUser;
+  let rows = authUser.tests;
+  mockTests = [];
+  rows.forEach(async row => {
+    const temp = await mocktestModel.single(row._id);
+    row.name = temp.name;
+    row.mocktestType = temp.mocktestType;
+    if (temp != null) {
+      mockTests.push(row);
+    }
+  });
+
+  res.render('vwUser/mocklist', {
+    mocktests: rows,
+    empty: rows.length === 0
+  });
+
+});
+
+router.get('/data', async (req, res) => {
   const rows = await mocktestModel.all();
   console.log(rows);
 
@@ -20,6 +41,7 @@ router.get('/', async (req, res) => {
   });
 
 });
+
 
 router.get('/:id', async (req, res) => {
   const mockId = req.params.id;
@@ -43,14 +65,13 @@ router.get('/pending/:id', async (req, res) => {
   const row = await mocktestModel.single(mockId);
 
   console.log(mockId);
-  
+
   authUser = req.session.authUser;
   mockTests = authUser.tests;
   var pendingMock = {};
   if (mockTests.length > 0) {//nếu có tồn tại bài đã làm rồi (ở đây là chắn chắn)
-    index = mockTests.findIndex(mock => mock._id == mockId && mock.status == 0 );
-    if(index!=-1)
-    {
+    index = mockTests.findIndex(mock => mock._id == mockId && mock.status == 0);
+    if (index != -1) {
       pendingMock = mockTests[index]
     }
   }
@@ -98,13 +119,12 @@ router.get('/done/:id', async (req, res) => {
   mockTests = authUser.tests;
   var pendingMock = {};
   if (mockTests.length > 0) {//nếu có tồn tại bài đã làm rồi
-    index = mockTests.findIndex(mock => mock._id == mockId && mock.status == 1 );
-    if(index!=-1)
-    {
-      pendingMock  = mockTests[index];
-    
+    index = mockTests.findIndex(mock => mock._id == mockId && mock.status == 1);
+    if (index != -1) {
+      pendingMock = mockTests[index];
+
     }
-   
+
   }
 
   if (isEmpty(pendingMock)) {//mnếu là bài test CHƯA LÀM hoặc CHƯA LÀM XONG
@@ -143,20 +163,20 @@ router.post('/submit', async (req, res) => {
 
   timeStart = parseInt(item.timeStart);
   oldTimeLeft = 3600; //mặc định 
-  
+
   item.grades = 0; //mặc định 
   item.isExisted = false;
   if (mockTests.length > 0) {//nếu có tồn tại bài đã làm rồi thì lấy bài đó
-    index = mockTests.findIndex(mock => mock._id == item._id && mock.status == 0 );
-    if(index!=-1)
-    {
+    index = mockTests.findIndex(mock => mock._id == item._id && mock.status == 0);
+    if (index != -1) {
+
       item.isExisted = true;
       oldTimeLeft = mockTests[index].timeLeft;
     }
-   
+
   }
 
- 
+
   timeNow = moment().unix();
   timeUsed = timeNow - timeStart;
   item.timeLeft = oldTimeLeft - timeUsed;
@@ -200,7 +220,7 @@ router.post('/submit', async (req, res) => {
   //   empty: item === null,
   //   numberedAnswers,
   // });
-   
+
 });
 
 
@@ -210,7 +230,7 @@ router.post('/ajax', async (req, res) => {
   // console.log(item);
   const row = await mocktestModel.single(item._id);
   // console.log(row);
-  
+
   authUser = req.session.authUser;
 
   mockTests = authUser.tests;
@@ -218,15 +238,14 @@ router.post('/ajax', async (req, res) => {
 
   item.isExisted = false;
   if (mockTests.length > 0) {//nếu có tồn tại bài đã làm rồi
-    index = mockTests.findIndex(mock => mock._id == item._id && mock.status == 0 );
-    if(index!=-1)
-    {
-      
+    index = mockTests.findIndex(mock => mock._id == item._id && mock.status == 0);
+    if (index != -1) {
+
       item.grades = mockTests[index].grades;
       item.isExisted = true;
       oldTimeLeft = mockTests[index].timeLeft;
     }
-   
+
   }
 
   if (item.action == "save") {
@@ -240,7 +259,7 @@ router.post('/ajax', async (req, res) => {
 
     delete item.action;
     delete item.timeStart;
-    console.log("Item",item);
+    console.log("Item", item);
     if (item.isExisted == false) {
       authUser.tests.push(item);
     }
@@ -274,11 +293,11 @@ router.post('/ajax', async (req, res) => {
 
     if (item.action == "changeTimeLeft") {
       item.timeLeft
-  
+
       item.status = 0; //1: DONE, 0: PENDING, -1:DELETED
-  
+
       delete item.action;
-      
+
       // console.log("Item",item);
       if (item.isExisted == false) {
         authUser.tests.push(item);
@@ -291,27 +310,27 @@ router.post('/ajax', async (req, res) => {
         });
         // console.log("TEMP: ", temp);
       }
-  
+
       // console.log("TESTS ajax:", authUser.tests);
-  
+
       entity = {
         _id: authUser._id,
         tests: authUser.tests
       }
       temp = await userModel.patchMocktest(entity)
-  
+
       // console.log(temp);
-  
+
       res.json({
         success: true,
         message: 'Lưu thành công',
       })
     }
     else
-    res.json({
-      success: false,
-      message: 'Không save được'
-    });
+      res.json({
+        success: false,
+        message: 'Không save được'
+      });
   }
 })
 

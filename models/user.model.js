@@ -28,6 +28,7 @@ module.exports = {
     return result;
   },
 
+  
   add: async entity => {
     const user = new db.User({
       username: entity.username,
@@ -73,6 +74,26 @@ module.exports = {
     if (user) {
         const result = await db.User.findOneAndUpdate({ _id }, 
                               { tests: tests || user.tests
+                                                                    })
+        if (result) {
+            const data = await db.User.findOne({ _id: result._id })
+            if (data) {
+                return data;
+            }
+            else{
+              return -1;//lỗi kô htêm được
+            }
+        }
+    }
+    return -2;//lỗi ko tìm thấy user
+  },
+
+  patchInterestedItems: async entity => {
+    const { _id, interestedItems } = entity
+    const user = await db.User.findOne({ _id })
+    if (user) {
+        const result = await db.User.findOneAndUpdate({ _id }, 
+                              { interestedItems: interestedItems || user.interestedItems
                                                                     })
         if (result) {
             const data = await db.User.findOne({ _id: result._id })

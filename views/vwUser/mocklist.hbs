@@ -58,25 +58,35 @@
           {{else}}
           <div class="wishlist-item table-responsive">
             <table class="col-md-12">
-              <thead>
-                <tr>
-                  <th class="th-delate">Xóa</th>
-                  <th class="th-details">Tên</th>
 
+                <thead>
+                    <tr>
+               <th class="th-delate">Xóa</th>
+                      <th>Tên</th>
+                      <th>Loại</th>
+                      <th class="th-price">Trạng thái</th>
+                      <th  class="action">Vào làm</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                      {{#each this.mocktests}}
+                    <tr>
+                      <td class="th-delete" data-id="{{_id}}"><a href="#"><i class="fas fa-times-circle"></i></a></td>
+                      <td class="cart_description"><p class="product-name"><a href="#"> {{name}} </a></p></td>
+                     
+                      <td class="availability in-stock"><span class="label">{{mocktestType}}</span></td>
 
-                </tr>
-              </thead>
-              <tbody>
-                {{#each this.interestedItems}}
-                <tr class="parent-{{_id}}">
-                  <td class="th-delete" data-id="{{_id}}"><a href="#"><i class="fas fa-times-circle"></i></a></td>
-            
-                  <td class="th-details">
-                    <h2><a href="/documents/{{_id}}">{{name}}</a></h2>
-                  </td>
-                </tr>
-                {{/each}}
-              </tbody>
+                      {{#if status}}
+                    <td class="availability out-of-stock"><span class="label">Đang làm</span></td>
+                    {{else}}
+                    <td class="availability out-of-stock"><span class="label">Hoàn thành</span></td>
+                    {{/if}}
+
+                      <td class="action"><a href="/user/mocktest/{{_id}}"><i class="fa fa-edit"></i></a></td>
+                    </tr>
+                   {{/each}}
+                  </tbody>
+                 
             </table>
             <a href="checkout.html" class="delete-all">Xóa tất cả</a>
           </div>
@@ -91,8 +101,8 @@
           <div class="block-content">
             <ul>
               <li><a href="info">Thông tin tài khoản</a></li>
-              <li class="current"><a >Danh sách yêu thích</a></li>
-              <li><a href="mocktest">Các bài kiểm tra thử </a></li>
+              <li class="current"><a href="wishlist" >Danh sách yêu thích</a></li>
+              <li class="current"><a >Các bài kiểm tra thử </a></li>
               <li><a href="questions"> Câu hỏi trong forum</a></li>
               <li class="last"><a href="upgarde">Nâng cấp học viên</a></li>
             </ul>

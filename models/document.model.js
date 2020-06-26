@@ -120,6 +120,11 @@ module.exports = {
     return result;
   },
 
+  singleById: async (docId) =>{
+    result = await db.Document.findOne({_id: docId});
+    return result;
+  },
+
   upDateView: async (_id) =>{
    doc = null;
    await db.Document.findOne({_id})
