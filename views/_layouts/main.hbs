@@ -841,6 +841,46 @@
     });
   </script>
 
+<script>
+    jQuery(document).ready(function () {
+      $('.add_to_wishlist').click(function () {
+        //var myAcc = $('.my-acc').text();
+        //if (myAcc === 'My Account') {
+          //window.location = "../../account/login";
+        //}
+        console.log("lala");
+        var idProduct = $(this).attr('data-id');
+        $.ajax({
+          url: '/user/wishlist/ajax',
+          type: 'POST',
+          data: {
+            id: 0, // $_POST['id'] = 22
+            action: 'add'
+          },
+          dataType: 'JSON',
+          success: function (response) {
+            // response : obj
+            console.log(response);
+            {{!-- if (response.success) {
+              $('.modal-title').text(response.message)
+              $('.modal-body i').text(response.data.id)
+              $('.cart-total').text(response.data.count + ' Item(s)')
+            }
+            else {
+              $('.modal-title').text('Error!')
+              $('.modal-body').text(response.message)
+            }
+            $('#myMessage').modal('show') --}}
+          }
+        })
+     
+      
+      });
+    })
+    
+  </script>
+
+
 </body>
 
 <!-- Mirrored from htmlmystore.justthemevalley.com/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 03 Mar 2020 08:13:18 GMT -->

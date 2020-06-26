@@ -8,9 +8,9 @@ module.exports = function (app) {
  
   app.use('/users',restrict.user ,require('../routes/user/info.route'));
   app.use('/user/mocktest',restrict.user ,require('../routes/user/mocktest.route'));
+  app.use('/user/wishlist',restrict.user ,require('../routes/user/wishlist.route'));
 
   app.use('/teacher',restrict.teacher ,require('../routes/teacher/info.route'));
-
   app.use('/teacher/documents',restrict.teacher ,require('../routes/teacher/document.route'));
   // app.use('/seller/soldlist',restrict.seller ,require('../routes/seller/soldlist.route'));
 

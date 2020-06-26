@@ -115,7 +115,7 @@
 </script>
 
 <script>
-  {{!-- var mockID = $('#save').attr('mockID');
+  var mockID = $('#save').attr('mockID');
   var timeStart = parseInt($('#timeStart').val());
   var timeLeft = $('.timeLeft').attr('content');
 
@@ -154,10 +154,7 @@
         }
       });
     }
-  } --}}
-
- 
-
+  }
 </script>
 
 <script>
@@ -230,7 +227,9 @@
 
                   <li><button type="button" class="btn btn-primary" id="save" mockID="{{this.mocktest._id}}">Lưu
                       lại</button></li>
-                  <li><a type="button" class="btn btn-primary" href="javascript: $('#frmCompletedTest').submit();">Nộp
+                  <li><a type="button" class="btn btn-primary" href="javascript: 
+                            clearInterval(timer);
+                            $('#frmCompletedTest').submit();">Nộp
                       bài</a></li>
 
 

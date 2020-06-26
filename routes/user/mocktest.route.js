@@ -150,7 +150,6 @@ router.post('/submit', async (req, res) => {
     index = mockTests.findIndex(mock => mock._id == item._id && mock.status == 0 );
     if(index!=-1)
     {
-      item = mockTests[index];
       item.isExisted = true;
       oldTimeLeft = mockTests[index].timeLeft;
     }

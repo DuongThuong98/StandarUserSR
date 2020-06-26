@@ -51,33 +51,6 @@ router.post('/info', async (req, res) => {
   });
 });
 
-//DANH SÁCH ĐÁNH GIÁ
-
-
-
-//DANH SÁCH YÊU THÍCH
-router.get('/wishlist', async (req, res) => {
-  const products = [];
-  // authUser = req.session.authUser;
-  // let wishlist = await wishlistModel.allByUserID(authUser.id);
-  // for (i = 0; i < wishlist.length; i++) {
-  //   const pr = await productModel.single(wishlist[i].id_product);
-  //   if (pr !== null) {
-  //     products.push(pr[0]);
-  //   }
-  // }
-  // if (typeof (req.session.wishlistLength) === 'undefined') {
-  //   req.session.wishlistLength = wishlist.length;
-  // }
-
-  // console.log(wishlist);
-  // console.log(products);
-  res.render('vwUser/wishlist', {
-    products,
-    empty: products.length === 0,
-  });
-});
-
 
 
 
