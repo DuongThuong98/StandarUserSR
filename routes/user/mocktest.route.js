@@ -19,6 +19,13 @@ router.get('/', async (req, res) => {
     const temp = await mocktestModel.single(row._id);
     row.name = temp.name;
     row.mocktestType = temp.mocktestType;
+    if(temp.status == 0)
+    {
+      row.isDone = false;
+    }
+    else{
+      row.isDone = true;
+    }
     if (temp != null) {
       mockTests.push(row);
     }
@@ -49,7 +56,7 @@ router.get('/:id', async (req, res) => {
   // console.log(row);
   // console.log("lala")
 
-  timeLeft = 30;
+  timeLeft = 3600;
   timeStart = moment().unix();
   console.log("time start:", timeStart);
   res.render('vwMocktests/detailMocktest', {
@@ -151,6 +158,17 @@ router.get('/done/:id', async (req, res) => {
       numberedAnswers,
     });
   }
+});
+
+router.get('/key/:id', async (req, res) => {
+  const mockId = req.params.id;
+  const row = await mocktestModel.single(mockId);
+
+  return res.render('vwMocktests/keyMocktest', {
+    layout: false,
+    mocktest : row
+  });
+
 });
 
 //ruote nộp bài

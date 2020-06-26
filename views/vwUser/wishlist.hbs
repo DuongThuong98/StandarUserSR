@@ -39,6 +39,40 @@
 
 {{#section 'js'}}
 
+<script>
+   jQuery(document).ready(function () {
+    $('.th-delete').click(function () {
+      var myAcc = $('.my-acc').text();
+      {{!-- if (myAcc === 'My Account') {
+        window.location = "../../account/login";
+      } --}}
+
+      var idProduct = $(this).attr('data-id');
+      $.ajax({
+        url: '/user/wishlist/ajax',
+        type: 'POST',
+        data: {
+          _id: idProduct, // $_POST['id'] = 22
+          action: 'delete'
+        },
+        dataType: 'JSON',
+        success: function (response) {
+          // response : obj
+          console.log(response);
+          if (response.success) {
+           
+              
+              $('.parent-' + idProduct).hide(500)
+             
+           
+          }
+        }
+      })
+    });
+  });
+
+</script>
+
 {{/section}}
 
 <!-- Main Container -->
@@ -69,7 +103,7 @@
               <tbody>
                 {{#each this.interestedItems}}
                 <tr class="parent-{{_id}}">
-                  <td class="th-delete" data-id="{{_id}}"><a href="#"><i class="fas fa-times-circle"></i></a></td>
+                  <td class="th-delete" data-id="{{_id}}"><a href="javascript:;"><i class="fas fa-times-circle"></i></a></td>
             
                   <td class="th-details">
                     <h2><a href="/documents/{{_id}}">{{name}}</a></h2>

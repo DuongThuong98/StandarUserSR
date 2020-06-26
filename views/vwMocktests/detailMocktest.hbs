@@ -120,10 +120,10 @@
   var timeLeft = $('.timeLeft').attr('content');
 
   timer = setInterval(run, 10000);
-
+  per = 60
   function run() {
-    timeStart = timeStart + 10;
-    timeLeft = timeLeft - 10;
+    timeStart = timeStart + per;
+    timeLeft = timeLeft - per;
     console.log(timeLeft)
 
     if (timeLeft <= 0) {
