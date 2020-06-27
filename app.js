@@ -68,8 +68,15 @@ mongoose
 require('./middlewares/locals.mdw')(app);
 require('./middlewares/routes.mdw')(app);
 
+const documentModel = require('./models/document.model');
 app.get('/', async (req, res) => {
-  res.render('home');
+
+  documents = await documentModel.mostViews();
+  console.log(documents);
+  res.render('home',{
+    documents,
+    empty: documents.length == 0
+  });
 })
 
 app.get('/about', (req, res) => {

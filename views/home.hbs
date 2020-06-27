@@ -11,13 +11,17 @@
     justify-content: flex-start;
 
   }
+
+  figure {
+    height: 171px;
+  }
 </style>
 {{/section}}
 {{#section 'js'}}
 
- <!-- owl.carousel.min js -->
-  <script src="/js/owl.carousel.min.js"></script>
-  
+<!-- owl.carousel.min js -->
+<script src="/js/owl.carousel.min.js"></script>
+
 <!-- Revolution Slider -->
 <script type="text/javascript">
   jQuery(document).ready(function () {
@@ -145,375 +149,166 @@
 
 <!--special-products-->
 
-    <div class="container">
-      <div class="special-products">
-        <div class="page-header">
-          <h2>TÀI LIỆU NỔI BẬT</h2>
+<div class="container">
+  <div class="special-products">
+    <div class="page-header">
+      <h2>TÀI LIỆU NỔI BẬT</h2>
+    </div>
+    <div class="special-products-pro">
+      <div class="slider-items-products">
+        <div id="special-products-slider" class="product-flexslider hidden-buttons">
+          <div class="slider-items slider-width-col4">
+
+            {{#each this.documents}}
+            <div class="product-item">
+              <div class="item-inner">
+                <div class="product-thumbnail">
+                  <div class="icon-sale-label sale-left">Sale</div>
+                  <div class="icon-new-label new-right">New</div>
+                  <div class="pr-img-area"> <a title="Ipsums Dolors Untra" href="documents/{{_id}}">
+                      <figure> <img class="first-img" src="images/documents/{{image}}" alt="html template"> <img
+                          class="hover-img" src="images/documents/{{image}}" alt="html template"></figure>
+                    </a>
+                    <button type="button" class="add-to-cart-mt"> <i class="fa fa-shopping-cart"></i><span> Tìm hiểu
+                        thêm</span> </button>
+                  </div>
+
+                  <div class="pr-info-area">
+                    <div class="pr-button">
+                       <div class="mt-button add_to_wishlist wish_{{_id}}" data-id="{{_id}}"> <a
+                                    href="javascript:;"> <i class="fa fa-heart"></i>
+                                  </a> </div>
+
+
+                    </div>
+                  </div>
+
+                </div>
+                <div class="item-info">
+                  <div class="info-inner">
+                    <div class="item-title"> <a title="Ipsums Dolors Untra" href="single_product.html">{{name}}</a> </div>
+                    <div class="item-content">
+                      <div class="rating">
+                        <div class="view_talk">
+                          <span class="fa fa-eye" style="padding-top: 4px;"> {{views}} &nbsp;&nbsp;</span>
+                          <span class="comment-count"> <i class="fa fa-comment"></i>&nbsp; {{views}} </span>
+                        </div>
+                        <i style="margin-bottom: 5px;">April, 12, 2016</i>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {{/each}}
+
+          </div>
         </div>
-        <div class="special-products-pro">
-          <div class="slider-items-products">
-            <div id="special-products-slider" class="product-flexslider hidden-buttons">
-              <div class="slider-items slider-width-col4">
-                <div class="product-item">
-                  <div class="item-inner">
-                    <div class="product-thumbnail">
-                      <div class="icon-sale-label sale-left">Sale</div>
-                      <div class="icon-new-label new-right">New</div>
-                      <div class="pr-img-area"> <a title="Ipsums Dolors Untra" href="single_product.html">
-                          <figure> <img class="first-img" src="images/products/mau1.jpg" alt="html template"> <img
-                              class="hover-img" src="images/products/mau1.jpg" alt="html template"></figure>
-                        </a>
-                        <button type="button" class="add-to-cart-mt"> <i class="fa fa-shopping-cart"></i><span> Tìm hiểu
-                            thêm</span> </button>
-                      </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-                      <div class="pr-info-area">
-                        <div class="pr-button">
-                          <div class="mt-button add_to_wishlist"> <a href="wishlist.html"> <i class="fa fa-heart"></i>
-                            </a> </div>
-
-
-                        </div>
-                      </div>
-
-                    </div>
-                    <div class="item-info">
-                      <div class="info-inner">
-                        <div class="item-title"> <a title="Ipsums Dolors Untra" href="single_product.html">IELTS
-                            Listening: Dạng câu hỏi Flowcharts, Notes, Tables, Summaries And Forms </a> </div>
-                        <div class="item-content">
-                          <div class="rating">
-                            <div class="view_talk">
-                              <span class="fa fa-eye" style="padding-top: 4px;"> 28924 &nbsp;&nbsp;</span>
-                              <span class="comment-count"> <i class="fa fa-comment"></i>&nbsp; 3 </span>
-                            </div>
-                            <i style="margin-bottom: 5px;">April, 12, 2016</i>
-                          </div>
-
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="product-item">
-                  <div class="item-inner">
-                    <div class="product-thumbnail">
-                      <div class="icon-sale-label sale-left">Sale</div>
-                      <div class="icon-new-label new-right">New</div>
-                      <div class="pr-img-area"> <a title="Ipsums Dolors Untra" href="single_product.html">
-                          <figure> <img class="first-img" src="images/products/mau1.jpg" alt="html template"> <img
-                              class="hover-img" src="images/products/mau1.jpg" alt="html template"></figure>
-                        </a>
-                        <button type="button" class="add-to-cart-mt"> <i class="fa fa-shopping-cart"></i><span> Tìm hiểu
-                            thêm</span> </button>
-                      </div>
-
-                      <div class="pr-info-area">
-                        <div class="pr-button">
-                          <div class="mt-button add_to_wishlist"> <a href="wishlist.html"> <i class="fa fa-heart"></i>
-                            </a> </div>
-
-
-                        </div>
-                      </div>
-
-                    </div>
-                    <div class="item-info">
-                      <div class="info-inner">
-                        <div class="item-title"> <a title="Ipsums Dolors Untra" href="single_product.html">IELTS
-                            Listening: Dạng câu hỏi Flowcharts, Notes, Tables, Summaries And Forms </a> </div>
-                        <div class="item-content">
-                          <div class="rating">
-                            <div class="view_talk">
-                              <span class="fa fa-eye" style="padding-top: 4px;"> 28924 &nbsp;&nbsp;</span>
-                              <span class="comment-count"> <i class="fa fa-comment"></i>&nbsp; 3 </span>
-                            </div>
-                            <i style="margin-bottom: 5px;">April, 12, 2016</i>
-                          </div>
-
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="product-item">
-                  <div class="item-inner">
-                    <div class="product-thumbnail">
-                      <div class="icon-sale-label sale-left">Sale</div>
-                      <div class="icon-new-label new-right">New</div>
-                      <div class="pr-img-area"> <a title="Ipsums Dolors Untra" href="single_product.html">
-                          <figure> <img class="first-img" src="images/products/mau1.jpg" alt="html template"> <img
-                              class="hover-img" src="images/products/mau1.jpg" alt="html template"></figure>
-                        </a>
-                        <button type="button" class="add-to-cart-mt"> <i class="fa fa-shopping-cart"></i><span> Tìm hiểu
-                            thêm</span> </button>
-                      </div>
-
-                      <div class="pr-info-area">
-                        <div class="pr-button">
-                          <div class="mt-button add_to_wishlist"> <a href="wishlist.html"> <i class="fa fa-heart"></i>
-                            </a> </div>
-
-
-                        </div>
-                      </div>
-
-                    </div>
-                    <div class="item-info">
-                      <div class="info-inner">
-                        <div class="item-title"> <a title="Ipsums Dolors Untra" href="single_product.html">IELTS
-                            Listening: Dạng câu hỏi Flowcharts, Notes, Tables, Summaries And Forms </a> </div>
-                        <div class="item-content">
-                          <div class="rating">
-                            <div class="view_talk">
-                              <span class="fa fa-eye" style="padding-top: 4px;"> 28924 &nbsp;&nbsp;</span>
-                              <span class="comment-count"> <i class="fa fa-comment"></i>&nbsp; 3 </span>
-                            </div>
-                            <i style="margin-bottom: 5px;">April, 12, 2016</i>
-                          </div>
-
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="product-item">
-                  <div class="item-inner">
-                    <div class="product-thumbnail">
-                      <div class="icon-sale-label sale-left">Sale</div>
-                      <div class="icon-new-label new-right">New</div>
-                      <div class="pr-img-area"> <a title="Ipsums Dolors Untra" href="single_product.html">
-                          <figure> <img class="first-img" src="images/products/mau1.jpg" alt="html template"> <img
-                              class="hover-img" src="images/products/mau1.jpg" alt="html template"></figure>
-                        </a>
-                        <button type="button" class="add-to-cart-mt"> <i class="fa fa-shopping-cart"></i><span> Tìm hiểu
-                            thêm</span> </button>
-                      </div>
-
-                      <div class="pr-info-area">
-                        <div class="pr-button">
-                          <div class="mt-button add_to_wishlist"> <a href="wishlist.html"> <i class="fa fa-heart"></i>
-                            </a> </div>
-
-
-                        </div>
-                      </div>
-
-                    </div>
-                    <div class="item-info">
-                      <div class="info-inner">
-                        <div class="item-title"> <a title="Ipsums Dolors Untra" href="single_product.html">IELTS
-                            Listening: Dạng câu hỏi Flowcharts, Notes, Tables, Summaries And Forms </a> </div>
-                        <div class="item-content">
-                          <div class="rating">
-                            <div class="view_talk">
-                              <span class="fa fa-eye" style="padding-top: 4px;"> 28924 &nbsp;&nbsp;</span>
-                              <span class="comment-count"> <i class="fa fa-comment"></i>&nbsp; 3 </span>
-                            </div>
-                            <i style="margin-bottom: 5px;">April, 12, 2016</i>
-                          </div>
-
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="product-item">
-                  <div class="item-inner">
-                    <div class="product-thumbnail">
-                      <div class="icon-sale-label sale-left">Sale</div>
-                      <div class="icon-new-label new-right">New</div>
-                      <div class="pr-img-area"> <a title="Ipsums Dolors Untra" href="single_product.html">
-                          <figure> <img class="first-img" src="images/products/mau1.jpg" alt="html template"> <img
-                              class="hover-img" src="images/products/mau1.jpg" alt="html template"></figure>
-                        </a>
-                        <button type="button" class="add-to-cart-mt"> <i class="fa fa-shopping-cart"></i><span> Tìm hiểu
-                            thêm</span> </button>
-                      </div>
-
-                      <div class="pr-info-area">
-                        <div class="pr-button">
-                          <div class="mt-button add_to_wishlist"> <a href="wishlist.html"> <i class="fa fa-heart"></i>
-                            </a> </div>
-
-
-                        </div>
-                      </div>
-
-                    </div>
-                    <div class="item-info">
-                      <div class="info-inner">
-                        <div class="item-title"> <a title="Ipsums Dolors Untra" href="single_product.html">IELTS
-                            Listening: Dạng câu hỏi Flowcharts, Notes, Tables, Summaries And Forms </a> </div>
-                        <div class="item-content">
-                          <div class="rating">
-                            <div class="view_talk">
-                              <span class="fa fa-eye" style="padding-top: 4px;"> 28924 &nbsp;&nbsp;</span>
-                              <span class="comment-count"> <i class="fa fa-comment"></i>&nbsp; 3 </span>
-                            </div>
-                            <i style="margin-bottom: 5px;">April, 12, 2016</i>
-                          </div>
-
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="product-item">
-                  <div class="item-inner">
-                    <div class="product-thumbnail">
-                      <div class="icon-sale-label sale-left">Sale</div>
-                      <div class="icon-new-label new-right">New</div>
-                      <div class="pr-img-area"> <a title="Ipsums Dolors Untra" href="single_product.html">
-                          <figure> <img class="first-img" src="images/products/mau1.jpg" alt="html template"> <img
-                              class="hover-img" src="images/products/mau1.jpg" alt="html template"></figure>
-                        </a>
-                        <button type="button" class="add-to-cart-mt"> <i class="fa fa-shopping-cart"></i><span> Tìm hiểu
-                            thêm</span> </button>
-                      </div>
-
-                      <div class="pr-info-area">
-                        <div class="pr-button">
-                          <div class="mt-button add_to_wishlist"> <a href="wishlist.html"> <i class="fa fa-heart"></i>
-                            </a> </div>
-
-
-                        </div>
-                      </div>
-
-                    </div>
-                    <div class="item-info">
-                      <div class="info-inner">
-                        <div class="item-title"> <a title="Ipsums Dolors Untra" href="single_product.html">IELTS
-                            Listening: Dạng câu hỏi Flowcharts, Notes, Tables, Summaries And Forms </a> </div>
-                        <div class="item-content">
-                          <div class="rating">
-                            <div class="view_talk">
-                              <span class="fa fa-eye" style="padding-top: 4px;"> 28924 &nbsp;&nbsp;</span>
-                              <span class="comment-count"> <i class="fa fa-comment"></i>&nbsp; 3 </span>
-                            </div>
-                            <i style="margin-bottom: 5px;">April, 12, 2016</i>
-                          </div>
-
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
+<!-- chia sẻ từ chúng tôi -->
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <!-- Testimonials Box -->
+      <div class="testimonials">
+        <div class="slider-items-products">
+          <div id="testimonials-slider" class="product-flexslider hidden-buttons home-testimonials">
+            <div class="slider-items slider-width-col4 ">
+              <div class="holder">
+                <p>sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+                  minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                  ex ea commodo consequat. </p>
+                <div class="thumb"> <img src="images/testimonials-img3.jpg" alt="testimonials img"> </div>
+                <strong class="name">John Doe</strong> <strong class="designation">CEO, Company</strong>
+              </div>
+              <div class="holder">
+                <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                  ex ea commodo consequat. fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.
+                </p>
+                <div class="thumb"> <img src="images/testimonials-img1.jpg" alt="testimonials img"> </div>
+                <strong class="name">Vince Roy</strong> <strong class="designation">CEO, Newspaper</strong>
+              </div>
+              <div class="holder">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                  eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+                  minim veniam, quis nostrud. </p>
+                <div class="thumb"> <img src="images/testimonials-img2.jpg" alt="testimonials img"> </div>
+                <strong class="name">John Doe</strong> <strong class="designation">CEO, ABC Softwear</strong>
+              </div>
+              <div class="holder">
+                <p>sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+                  minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                  ex ea commodo consequat.</p>
+                <div class="thumb"> <img src="images/testimonials-img4.jpg" alt="testimonials img"> </div>
+                <strong class="name">Vince Roy</strong> <strong class="designation">CEO, XYZ Softwear</strong>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <!-- End Testimonials Box -->
+    <!-- our clients Slider -->
+    <div class="col-md-6">
+      <div class="our-clients">
+        <div class="slider-items-products">
+          <div id="our-clients-slider" class="product-flexslider hidden-buttons">
+            <div class="slider-items slider-width-col6">
 
-     <!-- chia sẻ từ chúng tôi -->
-    <div class="container">
-      <div class="row">
-        <div class="col-md-6">
-          <!-- Testimonials Box -->
-          <div class="testimonials">
-            <div class="slider-items-products">
-              <div id="testimonials-slider" class="product-flexslider hidden-buttons home-testimonials">
-                <div class="slider-items slider-width-col4 ">
-                  <div class="holder">
-                    <p>sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                      minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                      ex ea commodo consequat. </p>
-                    <div class="thumb"> <img src="images/testimonials-img3.jpg" alt="testimonials img"> </div>
-                    <strong class="name">John Doe</strong> <strong class="designation">CEO, Company</strong>
-                  </div>
-                  <div class="holder">
-                    <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                      ex ea commodo consequat. fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.
-                    </p>
-                    <div class="thumb"> <img src="images/testimonials-img1.jpg" alt="testimonials img"> </div>
-                    <strong class="name">Vince Roy</strong> <strong class="designation">CEO, Newspaper</strong>
-                  </div>
-                  <div class="holder">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                      eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                      minim veniam, quis nostrud. </p>
-                    <div class="thumb"> <img src="images/testimonials-img2.jpg" alt="testimonials img"> </div>
-                    <strong class="name">John Doe</strong> <strong class="designation">CEO, ABC Softwear</strong>
-                  </div>
-                  <div class="holder">
-                    <p>sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                      minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                      ex ea commodo consequat.</p>
-                    <div class="thumb"> <img src="images/testimonials-img4.jpg" alt="testimonials img"> </div>
-                    <strong class="name">Vince Roy</strong> <strong class="designation">CEO, XYZ Softwear</strong>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- End Testimonials Box -->
-        <!-- our clients Slider -->
-        <div class="col-md-6">
-          <div class="our-clients">
-            <div class="slider-items-products">
-              <div id="our-clients-slider" class="product-flexslider hidden-buttons">
-                <div class="slider-items slider-width-col6">
+              <!-- Item -->
+              <div class="item"> <a href="#"><img src="images/brand1.png" alt="Image"></a> <a href="#"><img
+                    src="images/brand2.png" alt="Image"></a> </div>
+              <!-- End Item -->
 
-                  <!-- Item -->
-                  <div class="item"> <a href="#"><img src="images/brand1.png" alt="Image"></a> <a href="#"><img
-                        src="images/brand2.png" alt="Image"></a> </div>
-                  <!-- End Item -->
+              <!-- Item -->
+              <div class="item"> <a href="#"><img src="images/brand3.png" alt="Image"></a> <a href="#"><img
+                    src="images/brand4.png" alt="Image"></a> </div>
+              <!-- End Item -->
 
-                  <!-- Item -->
-                  <div class="item"> <a href="#"><img src="images/brand3.png" alt="Image"></a> <a href="#"><img
-                        src="images/brand4.png" alt="Image"></a> </div>
-                  <!-- End Item -->
+              <!-- Item -->
+              <div class="item"> <a href="#"><img src="images/brand5.png" alt="Image"></a> <a href="#"><img
+                    src="images/brand6.png" alt="Image"></a> </div>
+              <!-- End Item -->
 
-                  <!-- Item -->
-                  <div class="item"> <a href="#"><img src="images/brand5.png" alt="Image"></a> <a href="#"><img
-                        src="images/brand6.png" alt="Image"></a> </div>
-                  <!-- End Item -->
+              <!-- Item -->
+              <div class="item"> <a href="#"><img src="images/brand7.png" alt="Image"></a> <a href="#"><img
+                    src="images/brand3.png" alt="Image"></a> </div>
+              <!-- End Item -->
 
-                  <!-- Item -->
-                  <div class="item"> <a href="#"><img src="images/brand7.png" alt="Image"></a> <a href="#"><img
-                        src="images/brand3.png" alt="Image"></a> </div>
-                  <!-- End Item -->
-
-                </div>
-              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
+</div>
 
-    <!-- Bottom Banner Start -->
+<!-- Bottom Banner Start -->
 
-    <div class="bottom-banner-section">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-4 col-sm-4"> <a href="#" class="bottom-banner-img"><img src="images/ads-04.jpg"
-                alt="bottom banner"> <span class="banner-overly"></span>
-              <div class="bottom-img-info">
-                <h3>Electronic</h3>
-                <h6>Sed diam nonummy nibh euismod tincidunt</h6>
-                <span class="shop-now-btn">Shop Now</span>
-              </div>
-            </a> </div>
-          <div class="col-md-8 col-sm-8"> <a href="#" class="bottom-banner-img last"><img src="images/ads-05.jpg"
-                alt="bottom banner"> <span class="banner-overly last"></span>
-              <div class="bottom-img-info last">
-                <h3>New Collection</h3>
-                <h6>Lorem ipsum dolor sit amet, consectetuer adipiscing elit</h6>
-                <span class="shop-now-btn">Shop Now</span>
-              </div>
-            </a> </div>
-        </div>
-      </div>
+<div class="bottom-banner-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4 col-sm-4"> <a href="#" class="bottom-banner-img"><img src="images/ads-04.jpg"
+            alt="bottom banner"> <span class="banner-overly"></span>
+          <div class="bottom-img-info">
+            <h3>Electronic</h3>
+            <h6>Sed diam nonummy nibh euismod tincidunt</h6>
+            <span class="shop-now-btn">Shop Now</span>
+          </div>
+        </a> </div>
+      <div class="col-md-8 col-sm-8"> <a href="#" class="bottom-banner-img last"><img src="images/ads-05.jpg"
+            alt="bottom banner"> <span class="banner-overly last"></span>
+          <div class="bottom-img-info last">
+            <h3>New Collection</h3>
+            <h6>Lorem ipsum dolor sit amet, consectetuer adipiscing elit</h6>
+            <span class="shop-now-btn">Shop Now</span>
+          </div>
+        </a> </div>
     </div>
-
-
+  </div>
+</div>

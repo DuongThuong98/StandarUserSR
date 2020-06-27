@@ -167,6 +167,12 @@ module.exports = {
   },
 
 
+  mostViews:async () => {
+    result = await db.Document.find().sort({views: -1})
+    .limit(config.paginate.limit)
+    return result;
+  },
+
   allByIDTeacher: async (id) =>{
     result = await db.Document.find({ authorID: id })
    console.log(result);
