@@ -1,6 +1,6 @@
 {{#section 'css'}}
-  <!-- style CSS -->
-  <link rel="stylesheet" type="text/css" href="/css/blog.css" media="all">
+<!-- style CSS -->
+<link rel="stylesheet" type="text/css" href="/css/blog.css" media="all">
 <style>
   .item-brief {
     padding-left: 3px;
@@ -41,7 +41,47 @@
 
 {{#section 'js'}}
 
+<script>
+  jQuery(document).ready(function () {
+    $('.myConfirm').click(function () {
+      mockID = $(this).attr('data-id');
+      var b = false;
+      $.ajax({
+        url: '/user/mocktest/ajax/confirm',
+        type: 'POST',
+        data: {
+          _id: mockID, // $_POST['id'] = 22
+          action: 'makeNew',
 
+        },
+        dataType: 'JSON',
+        success: function (response) {
+          console.log(response)
+          if (response.success == false) {
+            var r = confirm("Bạn muốn làm lại bài này?");
+            console.log(r)
+            if (r == true) {
+              $(this).attr('onclick', "return true");
+              $(this).click();
+            } else {
+              $(this).attr('onclick', "return false");
+            }
+          }
+          else {
+
+            $(this).attr('onclick', "return true");
+            $(this).click();
+          }
+        }
+
+      });
+
+    })
+
+  });
+
+
+</script>
 {{/section}}
 
 <!-- Main Container -->
@@ -53,52 +93,55 @@
           <div class="page-title">
             <h2>Sản phẩm của tôi</h2>
             <a class="btn btn-success" href="/teacher/documents/add" role="button" style="margin-left: 1px;">
-            <i class="fa fa-plus" aria-hidden="true"></i>
-            Add Product
-          </a>
+              <i class="fa fa-plus" aria-hidden="true"></i>
+              Add Product
+            </a>
           </div>
           {{#if this.empty}}
           <div class="card-body">
-           <p style="color:#fed700; font-size:25px">Danh sách rỗng</p>
-              <a class="continue-btn" href="/"><i class="fa fa-arrow-left"> </i>&nbsp; Về trang chủ</a>
+            <p style="color:#fed700; font-size:25px">Danh sách rỗng</p>
+            <a class="continue-btn" href="/"><i class="fa fa-arrow-left"> </i>&nbsp; Về trang chủ</a>
           </div>
           {{else}}
 
-        
-        <div class="order-detail-content">
-              <div class="table-responsive">
-                <table class="table table-bordered cart_summary">
-                  <thead>
-                    <tr>
-              
-                      <th>Tên</th>
-                      <th>Loại</th>
-                      <th  class="action">Vào làm</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                      {{#each this.mocktests}}
-                    <tr>
-                      
-                      <td class="cart_description"><p class="product-name"><a href="#"> {{name}} </a></p></td>
-                     
-                      <td class="availability in-stock"><span class="label">{{mocktestType}}</span></td>
-                    
-                      <td class="action"><a href="/user/mocktest/{{_id}}"><i class="fa fa-edit"></i></a></td>
-                    </tr>
-                   {{/each}}
-                  </tbody>
-                 
-                </table>
-              </div>
-            </div>
 
-        {{/if}}
-         </div>
+          <div class="order-detail-content">
+            <div class="table-responsive">
+              <table class="table table-bordered cart_summary">
+                <thead>
+                  <tr>
+
+                    <th>Tên</th>
+                    <th>Loại</th>
+                    <th class="action">Vào làm</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {{#each this.mocktests}}
+                  <tr>
+
+                    <td class="cart_description">
+                      <p class="product-name"><a href="#"> {{name}} </a></p>
+                    </td>
+
+                    <td class="availability in-stock"><span class="label">{{mocktestType}}</span></td>
+
+                    <td class="action"><a  data-id="{{_id}}" ef="javascript:;"
+                        href="/user/mocktest/{{_id}}" onclick="return true">
+                        <i class="fa fa-edit"></i></a></td>
+                  </tr>
+                  {{/each}}
+                </tbody>
+
+              </table>
+            </div>
+          </div>
+
+          {{/if}}
+        </div>
       </div>
-    
+
     </div>
   </div>
 </section>
 <!-- Main Container End -->
-

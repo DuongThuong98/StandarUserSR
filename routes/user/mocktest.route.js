@@ -266,7 +266,6 @@ router.post('/ajax', async (req, res) => {
   if (mockTests.length > 0) {//nếu có tồn tại bài đã làm rồi
     index = mockTests.findIndex(mock => mock._id == item._id && mock.status == 0);
     if (index != -1) {
-
       item.grades = mockTests[index].grades;
       item.isExisted = true;
       oldTimeLeft = mockTests[index].timeLeft;
@@ -316,7 +315,6 @@ router.post('/ajax', async (req, res) => {
     })
   }
   else {
-
     if (item.action == "changeTimeLeft") {
       item.timeLeft
 
@@ -360,6 +358,58 @@ router.post('/ajax', async (req, res) => {
   }
 })
 
+router.post('/ajax/confirm', async (req, res) => {
+
+  item = req.body;
+  // console.log(item);
+  const row = await mocktestModel.single(item._id);
+  // console.log(row);
+
+  authUser = req.session.authUser;
+  mockTests = authUser.tests;
+ 
+
+  item.isExisted = false;
+  if (mockTests.length > 0) {//nếu có tồn tại bài đã làm rồi
+    index = mockTests.findIndex(mock => mock._id == item._id);
+    if (index != -1) {
+      res.json({
+        success: false,
+        message: 'Làm lại'
+      });
+    }
+    else
+    {
+      res.json({
+        success: true,
+        message: 'Lần đầu'
+      });
+    }
+  }
+  else
+  {
+    res.json({
+      success: true,
+      message: 'Lần đầu!'
+    });
+  }
+
+  
+})
+
 
 
 module.exports = router;
+
+
+// if (response.success == false) {
+//   var r = confirm("Bạn muốn làm lại bài này?");
+//   if (r == true) {
+//     b = true;
+//   } else {
+//     b = false;
+//   }
+// }
+// else {
+//   b = true;
+// }
