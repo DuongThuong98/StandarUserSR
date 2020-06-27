@@ -138,7 +138,7 @@
             $('.modal-title').text('Error!')
             $('.modal-body').text(response.message)
           }
-          {{!-- $('#myMessage').modal('show') --}}
+        // $('#myMessage').modal('show')
           // $('.reload_page_button').click(function () { window.location = '/products/' + response.data; });
 
         }
@@ -150,6 +150,67 @@
 
 </script>
 
+<script>
+  var mockID = $('#save').attr('mockID');
+  var timeStart = parseInt($('#timeStart').val());
+  var timeLeft = $('.timeLeft').attr('content');
+
+  timer = setInterval(run, 10000);
+  per = 60
+  function run() {
+    timeStart = timeStart + per;
+    timeLeft = timeLeft - per;
+    console.log(timeLeft)
+
+    if (timeLeft <= 0) {
+      clearInterval(timer);
+      $('#frmCompletedTest').submit();
+    }
+    else {
+      $('#timeStart').attr('value', timeStart);
+      var l = $('.my-form').length;
+      var result = [];
+      for (i = 0; i < l; i++) {
+        result.push($('.my-form').eq(i).val());
+      }
+
+      $.ajax({
+        url: '/user/mocktest/ajax',
+        type: 'POST',
+        data: {
+          _id: mockID, // $_POST['id'] = 22
+          action: 'changeTimeLeft',
+          answerKeys: result,
+          timeLeft: timeLeft
+        },
+        dataType: 'JSON',
+        success: function (response) {
+
+          console.log(response);
+        }
+      });
+    }
+  }
+  function submit() {
+    clearInterval(timer);
+    $('#frmCompletedTest').submit();
+  }
+</script>
+
+
+<script>
+  jQuery(document).ready(function () {
+    $('.audiolinks').change(function () {
+      //console.log("lala")
+      //console.log($('.audiolinks').val())
+      url = "/mp3/documents/" + $('.audiolinks').val()
+      var audio = document.getElementById('audio');
+      var source = document.getElementById('audioSource');
+      source.src = url
+      audio.load();
+    })
+  });
+</script>
 {{/section}}
 
 <!-- Main Container -->
@@ -170,9 +231,10 @@
                   <li class="active"> <a href="#description" data-toggle="tab"> Bài làm</a>
                   </li>
 
-                  <li><button type="button" class="btn btn-primary" id="save" mockID="{{this.mocktest._id}}" >Lưu lại</button></li>
-                  <li><a type="button" class="btn btn-primary"  href="javascript: $('#frmCompletedTest').submit();">Nộp bài</a></li>
-    
+                  <li><button type="button" class="btn btn-primary" id="save" mockID="{{this.mocktest._id}}">Lưu
+                      lại</button></li>
+                  <li><button type="button" class="btn btn-primary" onclick="submit()">Nộp
+                      bài</button></li>
 
                   <!-- thời gian còn lại/ -->
                   <li>
@@ -203,26 +265,40 @@
 
                       <div id="tab-a6bfee399f4791567a15c5309524f5ac" class="tab-content current">
 
-                        <audio
-                          src="http://static.ielts-fighter.com/uploads/2019/test%20listening/14/test-14-section-1.mp3"
-                          controls=""></audio>
-                        <!--End-->
-
-
                         <ul class="questions col-md-12 col-sm-12 col-xs-12">
+                          <li class="row">
+
+                            <div class="col-sm-3">
+                              <select class="input form-control audiolinks" name="audiolinks">
+                                <option selected="true" disabled="disabled">Chọn </option>
+                                {{#each this.mocktest.audioLinks}}
+                                <option value="{{this}}">{{this}}</option>
+                                {{/each}}
+                              </select>
+                            </div>
+                            <div class="col-sm-3 audio-area">
+
+                              <audio id="audio" controls="controls">
+                                <source id="audioSource" src="">
+                                </source>
+                                Your browser does not support the audio format.
+                              </audio>
+                            </div>
+
+                          </li>
                           <h3><span>Questions</span></h3>
-                          <form method="POST" name="frmAddProduct" novalidate 
-                                action="/user/mocktest/submit" id="frmCompletedTest">
-                                <input type="hidden" name="_id" value="{{this.mocktest._id}}">
-                                <input type="hidden" name="timeStart" value="{{timeStart}}" id="timeStart">
+                          <form method="POST" name="frmAddProduct" novalidate action="/user/mocktest/submit"
+                            id="frmCompletedTest">
+                            <input type="hidden" name="_id" value="{{this.mocktest._id}}">
+                            <input type="hidden" name="timeStart" value="{{timeStart}}" id="timeStart">
                             <div class="col-sm-3 answer-area" height="500" style=" height: 500px;
                                                                         overflow: scroll;">
                               {{!-- 40 CÂU TRẢ LỜI --}}
-                               
+
                               {{#each this.numberedAnswers}}
                               {{index}}.
-                                <input type="text" class="input form-control my-form"
-                                         name="answerKeys" id="answer-key" value="{{answer}}">
+                              <input type="text" class="input form-control my-form" name="answerKeys" id="answer-key"
+                                value="{{answer}}">
                               {{/each}}
                             </div>
                           </form>

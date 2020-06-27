@@ -71,7 +71,6 @@ router.post('/add', cpUpload, async (req, res) => {
         if (entity.mocktest_type == 1) {
             entity.audioLinks = [];
             req.files['fuMain-audio'].forEach(element => {
-                entity.audioLinks = [];
                 entity.audioLinks.push(element.filename)
 
             });

@@ -14,23 +14,28 @@ const router = express.Router();
 router.get('/', async (req, res) => {
   authUser = req.session.authUser;
   let rows = authUser.tests;
-  mockTests = [];
-  rows.forEach(async row => {
-    const temp = await mocktestModel.single(row._id);
-    row.name = temp.name;
-    row.mocktestType = temp.mocktestType;
-    if(temp.status == 0)
+  var mockTests = [];
+  for (i=0; i<rows.length; i++)
+  {
+    const temp = await mocktestModel.single(rows[i]._id);
+    rows[i].name = temp.name;
+    rows[i].mocktestType = temp.mocktestType;
+    if(rows[i].status === 0)
     {
-      row.isDone = false;
+      rows[i].isDone = false;
     }
     else{
-      row.isDone = true;
+      rows[i].isDone = true;
     }
-    if (temp != null) {
-      mockTests.push(row);
-    }
-  });
 
+    if (temp != null) {
+      console.log("la ");
+      mockTests.push(rows[i]);
+    }
+  }
+
+
+  console.log(rows)
   res.render('vwUser/mocklist', {
     mocktests: rows,
     empty: rows.length === 0
@@ -102,8 +107,10 @@ router.get('/pending/:id', async (req, res) => {
     console.log(numberedAnswers)
 
     pendingMock.questionLink = row.questionLink;
-    console.log("time start pending:", pendingMock);
+    pendingMock.questionLink = row.questionLink;
+    pendingMock.audioLinks = row.audioLinks;
     // console.log("time start pending:", pendingMock);
+    
     res.render('vwMocktests/pendingDetailMocktest', {
       mocktest: pendingMock,
       empty: pendingMock === null,

@@ -155,9 +155,23 @@
       });
     }
   }
+
 </script>
 
 <script>
+
+  jQuery(document).ready(function () {
+    $('.audiolinks').change(function () {
+      //console.log("lala")
+      //console.log($('.audiolinks').val())
+      url = "/mp3/documents/" + $('.audiolinks').val()
+      var audio = document.getElementById('audio');
+      var source = document.getElementById('audioSource');
+      source.src = url
+      audio.load();
+    })
+  });
+
   jQuery(document).ready(function () {
     $('#save').click(function () {
       //var answerKeys = $('#answer-key').val();
@@ -193,7 +207,7 @@
             $('.modal-title').text('Error!')
             $('.modal-body').text(response.message)
           }
-          { { !--$('#myMessage').modal('show') --} }
+          //$('#myMessage').modal('show')
           // $('.reload_page_button').click(function () { window.location = '/products/' + response.data; });
 
         }
@@ -227,10 +241,10 @@
 
                   <li><button type="button" class="btn btn-primary" id="save" mockID="{{this.mocktest._id}}">Lưu
                       lại</button></li>
-                  <li><a type="button" class="btn btn-primary" href="javascript: 
+                  <li><button type="button" class="btn btn-primary" onclick="javascript: 
                             clearInterval(timer);
                             $('#frmCompletedTest').submit();">Nộp
-                      bài</a></li>
+                      bài</button></li>
 
 
 
@@ -263,13 +277,27 @@
 
                       <div id="tab-a6bfee399f4791567a15c5309524f5ac" class="tab-content current">
 
-                        <audio
-                          src="http://static.ielts-fighter.com/uploads/2019/test%20listening/14/test-14-section-1.mp3"
-                          controls=""></audio>
-                        <!--End-->
-
-
                         <ul class="questions col-md-12 col-sm-12 col-xs-12">
+                          <li class="row">
+
+                            <div class="col-sm-3">
+                              <select class="input form-control audiolinks" name="audiolinks">
+                                <option selected="true" disabled="disabled">Chọn </option>
+                                {{#each this.mocktest.audioLinks}}
+                                <option value="{{this}}">{{this}}</option>
+                                {{/each}}
+                              </select>
+                            </div>
+                            <div class="col-sm-3 audio-area">
+
+                              <audio id="audio" controls="controls">
+                                <source id="audioSource" src="">
+                                </source>
+                                Your browser does not support the audio format.
+                              </audio>
+                            </div>
+
+                          </li>
                           <h3><span>Questions</span></h3>
                           <form method="POST" name="frmAddProduct" novalidate action="/user/mocktest/submit"
                             id="frmCompletedTest">

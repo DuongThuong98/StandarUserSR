@@ -38,7 +38,18 @@
 {{/section}}
 
 {{#section 'js'}}
+<script>
+  jQuery(document).ready(function () {
+    $('.grade').click(function () {
 
+      $('.modal-title').text("Số điểm của bạn là")
+      $('.modal-body').text($(this).attr('grade'))
+    console.log($(this).attr('grade'))
+      $('#myMessage').modal('show')
+
+    })
+  });
+</script>
 {{/section}}
 
 <!-- Main Container -->
@@ -72,9 +83,9 @@
                 {{#each this.mocktests}}
                 <tr>
                   <td class="th-delete" data-id="{{_id}}"><a href="#"><i class="fas fa-times-circle"></i></a></td>
-                  
+
                   {{#if isDone}}
-                 <td class="cart_description">
+                  <td class="cart_description">
                     <p class="product-name"><a href="/user/mocktest/done/{{_id}}"> {{name}} </a></p>
                   </td>
                   {{else}}
@@ -87,11 +98,14 @@
 
                   {{#if isDone}}
                   <td class="availability in-stock"><span class="label"> Hoàn thành</span></td>
+                  <td class="action"><a href="javascript:;" class="grade" grade="{{grades}}"><i
+                        class="fa fa-certificate"></i></a></td>
                   {{else}}
                   <td class="availability out-of-stock"><span class="label">Đang làm</span></td>
+                  <td class="action"><a href="/user/mocktest/pending/{{_id}}"><i class="fa fa-edit"></i></a></td>
                   {{/if}}
 
-                  <td class="action"><a href="/user/mocktest/{{_id}}"><i class="fa fa-edit"></i></a></td>
+
                 </tr>
                 {{/each}}
               </tbody>
