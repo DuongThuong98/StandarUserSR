@@ -44,6 +44,10 @@ const UserSchema = mongoose.Schema({
         type: Boolean,
         default: false,
     },
+    wantToUpgrade: {
+        type: Boolean,
+        default: false,
+    },
     city: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "City",
@@ -85,6 +89,17 @@ const UserSchema = mongoose.Schema({
             ref: "Document",
         },
     }, ],
+    courseList: [{
+        _id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Course",
+        },
+    },],
+    resetLink: {
+        data: String,
+        default: "",
+      },
+   
 }, {
     timestamps: true,
 });

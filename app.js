@@ -72,6 +72,12 @@ const documentModel = require('./models/document.model');
 app.get('/', async (req, res) => {
 
   documents = await documentModel.mostViews();
+
+  for(i=0;i<documents.length;i++)
+  {
+    documents[i].created_at = moment(documents[i].createdAt, 'YYYY-MM-DDTHH:mm:ss[Z]').format('MMMM Do YYYY, h:mm:ss a');
+  }
+
   console.log(documents);
   res.render('home',{
     documents,

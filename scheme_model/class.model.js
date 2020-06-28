@@ -2,12 +2,12 @@ const mongoose = require("mongoose");
 
 const ClassSchema = mongoose.Schema({
     name: String,
-    lecturer: {},
     status: Number,
     content: Number,
-    categoryID: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Category",
+    linkVideo: [String],
+    category: {
+        type: String,
+        default: "chính thức",//chính thức hoặc bổ túc
     },
     dateOpening: {
         type: Date,

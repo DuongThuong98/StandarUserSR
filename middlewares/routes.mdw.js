@@ -12,7 +12,8 @@ module.exports = function (app) {
 
   app.use('/teacher',restrict.teacher ,require('../routes/teacher/info.route'));
   app.use('/teacher/documents',restrict.teacher ,require('../routes/teacher/document.route'));
-  // app.use('/seller/soldlist',restrict.seller ,require('../routes/seller/soldlist.route'));
+  app.use('/teacher/courses',require('../routes/teacher/course.route'));
+
 
   // app.use('/admin/users',restrict.admin ,require('../routes/admin/users.route'));
   // app.use('/admin/categories',restrict.admin ,require('../routes/admin/categories.route'));
