@@ -1,0 +1,113 @@
+{{#section 'css'}}
+<style>
+    .item-brief {
+        padding-left: 3px;
+
+    }
+
+    .product-item {
+        /* margin-top: 10px; */
+        /* background-color: rgb(245, 240, 139); */
+        border-style: groove;
+        /* border-color: honeydew; */
+        border-width: 1px;
+    }
+
+    .page-title {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .form-group {
+        width: fit-content;
+    }
+
+    .checkbox>label {
+        font-weight: bold;
+        margin-left: 15px;
+    }
+
+    /* .password-group{
+        display: none; */
+    /* } */
+</style>
+{{/section}}
+
+
+{{#section 'js'}}
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+        $('.password-group').hide();
+        console.log('a');
+    });
+    jQuery(document).ready(function () {
+        $('#is_change_pass').click(function () {
+            $('.password-group').toggle(500);
+            // alert("fdf");
+        })
+    });
+
+    function validate() {
+        if ($('#is_change_pass').is(":checked")) {
+            if ($('#old_password').val() == "" ||
+                $('#new_password').val() == "" ||
+                $('#re_new_password').val() !== $('#new_password').val()) {
+                alert("Nhập lại Password")
+                return false;
+            }
+        }
+
+        return true;
+    }
+</script>
+{{/section}}
+
+
+<!-- Main Container -->
+<section class="main-container col2-right-layout">
+    <div class="main container">
+        <div class="row">
+            <div class="col-main col-sm-9 col-xs-12">
+                {{#if this.err_message}}
+                {{this.err_message}}
+                {{/if}}
+                {{#if successMessage}}
+                <div class="alert alert-success alert-dismissible" style="width:300px">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>Thành công!</strong> {{successMessage}}
+                </div>
+                {{/if}}
+                <ul>
+                    <li>
+                    <a href="">Link kiểm tra đầu vào dành cho người chưa từng học Ielts</a>
+                    </li>
+                    <li>
+                        <a href="">Link kiểm tra dành cho người đã học Ielts</a>
+                    </li>
+                </ul>
+
+
+            </div>
+
+
+            <aside class="right sidebar col-sm-3 col-xs-12">
+                <div class="sidebar-account block">
+                    <div class="sidebar-bar-title">
+                        <h3>Tài khoản cá nhân</h3>
+                    </div>
+                    <div class="block-content">
+                        <ul>
+                            <li><a href="info">Thông tin tài khoản</a></li>
+                            <li><a href="wishlist">Danh sách yêu thích</a></li>
+                            <li><a href="mocktest">Các bài kiểm tra thử </a></li>
+                            <li><a href="questions"> Câu hỏi trong forum</a></li>
+                            <li class="current last"><a>Nâng cấp học viên</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+            </aside>
+        </div>
+    </div>
+</section>
+<!-- Main Container End -->

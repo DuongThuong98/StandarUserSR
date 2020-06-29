@@ -92,49 +92,28 @@ router.post('/add', cpUpload, async (req, res) => {
         entity.authorID = req.session.authUser._id;
         entity.image = req.files['fuMain'][0].filename;
 
-        result = await documentModel.add(entity);
-        console.log("Thêm được chưa?: ", result);
+        // result = await documentModel.add(entity);
+        console.log("Thêm được chưa?: ", entity);
     }
     // console.log(entity.name);
 
     res.render('vwTeacher/addDoc');
 })
 
-// router.get('/edit/:id', async (req, res) => {
-//     const rows = await productModel.single(req.params.id);
-
-//     if (rows.length === 0) {
-//         throw new Error('Invalid product id');
-//     }
-//     const type = await categoryModel.single(rows[0].id_type);
-//     //console.log(rows[0]);
-//     //console.log(type);
-
-//     res.render('vwSeller/editPro', { product: rows[0], typeName: type[0].cate_name });
-// })
-
-
-// router.post('/patch', async (req, res) => {
-//     const rows = await productModel.single(req.body.id);
-
-//     if (rows.length === 0) {
-//         throw new Error('Invalid product id');
-//     }
-//     const type = await categoryModel.single(rows[0].id_type);
-//     //console.log(rows[0]);
-//     //console.log(type);
-
-//     current_time = moment().format('LLLL'); 
-//     rows[0].detail = "</br>" + rows[0].detail + '<b>'+current_time+'</b> </br>' +req.body.moreDetail ;
-
-//     console.log(req.body);
-//     console.log(rows[0].detail);
-//     entity = {detail: rows[0].detail,
-//               ProID: req.body.id};
-//     productModel.patch(entity);
-//     //res.render('vwSeller/editPro', { product: rows[0], typeName: type[0].cate_name });
-//     res.redirect('/seller/product');
-// })
-
 
 module.exports = router;
+
+// for (var i = 1; i <= rows; i++) {
+//     if (i % 4 == 1) {
+//         $('.answers-input').append(" <li class='row'>");
+//     }
+
+//     $('.answers-input').append("<div class='col-sm-3'>"
+//         + i + ".<input type='text' class='input form-control' name='answerKeys'" +
+//         "id = 'answer-key' ></div > ");
+
+//     if (i % 4 == 1) {
+//         $('.answers-input').append('</li>');
+//     }
+
+// }

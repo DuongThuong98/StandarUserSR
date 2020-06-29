@@ -88,7 +88,7 @@
     });
     jQuery(document).ready(function () {
         $('.mocktest-type').change(function () {
-            
+
             if ($('.mocktest-type').val() == 1) { $('.audio-area').toggle(500); }
             else {
                 $('.audio-area').hide();
@@ -96,25 +96,56 @@
             //alert("fdf");
         })
     });
+    jQuery(document).ready(function () {
+        $('#points').change(function () {
+            var rows = parseInt($('#points').val());
+            $('.answers-input').empty();
+            console.log(rows)
+            for (var i = 1; i <= rows; i++) {
+                if (i % 4 == 1) {
+                    $('.answers-input').append(" <li class='row'>");
+                }
+
+                $('.answers-input').append("<div class='col-sm-3'>"
+                    + i + ".<input type='text' class='input form-control' name='answerKeys'" +
+                    "id = 'answer-key' ></div > ");
+
+                if (i % 4 == 1) {
+                    $('.answers-input').append('</li>');
+                }
+
+            }
+        })
+    });
 
     jQuery(document).ready(function () {
-        var rows = 40;
-        for (var i = 1; i <= rows; i++) {
-            if (i % 4 == 1) {
-                $('.answers-input').append(" <li class='row'>");
+        $('#points-singleQuiz').change(function () {
+            $('.singleQuiz').empty();
+            var rows = parseInt($('#points-singleQuiz').val());
+            $('.answers-input').append(" <li class='row'>");
+            for (var i = 1; i <= rows; i++) {
+                $('.singleQuiz').append(`<input type="text" class="input form-control" style="width: auto;"
+                                 name="answerKeys" id="answer-key" placeholder="A">`)
             }
-
-            $('.answers-input').append("<div class='col-sm-3'>"
-                + i + ".<input type='text' class='input form-control' name='answerKeys'" +
-                "id = 'answer-key' ></div > ");
-
-            if (i % 4 == 1) {
-                $('.answers-input').append('</li>');
-            }
-
-        }
-
+            $('.answers-input').append(" </li>");
+        })
     });
+    jQuery(document).ready(function () {
+        $('#choices').click(function () {
+            if ($('#choices').is(":checked")) {
+                $('#points-singleQuiz').show(500)
+                $('.singleQuiz').empty();
+
+            }
+            else {
+                $('#points-singleQuiz').hide(500)
+                $('.singleQuiz').empty();
+                $('.singleQuiz').append(` <input type="text" class="input form-control"
+                                                                        name="answerKeys" id="answer-key">`)
+            }
+        })
+    });
+
 </script>
 
 {{/section}}
@@ -277,8 +308,29 @@
 
                                                         </li>
 
+                                                        <input type="number" id="points" name="points" step="1" min="0"
+                                                            value="0">
                                                         <div class="answers-input">
+                                                            {{!-- 40 câu hỏi --}}
+                                                            <li class="row">
+                                                                <div class="col-sm-6 ">
+                                                                    <div class="col-sm-6 ">
+                                                                        1. <input type="checkbox" id="choices"
+                                                                            value="choices">
+                                                                        <span for="choices">Trắc nghiệm</span><br>
+                                                                    </div>
+                                                                    <div class="col-sm-3 ">
+                                                                        <input type="number" id="points-singleQuiz"
+                                                                            step="1" min="0" value="0" hidden>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="singleQuiz">
 
+                                                                    <input type="text" class="input form-control"
+                                                                        style="width: auto;" name="answerKeys"
+                                                                        id="answer-key">
+                                                                </div>
+                                                            </li>
                                                         </div>
 
 
