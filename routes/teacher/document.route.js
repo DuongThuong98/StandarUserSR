@@ -65,34 +65,65 @@ router.post('/add', cpUpload, async (req, res) => {
     if (typeof (req.body.categoryId) == "undefined") {
         const entity = req.body;
         console.log(entity);
-        entity.questionLink = req.files['fuMain-ques'][0].filename;
-        entity.answerKeyLink = req.files['fuMain-key'][0].filename;
+        // entity.questionLink = req.files['fuMain-ques'][0].filename;
+        // entity.answerKeyLink = req.files['fuMain-key'][0].filename;
 
-        if (entity.mocktest_type == 1) {
-            entity.audioLinks = [];
-            req.files['fuMain-audio'].forEach(element => {
-                entity.audioLinks.push(element.filename)
+        // if (entity.mocktest_type == 1) {
+        //     entity.audioLinks = [];
+        //     req.files['fuMain-audio'].forEach(element => {
+        //         entity.audioLinks.push(element.filename)
 
-            });
-            entity.mocktestType = "listening";
-        }
-        else{
-            entity.mocktestType = "reading";
-        }
+        //     });
+        //     entity.mocktestType = "listening";
+        // }
+        // else{
+        //     entity.mocktestType = "reading";
+        // }
 
         delete entity.mocktest_type;
         entity.authorID = req.session.authUser._id;
-        console.log(entity)
 
-        result = await mocktestModel.add(entity);
-        console.log("Thêm được chưa?: ", result);
+        amountQuiz = parseInt(entity.points)
+
+        answerKeys = [];
+
+        temp = "answerKeys_1";
+        console.log(entity[temp]);
+        
+        for(i=0;i<amountQuiz;i++)
+        {
+            keyBro = "answerKeys_"+ String(i+1);
+            obj = {}
+            if(typeof entity[keyBro] == "string")
+            {
+                obj = {key: entity[keyBro]}
+            }
+            else
+            {
+                keySub = keyBro + "_sub"
+                obj = {key: entity[keyBro],
+                keySub: entity[keySub]}
+            }
+            
+            answerKeys.push(obj)
+        }
+        
+        entity.answerKeys = answerKeys;
+        console.log(entity.answerKeys)
+        answerKeys.forEach(element => {
+            console.log(element);
+            
+        });
+
+        //result = await mocktestModel.add(entity);
+        //console.log("Thêm được chưa?: ", result);
     }
     else {
         const entity = req.body;
         entity.authorID = req.session.authUser._id;
         entity.image = req.files['fuMain'][0].filename;
 
-        // result = await documentModel.add(entity);
+         result = await documentModel.add(entity);
         console.log("Thêm được chưa?: ", entity);
     }
     // console.log(entity.name);
@@ -117,3 +148,34 @@ module.exports = router;
 //     }
 
 // }
+
+
+// jQuery(document).ready(function () {
+//     $('.choices').click(function () {
+//         var temp = $(this).attr('choice-id')
+//         console.log("temp")
+//         code = ".points-singleQuiz-" + temp;
+//         console.log(code)
+//         if ($(this).is(":checked")) {
+//             $(code).show(500)
+//             //$('.singleQuiz').empty();
+
+//         }
+//         else {
+//             $(code).hide(500)
+//             //$('.singleQuiz').empty();
+//            // $('.singleQuiz').append(` <input type="text" class="input form-control"
+//             //                                                        name="answerKeys" id="answer-key">`)
+//         }
+//     })
+// });
+
+// jQuery(document).on('click','.choices',function () {
+      
+//     var temp = $(this).attr('choice-id')
+//     console.log("temp")
+//     code = ".points-singleQuiz-" + temp;
+//     console.log(code)
+  
+
+// });

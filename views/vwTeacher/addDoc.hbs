@@ -82,6 +82,7 @@
 
 
 <script type="text/javascript">
+    alphabet = 'abcdefghijklmnopqrstuvwxyz'.toUpperCase().split('');
     jQuery(document).ready(function () {
         $('.audio-area').hide();
         console.log('a');
@@ -102,49 +103,69 @@
             $('.answers-input').empty();
             console.log(rows)
             for (var i = 1; i <= rows; i++) {
-                if (i % 4 == 1) {
-                    $('.answers-input').append(" <li class='row'>");
-                }
+                $('.answers-input').append(`<li class="row">
+                                                                <div class="col-sm-12 ">
+                                                                    <div class="col-sm-6 ">
+                                                                        ${i}. <input type="checkbox" class="choices"
+                                                                            value="choices" choice-id="${i}">
+                                                                        <span for="choices">Trắc nghiệm</span><br>
+                                                                    </div>
+                                                                    <div class="col-sm-3 ">
+                                                                        <input type="number" class="points-singleQuiz-${i} points-singleQuiz " 
+                                                                            step="1" min="0" value="0" hidden choice-id="${i}">
+                                                                    </div>
+                                                                </div>
+                                                           <div class="col-sm-12 ">
+                                                                <div class="singleQuiz-${i}">
+                                                                    <input type="text" class="input form-control"
+                                                                        style="width: auto;" name="answerKeys_${i}"
+                                                                        id="answer-key">
+                                                                </div>
+                                                                 </div>
+                                                            
+                                                            </li>`);
 
-                $('.answers-input').append("<div class='col-sm-3'>"
-                    + i + ".<input type='text' class='input form-control' name='answerKeys'" +
-                    "id = 'answer-key' ></div > ");
 
-                if (i % 4 == 1) {
-                    $('.answers-input').append('</li>');
-                }
 
             }
         })
     });
 
-    jQuery(document).ready(function () {
-        $('#points-singleQuiz').change(function () {
-            $('.singleQuiz').empty();
-            var rows = parseInt($('#points-singleQuiz').val());
-            $('.answers-input').append(" <li class='row'>");
-            for (var i = 1; i <= rows; i++) {
-                $('.singleQuiz').append(`<input type="text" class="input form-control" style="width: auto;"
-                                 name="answerKeys" id="answer-key" placeholder="A">`)
-            }
-            $('.answers-input').append(" </li>");
-        })
-    });
-    jQuery(document).ready(function () {
-        $('#choices').click(function () {
-            if ($('#choices').is(":checked")) {
-                $('#points-singleQuiz').show(500)
-                $('.singleQuiz').empty();
+    jQuery(document).on('click', '.points-singleQuiz', function () {
+        console.log(alphabet)
+        var rows = parseInt($(this).val());
+        var id = $(this).attr('choice-id')
+        code = ".singleQuiz-" + id;
+        $(code).empty();
+        for (var i = 0; i <= rows; i++) {
+            $(code).append(`<div class="col-sm-2"> <input type="checkbox" name="answerKeys_${id}_sub" value="${i}">
+                <input type="text" class="input form-control" style="width: auto;"
+                                 name="answerKeys_${id}" id="answer-key" placeholder="${alphabet[i]}"> </div>`)
 
-            }
-            else {
-                $('#points-singleQuiz').hide(500)
-                $('.singleQuiz').empty();
-                $('.singleQuiz').append(` <input type="text" class="input form-control"
-                                                                        name="answerKeys" id="answer-key">`)
-            }
-        })
+        }
+
+
     });
+    jQuery(document).on('click', '.choices', function () {
+        var id = $(this).attr('choice-id')
+       
+        code = ".points-singleQuiz-" + id;
+        console.log(code)
+        singleQuiz = ".singleQuiz" + id;
+        if ($(this).is(":checked")) {
+            $(code).show(500)
+            $(singleQuiz).empty();
+
+        }
+        else {
+            $(code).hide(500)
+            $(singleQuiz).empty();
+            $(singleQuiz).append(` <input type="text" class="input form-control"
+                                                                    name="answerKeys_${id}" id="answer-key">`)
+        }
+
+    });
+
 
 </script>
 
@@ -312,25 +333,9 @@
                                                             value="0">
                                                         <div class="answers-input">
                                                             {{!-- 40 câu hỏi --}}
-                                                            <li class="row">
-                                                                <div class="col-sm-6 ">
-                                                                    <div class="col-sm-6 ">
-                                                                        1. <input type="checkbox" id="choices"
-                                                                            value="choices">
-                                                                        <span for="choices">Trắc nghiệm</span><br>
-                                                                    </div>
-                                                                    <div class="col-sm-3 ">
-                                                                        <input type="number" id="points-singleQuiz"
-                                                                            step="1" min="0" value="0" hidden>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="singleQuiz">
+                                                        
 
-                                                                    <input type="text" class="input form-control"
-                                                                        style="width: auto;" name="answerKeys"
-                                                                        id="answer-key">
-                                                                </div>
-                                                            </li>
+
                                                         </div>
 
 
