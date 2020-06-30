@@ -102,62 +102,6 @@
 </script>
 
 
-{{!-- <script type="text/javascript">
-  jQuery(document).ready(function () {
-    var rows = 40;
-    for (var i = 1; i <= rows; i++) {
-      $('.answer-area').append(i + ".<input type='text' class='input form-control my-form' name='answerKeys'" +
-        "id = 'answer-key' >");
-
-    }
-
-  });
-</script> --}}
-
-{{!-- <script>
-  var mockID = $('#save').attr('mockID');
-  var timeStart = parseInt($('#timeStart').val());
-  var timeLeft = $('.timeLeft').attr('content');
-
-  timer = setInterval(run, 10000);
-  per = 60
-  function run() {
-    timeStart = timeStart + per;
-    timeLeft = timeLeft - per;
-    console.log(timeLeft)
-
-    if (timeLeft <= 0) {
-      clearInterval(timer);
-      $('#frmCompletedTest').submit();
-    }
-    else {
-      $('#timeStart').attr('value', timeStart);
-      var l = $('.my-form').length;
-      var result = [];
-      for (i = 0; i < l; i++) {
-        result.push($('.my-form').eq(i).val());
-      }
-
-      $.ajax({
-        url: '/user/mocktest/ajax',
-        type: 'POST',
-        data: {
-          _id: mockID, // $_POST['id'] = 22
-          action: 'changeTimeLeft',
-          answerKeys: result,
-          timeLeft: timeLeft
-        },
-        dataType: 'JSON',
-        success: function (response) {
-
-          console.log(response);
-        }
-      });
-    }
-  }
-
-</script> --}}
-
 <script>
 
   jQuery(document).ready(function () {
@@ -174,7 +118,7 @@
 
   jQuery(document).ready(function () {
     $('#save').click(function () {
-      //var answerKeys = $('#answer-key').val();
+      var answers = $('#answer-key').val();
       //console.log(answers);
       var l = $('.my-form').length;
       //console.log(l)
@@ -192,7 +136,7 @@
         data: {
           _id: mockID, // $_POST['id'] = 22
           action: 'save',
-          answerKeys: result,
+          answers: result,
           timeStart: timeStart
         },
         dataType: 'JSON',
@@ -207,7 +151,7 @@
             $('.modal-title').text('Error!')
             $('.modal-body').text(response.message)
           }
-          //$('#myMessage').modal('show')
+          $('#myMessage').modal('show')
           // $('.reload_page_button').click(function () { window.location = '/products/' + response.data; });
 
         }
@@ -235,38 +179,17 @@
               <div class="product-tab-inner">
                 <ul id="product-detail-tab" class="nav nav-tabs product-tabs" style="  display: flex;">
                   <div hidden class="timeLeft" content="{{timeLeft}}"></div>
-
+                  <input type="hidden" name="timeStart" value="{{timeStart}}" id="timeStart">
                   <li class="active"> <a href="#description" data-toggle="tab"> Bài làm</a>
                   </li>
 
-                  <li><button type="button" class="btn btn-primary" id="save" mockID="{{this.mocktest._id}}">Lưu
-                      lại</button></li>
-                  <li><button type="button" class="btn btn-primary" onclick="javascript: 
-                            {{!-- clearInterval(timer); --}}
-                            $('#frmCompletedTest').submit();">Nộp
-                      bài</button></li>
+                  <li><button type="button" class="btn btn-primary" id="save" mockID="{{this.mocktest._id}}">Điểm
+                      số</button></li>
+                  <li><button type="button" class="btn btn-primary"
+                      onclick="window.open('http://localhost:3001/user/mocktest/key/{{this.mocktest._id}}');">Bài giải
+                      chi tiết</button></li>
 
 
-
-                  <!-- thời gian còn lại/ -->
-                  <li>
-                    <div class="upload-date" style="display: grid;">
-                      <div class="countbox_1 jtv-timer-grid count_2" value="count_2" timerun="01/03/2020 12:00:00 AM"
-                        style="  display: flex;
-                                                            flex-direction: row;
-                                                            justify-content: space-around;
-                                                            margin-bottom: 10px;
-                                                            width: 200px; 
-                                                            float: left;
-                                                            background-color: pink;">
-
-                        <div class="hour box-time-date"><span class="time-num">00</span>Hrs</div>
-                        <div class="min box-time-date"><span class="time-num">00</span>Mins</div>
-                        <div class="sec box-time-date"><span class="time-num">00</span>Secs</div>
-                      </div>
-                    </div>
-
-                  </li>
 
                 </ul>
 
@@ -277,6 +200,8 @@
 
                       <div id="tab-a6bfee399f4791567a15c5309524f5ac" class="tab-content current">
 
+
+                        <!--End-->
                         <ul class="questions col-md-12 col-sm-12 col-xs-12">
                           <li class="row">
 
@@ -289,48 +214,30 @@
                               </select>
                             </div>
                             <div class="col-sm-3 audio-area">
-
+                            
                               <audio id="audio" controls="controls">
                                 <source id="audioSource" src="">
                                 </source>
                                 Your browser does not support the audio format.
                               </audio>
                             </div>
+                             <div class="col-sm-3">
+                              <h3>.    Điểm số của bạn là: {{this.mocktest.percentGrade}}</h3>
+                              <h4>Khóa học đề xuất <a href="/courses/{{this.suggestedCourse._id}}">ĐÂY</a> </h4> 
+                            </div>
 
                           </li>
                           <h3><span>Questions</span></h3>
-                          <form method="POST" name="frmAddProduct" novalidate action="/user/mocktest/submit"
-                            id="frmCompletedTest">
-                            <input type="hidden" name="_id" value="{{this.mocktest._id}}">
-                            <input type="hidden" name="timeStart" value="{{timeStart}}" id="timeStart">
+                          <form method="POST" name="frmAddProduct" novalidate>
                             <div class="col-sm-3 answer-area" height="500" style=" height: 500px;
                                                                         overflow: scroll;">
                               {{!-- 40 CÂU TRẢ LỜI --}}
-                              {{#each mocktest.answerKeys}}
-                              <h5>{{this.number}}</h5>
 
-                              {{#if this.keySub}}
-                              {{#if this.single}}
-
-                              {{#each this.keyABC}}
-                              <input type="radio" name="answerKeys_{{../number}}" id="name{{../number}}_{{this.alpha}}" value="{{this.alpha}}">
-                              <label for="name{{../number}}_{{this.alpha}}">{{this.alpha}} {{this.detail}} </label>
+                              {{#each this.numberedAnswers}}
+                              {{index}}.
+                              <input type="text" class="input form-control my-form" name="answerKeys" id="answer-key"
+                                value="{{answer}}">
                               {{/each}}
-
-                              {{else}}
-
-                              {{#each this.keyABC}}
-                              <input type="checkbox" name="answerKeys_{{../number}}" id="track"
-                                value="{{this.alpha}}" /><label for="track">{{this.alpha}} {{this.detail}}</label><br />
-                              {{/each}}
-
-                              {{/if}}
-
-                              {{else}}
-                              <input type='text' class='input form-control my-form' name='answerKeys_{{this.number}}'>
-                              {{/if}}
-                              {{/each}}
-
                             </div>
                           </form>
 

@@ -4,6 +4,7 @@ module.exports = function (app) {
   app.use('/account', require('../routes/account.route'));
   app.use('/categories', require('../routes/category.route'));
   app.use('/documents', require('../routes/document.route'));
+  app.use('/courses', require('../routes/course.route'));
   // app.use('/authemail', require('../routes/authEmail.route'));
  
   app.use('/user',restrict.user ,require('../routes/user/info.route'));

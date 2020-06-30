@@ -1,0 +1,109 @@
+{{#section 'css'}}
+<style>
+  .rounded {
+    height: 80px;
+    width: 80px;
+    border-style: dotted;
+  }
+
+  .my-price,
+  .bidder-name,
+  .seller-name {
+    display: flex;
+    justify-content: space-between !important;
+
+  }
+
+  .quick-price .price {
+    color: #777777 !important;
+    font-size: 17px !important;
+    font-weight: normal;
+    margin-left: 6px;
+  }
+
+  .quick-price {
+    margin-top: 4px;
+  }
+
+  .bidder-name,
+  .seller-name,
+  .time-left {
+    font-size: 15px;
+    padding-top: 12px;
+    border-top: 1px solid #e5e5e5;
+    margin-bottom: 15px
+  }
+
+  .created-day {
+    font-size: 15px;
+    margin-bottom: 15px
+  }
+
+  .product-cart-option {
+    border-top: 1px solid #e5e5e5;
+    display: inline-block;
+  }
+
+  .wishlist-group {
+    padding-top: 10px !important;
+  }
+
+  .bidder-name h2,
+  .seller-name h2,
+  .created-day h2 {
+    font-size: 15px;
+    text-transform: uppercase;
+    color: #333e48;
+    margin-bottom: 5px;
+    font-weight: bold
+  }
+
+  #customers {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  #customers td,
+  #customers th {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+
+  #customers tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+
+  #customers tr:hover {
+    background-color: #ddd;
+  }
+
+  #customers th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+  }
+</style>
+{{/section}}
+
+{{#section 'js'}}
+
+<!-- flexslider js -->
+<script type="text/javascript" src="/js/jquery.flexslider.js"></script>
+<!--cloud-zoom js -->
+<script type="text/javascript" src="/js/cloud-zoom.js"></script>
+
+
+{{/section}}
+
+
+<h2>tên khóa học</h2> {{course.name}}
+
+<form method="POST" name="frmAddProduct" novalidate action="/courses/"
+                            id="frmCompletedTest">
+  <input type="text" name="courseID" value="{{course._id}}">
+  
+  </form>
+<button type="submit" form="frmCompletedTest" value="Submit">Đăng ký</button>

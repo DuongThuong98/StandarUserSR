@@ -102,62 +102,6 @@
 </script>
 
 
-{{!-- <script type="text/javascript">
-  jQuery(document).ready(function () {
-    var rows = 40;
-    for (var i = 1; i <= rows; i++) {
-      $('.answer-area').append(i + ".<input type='text' class='input form-control my-form' name='answerKeys'" +
-        "id = 'answer-key' >");
-
-    }
-
-  });
-</script> --}}
-
-{{!-- <script>
-  var mockID = $('#save').attr('mockID');
-  var timeStart = parseInt($('#timeStart').val());
-  var timeLeft = $('.timeLeft').attr('content');
-
-  timer = setInterval(run, 10000);
-  per = 60
-  function run() {
-    timeStart = timeStart + per;
-    timeLeft = timeLeft - per;
-    console.log(timeLeft)
-
-    if (timeLeft <= 0) {
-      clearInterval(timer);
-      $('#frmCompletedTest').submit();
-    }
-    else {
-      $('#timeStart').attr('value', timeStart);
-      var l = $('.my-form').length;
-      var result = [];
-      for (i = 0; i < l; i++) {
-        result.push($('.my-form').eq(i).val());
-      }
-
-      $.ajax({
-        url: '/user/mocktest/ajax',
-        type: 'POST',
-        data: {
-          _id: mockID, // $_POST['id'] = 22
-          action: 'changeTimeLeft',
-          answerKeys: result,
-          timeLeft: timeLeft
-        },
-        dataType: 'JSON',
-        success: function (response) {
-
-          console.log(response);
-        }
-      });
-    }
-  }
-
-</script> --}}
-
 <script>
 
   jQuery(document).ready(function () {
@@ -242,7 +186,7 @@
                   <li><button type="button" class="btn btn-primary" id="save" mockID="{{this.mocktest._id}}">Lưu
                       lại</button></li>
                   <li><button type="button" class="btn btn-primary" onclick="javascript: 
-                            {{!-- clearInterval(timer); --}}
+                
                             $('#frmCompletedTest').submit();">Nộp
                       bài</button></li>
 
@@ -299,7 +243,7 @@
 
                           </li>
                           <h3><span>Questions</span></h3>
-                          <form method="POST" name="frmAddProduct" novalidate action="/user/mocktest/submit"
+                          <form method="POST" name="frmAddProduct" novalidate action="/user/upgrade/mocktest/submit"
                             id="frmCompletedTest">
                             <input type="hidden" name="_id" value="{{this.mocktest._id}}">
                             <input type="hidden" name="timeStart" value="{{timeStart}}" id="timeStart">

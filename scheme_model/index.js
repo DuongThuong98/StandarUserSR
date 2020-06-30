@@ -6,6 +6,7 @@ module.exports = {
     Class: require("./class.model"),
     Comment: require("./comment.model"),
     Course: require("./course.model"),
+    CourseRequest: require("./courseRequest.model"),
     Document: require("./document.model"),
     Feedback: require("./feedback.model"),
     FeedbackDetail: require("./feedbackdetail.model"),

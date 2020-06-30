@@ -109,7 +109,13 @@ module.exports = {
   //  console.log(result);
     return result;
   },
-
+ 
+  singleByName:async (anyName) =>{
+    anyNameFind = ".*" + anyName +".*";
+    result = await db.MockingTest.findOne({"name" : {$regex : anyNameFind}});
+  //  console.log(result);
+    return result;
+  },
 
   add: async (entity) => {
       const doc = new db.MockingTest(entity)

@@ -66,9 +66,24 @@ router.get('/:id', async (req, res) => {
     }
     else {
       //alphabet = 'abcdefghijklmnopqrstuvwxyz'.toUpperCase().split('');
-      keyABC = 'abcdefghijklmnopqrstuvwxyz'.toUpperCase().split('', answerKeys[i].key.length);
+      keyAlpha = 'abcdefghijklmnopqrstuvwxyz'.toUpperCase().split('', answerKeys[i].key.length);
+      keyABC = []
+      for(j=0;j< answerKeys[i].key.length;j++)
+      {
+        temp = {alpha: keyAlpha[j],
+                detail: answerKeys[i].key[j] }
+        keyABC.push(temp)
+      }
 
       answerKeys[i].keyABC = keyABC
+      if (typeof answerKeys[i].keySub == "string")
+      {
+        answerKeys[i].single = true;
+      }
+      else
+      {
+        answerKeys[i].single = false;
+      }
     }
     answerKeys[i].number = i + 1;
   }
@@ -276,8 +291,8 @@ router.post('/submit', async (req, res) => {
       else
       {
         // console.log(item[keyBro], "lala" ,questionKey[i].keySub)
-        helper.isEqual(item[keyBro],  questionKey[i].keySub)
-        if ( true){
+        
+        if ( helper.isEqual(item[keyBro],  questionKey[i].keySub)){
           item.grades++;
           obj = {
             isRight: true,
