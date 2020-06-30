@@ -102,7 +102,7 @@
 </script>
 
 
-<script type="text/javascript">
+{{!-- <script type="text/javascript">
   jQuery(document).ready(function () {
     var rows = 40;
     for (var i = 1; i <= rows; i++) {
@@ -112,9 +112,9 @@
     }
 
   });
-</script>
+</script> --}}
 
-<script>
+{{!-- <script>
   var mockID = $('#save').attr('mockID');
   var timeStart = parseInt($('#timeStart').val());
   var timeLeft = $('.timeLeft').attr('content');
@@ -156,7 +156,7 @@
     }
   }
 
-</script>
+</script> --}}
 
 <script>
 
@@ -242,7 +242,7 @@
                   <li><button type="button" class="btn btn-primary" id="save" mockID="{{this.mocktest._id}}">Lưu
                       lại</button></li>
                   <li><button type="button" class="btn btn-primary" onclick="javascript: 
-                            clearInterval(timer);
+                            {{!-- clearInterval(timer); --}}
                             $('#frmCompletedTest').submit();">Nộp
                       bài</button></li>
 
@@ -306,7 +306,17 @@
                             <div class="col-sm-3 answer-area" height="500" style=" height: 500px;
                                                                         overflow: scroll;">
                               {{!-- 40 CÂU TRẢ LỜI --}}
-
+                              {{#each mocktest.answerKeys}}
+                              <h5>{{this.number}}</h5>
+                              {{#if this.keySub}}
+                              {{#each this.keyABC}}
+                              <input type="checkbox" name="answerKeys_{{../number}}" id="track" value="{{this}}" /><label for="track">{{this}}</label><br />
+                              {{/each}}
+                              {{else}}
+                              <input type='text' class='input form-control my-form' name='answerKeys_{{this.number}}' >
+                             {{/if}}
+                              {{/each}}
+                            
                             </div>
                           </form>
 

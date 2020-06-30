@@ -137,8 +137,8 @@
         var id = $(this).attr('choice-id')
         code = ".singleQuiz-" + id;
         $(code).empty();
-        for (var i = 0; i <= rows; i++) {
-            $(code).append(`<div class="col-sm-2"> <input type="checkbox" name="answerKeys_${id}_sub" value="${i}">
+        for (var i = 0; i < rows; i++) {
+            $(code).append(`<div class="col-sm-2"> <input type="checkbox" name="answerKeys_${id}_sub" value="${alphabet[i]}">
                 <input type="text" class="input form-control" style="width: auto;"
                                  name="answerKeys_${id}" id="answer-key" placeholder="${alphabet[i]}"> </div>`)
 

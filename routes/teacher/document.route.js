@@ -65,20 +65,20 @@ router.post('/add', cpUpload, async (req, res) => {
     if (typeof (req.body.categoryId) == "undefined") {
         const entity = req.body;
         console.log(entity);
-        // entity.questionLink = req.files['fuMain-ques'][0].filename;
-        // entity.answerKeyLink = req.files['fuMain-key'][0].filename;
+        entity.questionLink = req.files['fuMain-ques'][0].filename;
+        entity.answerKeyLink = req.files['fuMain-key'][0].filename;
 
-        // if (entity.mocktest_type == 1) {
-        //     entity.audioLinks = [];
-        //     req.files['fuMain-audio'].forEach(element => {
-        //         entity.audioLinks.push(element.filename)
+        if (entity.mocktest_type == 1) {
+            entity.audioLinks = [];
+            req.files['fuMain-audio'].forEach(element => {
+                entity.audioLinks.push(element.filename)
 
-        //     });
-        //     entity.mocktestType = "listening";
-        // }
-        // else{
-        //     entity.mocktestType = "reading";
-        // }
+            });
+            entity.mocktestType = "listening";
+        }
+        else{
+            entity.mocktestType = "reading";
+        }
 
         delete entity.mocktest_type;
         entity.authorID = req.session.authUser._id;
@@ -115,8 +115,8 @@ router.post('/add', cpUpload, async (req, res) => {
             
         });
 
-        //result = await mocktestModel.add(entity);
-        //console.log("Thêm được chưa?: ", result);
+        result = await mocktestModel.add(entity);
+        console.log("Thêm được chưa?: ", result);
     }
     else {
         const entity = req.body;

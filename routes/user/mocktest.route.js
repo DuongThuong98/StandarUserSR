@@ -2,7 +2,7 @@ const express = require('express');
 const moment = require('moment');
 const mocktestModel = require('../../models/mocktest.model');
 const userModel = require('../../models/user.model');
-
+const helper = require('../../helpers/function.helper');
 
 // const categoryModel = require('../models/category.model');
 
@@ -15,16 +15,14 @@ router.get('/', async (req, res) => {
   authUser = req.session.authUser;
   let rows = authUser.tests;
   var mockTests = [];
-  for (i=0; i<rows.length; i++)
-  {
+  for (i = 0; i < rows.length; i++) {
     const temp = await mocktestModel.single(rows[i]._id);
     rows[i].name = temp.name;
     rows[i].mocktestType = temp.mocktestType;
-    if(rows[i].status === 0)
-    {
+    if (rows[i].status === 0) {
       rows[i].isDone = false;
     }
-    else{
+    else {
       rows[i].isDone = true;
     }
 
@@ -56,11 +54,28 @@ router.get('/data', async (req, res) => {
 
 
 router.get('/:id', async (req, res) => {
+  alphabet = 'abcdefghijklmnopqrstuvwxyz'.toUpperCase().split('');
   const mockId = req.params.id;
   const row = await mocktestModel.single(mockId);
   // console.log(row);
   // console.log("lala")
+  answerKeys = row.answerKeys;
+  for (i = 0; i < answerKeys.length; i++) {
+    if (typeof answerKeys[i].key == "string") {
 
+    }
+    else {
+      //alphabet = 'abcdefghijklmnopqrstuvwxyz'.toUpperCase().split('');
+      keyABC = 'abcdefghijklmnopqrstuvwxyz'.toUpperCase().split('', answerKeys[i].key.length);
+
+      answerKeys[i].keyABC = keyABC
+    }
+    answerKeys[i].number = i + 1;
+  }
+
+  row.answerKeys = answerKeys;
+
+  console.log(answerKeys)
   timeLeft = 3600;
   timeStart = moment().unix();
   console.log("time start:", timeStart);
@@ -110,7 +125,7 @@ router.get('/pending/:id', async (req, res) => {
     pendingMock.questionLink = row.questionLink;
     pendingMock.audioLinks = row.audioLinks;
     // console.log("time start pending:", pendingMock);
-    
+
     res.render('vwMocktests/pendingDetailMocktest', {
       mocktest: pendingMock,
       empty: pendingMock === null,
@@ -160,6 +175,8 @@ router.get('/done/:id', async (req, res) => {
     pendingMock.audioLinks = row.audioLinks;
     console.log("time start pending:", pendingMock);
     // console.log("time start pending:", pendingMock);
+
+    pendingMock.percentGrade = (pendingMock.grades / pendingMock.answerKeys.length)*100  ;
     res.render('vwMocktests/doneDetailMocktest', {
       mocktest: pendingMock,
       empty: pendingMock === null,
@@ -174,7 +191,7 @@ router.get('/key/:id', async (req, res) => {
 
   return res.render('vwMocktests/keyMocktest', {
     layout: false,
-    mocktest : row
+    mocktest: row
   });
 
 });
@@ -182,6 +199,8 @@ router.get('/key/:id', async (req, res) => {
 //ruote nộp bài
 router.post('/submit', async (req, res) => {
   item = req.body;
+  console.log(item);
+
   const row = await mocktestModel.single(item._id);
 
   authUser = req.session.authUser;
@@ -210,11 +229,73 @@ router.post('/submit', async (req, res) => {
   item.status = 1; //1: DONE, 0: PENDING, -1:DELETED
 
   console.log("Item submited: ", item);
-  for (i = 0; i < 40; i++) {
-    if (item.answerKeys[i] == row.answerKeys[i]) {
-      item.grades++;
+  // for (i = 0; i < 40; i++) {
+  //   if (item.answerKeys[i] == row.answerKeys[i]) {
+  //     item.grades++;
+  //   }
+  // }
+
+  amountQuiz = parseInt(row.answerKeys.length)
+
+  questionKey = row.answerKeys;
+
+  answerKeys = [];
+
+  for (i = 0; i < amountQuiz; i++) {
+    keyBro = "answerKeys_" + String(i + 1);
+    obj = {}
+    if (typeof questionKey[i].key == "string") {
+      if (item[keyBro] === questionKey[i].key){
+        item.grades++;
+        obj = {
+          isRight: true,
+          key: item[keyBro]
+        }
+      }
+      else
+        obj = {
+          isRight: false,
+          key: item[keyBro]
+        }
     }
+    else {
+      if (typeof questionKey[i].keySub == "string") {
+        if (item[keyBro] === questionKey[i].keySub){
+          item.grades++;
+          obj = {
+            isRight: true,
+            key: item[keyBro]
+          }
+        }
+        else
+          obj = {
+            isRight: false,
+            key: item[keyBro]
+          }
+      }
+      else
+      {
+        // console.log(item[keyBro], "lala" ,questionKey[i].keySub)
+        helper.isEqual(item[keyBro],  questionKey[i].keySub)
+        if ( true){
+          item.grades++;
+          obj = {
+            isRight: true,
+            key: item[keyBro]
+          }
+        }
+        else
+          obj = {
+            isRight: false,
+            key: item[keyBro]
+          }
+      }
+    }
+
+    answerKeys.push(obj)
   }
+
+  item.answerKeys = answerKeys;
 
   delete item.action;
   delete item.timeStart;
@@ -231,14 +312,16 @@ router.post('/submit', async (req, res) => {
     // console.log("TEMP: ", temp);
   }
 
-  console.log("TESTS ajax:", authUser.tests);
+  console.log("AnswerKey: ", answerKeys);
 
   entity = {
     _id: authUser._id,
     tests: authUser.tests
   }
 
-  temp = await userModel.patchMocktest(entity)
+
+
+  // temp = await userModel.patchMocktest(entity)
 
   res.redirect(`/user/mocktest/done/${item._id}`)
   // res.render('vwMocktests/doneDetailMocktest', {
@@ -367,7 +450,7 @@ router.post('/ajax/confirm', async (req, res) => {
 
   authUser = req.session.authUser;
   mockTests = authUser.tests;
- 
+
 
   item.isExisted = false;
   if (mockTests.length > 0) {//nếu có tồn tại bài đã làm rồi
@@ -378,23 +461,21 @@ router.post('/ajax/confirm', async (req, res) => {
         message: 'Làm lại'
       });
     }
-    else
-    {
+    else {
       res.json({
         success: true,
         message: 'Lần đầu'
       });
     }
   }
-  else
-  {
+  else {
     res.json({
       success: true,
       message: 'Lần đầu!'
     });
   }
 
-  
+
 })
 
 
