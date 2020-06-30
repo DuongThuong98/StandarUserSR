@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const enumStatus = require("../enums/ECourseRequestsStatus ");
+const enumStatus = require("../enums/ECourseRequestsStatus");
 
 
 const RegisterCourseRequestSchema = mongoose.Schema({
