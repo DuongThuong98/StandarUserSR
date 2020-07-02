@@ -85,6 +85,13 @@
     background-color: #4CAF50;
     color: white;
   }
+
+  .flex-container {
+    display: flex;
+    flex-wrap: wrap;
+
+  }
+
 </style>
 {{/section}}
 
@@ -254,20 +261,24 @@
                               <h5>{{this.number}}</h5>
 
                               {{#if this.keySub}}
+
                               {{#if this.single}}
 
                               {{#each this.keyABC}}
-                              <input type="radio" name="answerKeys_{{../number}}" id="name{{../number}}_{{this.alpha}}" value="{{this.alpha}}">
+                              <input type="radio" name="answerKeys_{{../number}}" id="name{{../number}}_{{this.alpha}}"
+                                value="{{this.alpha}}">
                               <label for="name{{../number}}_{{this.alpha}}">{{this.alpha}} {{this.detail}} </label>
                               {{/each}}
 
+
                               {{else}}
-
-                              {{#each this.keyABC}}
-                              <input type="checkbox" name="answerKeys_{{../number}}" id="track"
-                                value="{{this.alpha}}" /><label for="track">{{this.alpha}} {{this.detail}}</label><br />
-                              {{/each}}
-
+                              <div class="flex-container">
+                                {{#each this.keyABC}}
+                                <input type="checkbox" name="answerKeys_{{../number}}" id="track"
+                                  value="{{this.alpha}}" /><label for="track">{{this.alpha}}
+                                  {{this.detail}}</label><br />
+                                {{/each}}
+                              </div>
                               {{/if}}
 
                               {{else}}

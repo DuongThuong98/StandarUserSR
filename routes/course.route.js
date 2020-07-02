@@ -1,9 +1,9 @@
 const express = require('express');
 const moment = require('moment');
-const documentModel = require('../models/document.model');
+
 const courseModel = require('../models/course.model');
 const requestModel = require('../models/courseRequest.model');
-// const categoryModel = require('../models/category.model');
+const userModel = require('../models/user.model');
 const config = require('../config/default.json');
 
 
@@ -32,15 +32,36 @@ router.post('/', async (req, res) => {
   item.userID = authUser._id;
 
   console.log(item);
-  requestModel.add(item);
-  
-  row = null
-  res.render('vwCourses/detail', 
+  result = requestModel.add(item);
+
+  entity = {_id: item.userID,
+    wantToUpgrade: 1}
+
+  userModel.patchWantToUpgrade(entity)
+    row = null
+  if(result)
   {
-    course: row,
-    empty: row == null,
+    success_message = "Đăng ký khóa học thành công"
+    res.render('vwCourses/detail', 
+    {
+      course: row,
+      empty: row == null,
+      success_message,
+    }
+    );
   }
-  );
+  else
+  {
+    err_message = "Đăng ký thất bại";
+    res.render('vwCourses/detail', 
+    {
+      course: row,
+      empty: row == null,
+      err_message,
+    }
+    );
+  }
+
 
 })
 

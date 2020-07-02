@@ -107,4 +107,24 @@ module.exports = {
     }
     return -2;//lỗi ko tìm thấy user
   },
+
+  patchWantToUpgrade: async entity => {
+    const { _id, wantToUpgrade } = entity
+    const user = await db.User.findOne({ _id })
+    if (user) {
+        const result = await db.User.findOneAndUpdate({ _id }, 
+                              { wantToUpgrade: wantToUpgrade || user.wantToUpgrade
+                                                                    })
+        if (result) {
+            const data = await db.User.findOne({ _id: result._id })
+            if (data) {
+                return data;
+            }
+            else{
+              return -1;//lỗi không sửa được 
+            }
+        }
+    }
+    return -2;//lỗi ko tìm thấy user
+  },
 };
