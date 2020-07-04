@@ -2,7 +2,8 @@ const express = require('express');
 const moment = require('moment');
 const mocktestModel = require('../../models/mocktest.model');
 const userModel = require('../../models/user.model');
-const { model } = require('../../scheme_model/user.model');
+const courseModel = require('../../models/course.model');
+
 const helper = require('../../helpers/function.helper');
 
 const router = express.Router();
@@ -10,11 +11,22 @@ const router = express.Router();
 
 router.get('/', async (req, res) => {
 
-  rows = await mocktestModel.singleByName("PRE");
-  console.log(rows)
+  enryTest = await mocktestModel.singleByName("PRE");
+  console.log(enryTest)
+
+  authUser = req.session.authUser;
+  mockTests = authUser.tests;
+  myEntryTest = {};
+  if(mockTests.length > 0)
+  {
+    myEntryTest = mockTests[0];
+    myEntryTest.percentGrade = (myEntryTest.grades / myEntryTest.answerKeys.length) * 100;
+  }
+
   res.render('vwUser/upgrade', {
-    mocktests: rows,
-    // empty: rows.length === 0
+    enryTest: enryTest,
+    myEntryTest: myEntryTest,
+    empty: mockTests.length === 0
   });
 
 });
@@ -24,55 +36,127 @@ function isEmpty(obj) {
 }
 
 router.get('/mocktest/done/:id', async (req, res) => {
+  alphabet = 'abcdefghijklmnopqrstuvwxyz'.toUpperCase().split('');
   const mockId = req.params.id;
-  const row = await mocktestModel.single(mockId);
+  const mocktest = await mocktestModel.single(mockId);
 
   authUser = req.session.authUser;
   mockTests = authUser.tests;
-  var pendingMock = {};
+  var doneMock = {};
   if (mockTests.length > 0) {//nếu có tồn tại bài đã làm rồi
     index = mockTests.findIndex(mock => mock._id == mockId && mock.status == 1);
     if (index != -1) {
-      pendingMock = mockTests[index];
+      doneMock = mockTests[index];
     }
   }
 
-  if (isEmpty(pendingMock)) {//mnếu là bài test CHƯA LÀM hoặc CHƯA LÀM XONG
+  if (isEmpty(doneMock)) {//mnếu là bài test CHƯA LÀM hoặc CHƯA LÀM XONG
     res.redirect("/");
   }
   else {
+    amountQuiz = parseInt(doneMock.answerKeys.length)
     //tạo list câu trả lời mà có số
-    numberedAnswers = [];
-    for (i = 0; i < 40; i++) {
-      temp = {
-        index: i + 1,
-        answer: pendingMock.answerKeys[i]
-      };
-      numberedAnswers.push(temp);
+    answerKeys = doneMock.answerKeys;
+    mocktestData = mocktest.answerKeys;
+
+    for (i = 0; i < answerKeys.length; i++) {
+      if (typeof mocktestData[i].key == "string") {
+        //xét câu đó nếu đúng hay sai
+        if (answerKeys[i].isRight == true) {
+
+        }
+        else {
+          answerKeys[i].realKey = mocktestData[i].key
+        }
+      }
+      else {
+        //alphabet = 'abcdefghijklmnopqrstuvwxyz'.toUpperCase().split('');
+        keyAlpha = 'abcdefghijklmnopqrstuvwxyz'.toUpperCase().split('', mocktestData[i].key.length);
+        keyABC = []
+        for (j = 0; j < mocktestData[i].key.length; j++) {
+          temp = {
+            alpha: keyAlpha[j],
+            detail: mocktestData[i].key[j]
+          }
+          keyABC.push(temp)
+        }
+
+        answerKeys[i].keyABC = keyABC
+
+        if (typeof mocktestData[i].keySub == "string") {
+          answerKeys[i].single = true;
+          for(z = 0;z < answerKeys[i].keyABC.length;z++)
+          {
+            if(answerKeys[i].keyABC[z].alpha == answerKeys[i].key)
+            {
+              answerKeys[i].keyABC[z].chose = true;
+            }
+          }
+        }
+        else {
+          answerKeys[i].single = false;
+
+          for(z = 0;z < answerKeys[i].keyABC.length;z++)
+          {
+
+            if(answerKeys[i].key.includes(answerKeys[i].keyABC[z].alpha ))
+            {
+              answerKeys[i].keyABC[z].chose = true;
+            }
+          }
+        }
+
+        //xét câu đó nếu đúng hay sai
+        if (answerKeys[i].isRight == true) {
+
+        }
+        else {
+          answerKeys[i].realKey = mocktestData[i].keySub
+        }
+      }
+
+      answerKeys[i].number = i + 1;
     }
-    console.log(numberedAnswers)
 
-    pendingMock.questionLink = row.questionLink;
-    pendingMock.audioLinks = row.audioLinks;
-    console.log("time start pending:", pendingMock);
-    // console.log("time start pending:", pendingMock);
 
-    pendingMock.percentGrade = (pendingMock.grades / pendingMock.answerKeys.length)*100  ;
+
+    doneMock.questionLink = mocktest.questionLink;
+    doneMock.audioLinks = mocktest.audioLinks;
+    console.log("time start pending:", doneMock);
+    console.log("Key ABC:", doneMock.answerKeys[24].keyABC);
+
+
+    doneMock.percentGrade = (doneMock.grades / doneMock.answerKeys.length) * 100;
     suggestedCourse = {}
-    if(pendingMock.percentGrade > 10)
-    {
-      suggestedCourse = {_id: "5ef8c255c6266fb21c016c6c"}
+    if (doneMock.percentGrade > 10) {
+      suggestedCourse = await courseModel.singleByCategory("vỡ lòng")
     }
+
+    console.log(suggestedCourse)
+
     res.render('vwMocktests/upgradeDoneDetailMocktest', {
-      mocktest: pendingMock,
-      empty: pendingMock === null,
-      numberedAnswers,
+      mocktest: doneMock,
+      empty: doneMock === null,
       suggestedCourse
     });
   }
 });
 
 router.get('/mocktest/:id', async (req, res) => {
+  //nếu tồn tại thì xóa
+  authUser = req.session.authUser;
+  mockTests = authUser.tests;
+  if(mockTests.length > 0)
+  {
+    entity = {
+      _id: authUser._id,
+      tests: []
+    }
+    temp = await userModel.patchMocktest(entity)
+  }
+
+  authUser.tests = [];
+
   alphabet = 'abcdefghijklmnopqrstuvwxyz'.toUpperCase().split('');
   const mockId = req.params.id;
   const row = await mocktestModel.single(mockId);
@@ -96,6 +180,7 @@ router.get('/mocktest/:id', async (req, res) => {
       }
 
       answerKeys[i].keyABC = keyABC
+
       if (typeof answerKeys[i].keySub == "string") {
         answerKeys[i].single = true;
       }
@@ -160,8 +245,10 @@ router.post('/mocktest/submit', async (req, res) => {
   for (i = 0; i < amountQuiz; i++) {
     keyBro = "answerKeys_" + String(i + 1);
     obj = {}
+    //dạng điền lỗ
     if (typeof questionKey[i].key == "string") {
-      if (item[keyBro] === questionKey[i].key) {
+      if ( helper.phraseIsAccepted(item[keyBro],questionKey[i].key)) {
+
         item.grades++;
         obj = {
           isRight: true,
@@ -175,6 +262,7 @@ router.post('/mocktest/submit', async (req, res) => {
         }
     }
     else {
+      // dạng trắc nghiệm 1 đáp án
       if (typeof questionKey[i].keySub == "string") {
         if (item[keyBro] === questionKey[i].keySub) {
           item.grades++;
@@ -189,7 +277,7 @@ router.post('/mocktest/submit', async (req, res) => {
             key: item[keyBro]
           }
       }
-      else {
+      else {//trắc nghiệm nhiều đáp án
         // console.log(item[keyBro], "lala" ,questionKey[i].keySub)
 
         if (helper.isEqual(item[keyBro], questionKey[i].keySub)) {
@@ -236,7 +324,7 @@ router.post('/mocktest/submit', async (req, res) => {
   temp = await userModel.patchMocktest(entity)
 
   res.redirect(`/user/upgrade/mocktest/done/${item._id}`)
- 
+
 });
 
 

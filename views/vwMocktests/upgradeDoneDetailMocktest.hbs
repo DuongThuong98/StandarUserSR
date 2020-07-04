@@ -6,25 +6,6 @@
     border-style: dotted;
   }
 
-  .my-price,
-  .bidder-name,
-  .seller-name {
-    display: flex;
-    justify-content: space-between !important;
-
-  }
-
-  .quick-price .price {
-    color: #777777 !important;
-    font-size: 17px !important;
-    font-weight: normal;
-    margin-left: 6px;
-  }
-
-  .quick-price {
-    margin-top: 4px;
-  }
-
   .bidder-name,
   .seller-name,
   .time-left {
@@ -48,42 +29,21 @@
     padding-top: 10px !important;
   }
 
-  .bidder-name h2,
-  .seller-name h2,
-  .created-day h2 {
-    font-size: 15px;
-    text-transform: uppercase;
-    color: #333e48;
-    margin-bottom: 5px;
-    font-weight: bold
-  }
 
-  #customers {
-    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-  }
-
-  #customers td,
-  #customers th {
-    border: 1px solid #ddd;
-    padding: 8px;
-  }
-
-  #customers tr:nth-child(even) {
-    background-color: #f2f2f2;
-  }
-
-  #customers tr:hover {
-    background-color: #ddd;
-  }
-
-  #customers th {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    text-align: left;
-    background-color: #4CAF50;
-    color: white;
+  .noselect {
+    -webkit-touch-callout: none;
+    /* iOS Safari */
+    -webkit-user-select: none;
+    /* Safari */
+    -khtml-user-select: none;
+    /* Konqueror HTML */
+    -moz-user-select: none;
+    /* Old versions of Firefox */
+    -ms-user-select: none;
+    /* Internet Explorer/Edge */
+    user-select: none;
+    /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
   }
 </style>
 {{/section}}
@@ -186,16 +146,14 @@
                   <li><button type="button" class="btn btn-primary" id="save" mockID="{{this.mocktest._id}}">Điểm
                       số</button></li>
                   <li><button type="button" class="btn btn-primary"
-                      onclick="window.open('http://localhost:3001/user/mocktest/key/{{this.mocktest._id}}');">Bài giải
+                      onclick="window.open('/user/mocktest/key/{{this.mocktest._id}}');">Bài giải
                       chi tiết</button></li>
-
-
 
                 </ul>
 
                 <div id="productTabContent" class="tab-content">
                   <div class="tab-pane fade in active" id="description">
-                    <div class="std" style="margin-left: 30px;">
+                    <div class="std noselect" style="margin-left: 30px;">
 
 
                       <div id="tab-a6bfee399f4791567a15c5309524f5ac" class="tab-content current">
@@ -213,17 +171,19 @@
                                 {{/each}}
                               </select>
                             </div>
-                            <div class="col-sm-3 audio-area">
-                            
+                            <div class="col-sm-3 ">
+
                               <audio id="audio" controls="controls">
                                 <source id="audioSource" src="">
                                 </source>
                                 Your browser does not support the audio format.
                               </audio>
                             </div>
-                             <div class="col-sm-3">
-                              <h3>.    Điểm số của bạn là: {{this.mocktest.percentGrade}}</h3>
-                              <h4>Khóa học đề xuất <a href="/courses/{{this.suggestedCourse._id}}">ĐÂY</a> </h4> 
+                            <div class="col-sm-6" >
+                              <div style="padding-left: 50px;">
+                              <h3>Điểm số của bạn là: {{this.mocktest.percentGrade}} %</h3>
+                              <h4>Khóa học đề xuất <a href="/courses/{{this.suggestedCourse._id}}">CLICK</a> </h4>
+                              </div>
                             </div>
 
                           </li>
@@ -233,52 +193,113 @@
                                                                         overflow: scroll;">
                               {{!-- 40 CÂU TRẢ LỜI --}}
 
-                              {{#each this.numberedAnswers}}
-                              {{index}}.
-                              <input type="text" class="input form-control my-form" name="answerKeys" id="answer-key"
-                                value="{{answer}}">
+                              {{#each mocktest.answerKeys}}
+                              <h5>{{this.number}}</h5>
+
+                              {{#if this.keyABC}}
+
+                              {{#if this.single}}
+
+                              {{#unless this.isRight}}
+                              <div style="background-color: rgb(206, 117, 117);">
+                                {{#each this.keyABC}}
+                                {{#if this.chose}}
+                                <input type="radio" name="answerKeys_{{../number}}"
+                                  id="name{{../number}}_{{this.alpha}}" value="{{this.alpha}}" checked>
+                                {{else}}
+                                <input type="radio" name="answerKeys_{{../number}}"
+                                  id="name{{../number}}_{{this.alpha}}" value="{{this.alpha}}" disabled>
+                                {{/if}}
+                                <label for="name{{../number}}_{{this.alpha}}">{{this.alpha}} {{this.detail}} </label>
+                                {{/each}}
+                                <span style="color: red; font-weight: bold;">Đáp án: {{this.realKey}}</span>
+                              </div>
+
+                              {{else}}
+
+                              {{#each this.keyABC}}
+                              {{#if this.chose}}
+                              <input type="radio" name="answerKeys_{{../number}}" id="name{{../number}}_{{this.alpha}}"
+                                value="{{this.alpha}}" checked>
+                              {{else}}
+                              <input type="radio" name="answerKeys_{{../number}}" id="name{{../number}}_{{this.alpha}}"
+                                value="{{this.alpha}}" disabled>
+                              {{/if}}
+                              <label for="name{{../number}}_{{this.alpha}}">{{this.alpha}} {{this.detail}} </label>
                               {{/each}}
-                            </div>
+                              {{/unless}}
+
+                              {{!-- CHƯA LÀM CÁI NHIỀU SỰ LỰA CHỌN --}}
+                              {{else}}
+                              <div class="flex-container">
+                                {{#each this.keyABC}}
+                                <input type="checkbox" name="answerKeys_{{../number}}" id="track" value="{{this.alpha}}"
+                                  disabled /><label for="track">{{this.alpha}}
+                                  {{this.detail}}</label><br />
+                                {{/each}}
+                              </div>
+                              {{/if}}
+                              {{!-- CHƯA LÀM CÁI NHIỀU SỰ LỰA CHỌN --}}
+
+                              {{else}}
+
+                              {{#if this.isRight}}
+                              <input type='text' class='input form-control my-form' value="{{this.key}}"
+                                name='answerKeys_{{this.number}}' disabled>
+                              {{else}}
+
+                              <input type='text' class='input form-control my-form'
+                                style="background-color: rgb(206, 117, 117);" value="{{this.key}}"
+                                name='answerKeys_{{this.number}}' disabled>
+
+                              <span style="color: red; font-weight: bold;"> {{this.realKey}}</span>
+                              {{/if}}
+
+                              {{/if}}
+
+                              {{/each}}
+
+
                           </form>
-
-                          <div class="col-sm-9">
-                            <iframe src="/pdf/documents/{{this.mocktest.questionLink}}" height="500"
-                              width="100%"></iframe>
-                          </div>
-
-                        </ul>
-                        <!--End-->
                       </div>
+
+                      <div class="col-sm-9">
+                        <iframe src="/pdf/documents/{{this.mocktest.questionLink}}" height="500" width="100%"></iframe>
+                      </div>
+
+                      </ul>
+                      <!--End-->
                     </div>
                   </div>
-
-
-
                 </div>
-                <button type="submit" class="btn btn-warning" style="margin-top: 10px;">
-                  <i class="fa fa-check" aria-hidden="true"></i>ĐĂNG KÝ
-                </button>
 
-                <button type="button" class="btn btn-primary" style="margin-top: 10px;">Primary</button>
-                <button type="button" class="btn btn-secondary" style="margin-top: 10px;">Secondary</button>
-                <button type="button" class="btn btn-success" style="margin-top: 10px;">Success</button>
-                <button type="button" class="btn btn-danger" style="margin-top: 10px;">Danger</button>
-                <button type="button" class="btn btn-warning" style="margin-top: 10px;">Warning</button>
-                <button type="button" class="btn btn-info" style="margin-top: 10px;">Info</button>
+
+
               </div>
+              <button type="submit" class="btn btn-warning" style="margin-top: 10px;">
+                <i class="fa fa-check" aria-hidden="true"></i>ĐĂNG KÝ
+              </button>
+
+              <button type="button" class="btn btn-primary" style="margin-top: 10px;">Primary</button>
+              <button type="button" class="btn btn-secondary" style="margin-top: 10px;">Secondary</button>
+              <button type="button" class="btn btn-success" style="margin-top: 10px;">Success</button>
+              <button type="button" class="btn btn-danger" style="margin-top: 10px;">Danger</button>
+              <button type="button" class="btn btn-warning" style="margin-top: 10px;">Warning</button>
+              <button type="button" class="btn btn-info" style="margin-top: 10px;">Info</button>
             </div>
           </div>
         </div>
       </div>
-
-
-
-
-
-
-
     </div>
+
+
+
+
+
+
+
   </div>
+</div>
 </div>
 
 <!-- Main Container End -->

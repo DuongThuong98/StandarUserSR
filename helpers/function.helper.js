@@ -27,5 +27,24 @@ module.exports = {
         {
             return false
         }
-    }
+    },
+
+    phraseIsAccepted : (answer, keyAnswer) => {
+        // if length is not equal 
+        if (typeof answer =="string" || typeof keyAnswer == "string") {
+            temp = keyAnswer.split("/").map(item => item.trim());
+            if(temp.includes(answer.trim()))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            return false
+        }
+    },
 }

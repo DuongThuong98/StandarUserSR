@@ -68,24 +68,39 @@
     <div class="main container">
         <div class="row">
             <div class="col-main col-sm-9 col-xs-12">
-                {{#if this.err_message}}
-                {{this.err_message}}
-                {{/if}}
-                {{#if successMessage}}
-                <div class="alert alert-success alert-dismissible" style="width:300px">
-                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    <strong>Thành công!</strong> {{successMessage}}
-                </div>
-                {{/if}}
-                <ul>
-                    <li>
-                    <a href="/user/upgrade/mocktest/{{this.mocktests._id}}">Link kiểm tra đầu vào dành cho người chưa từng học Ielts</a>
-                    </li>
-                    <li>
-                        <a href="">Link kiểm tra dành cho người đã học Ielts</a>
-                    </li>
-                </ul>
+                <div class="my-account">
+                    {{#if this.err_message}}
+                    {{this.err_message}}
+                    {{/if}}
+                    {{#if successMessage}}
+                    <div class="alert alert-success alert-dismissible" style="width:300px">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>WELL DONE! Sẽ có tư vấn viên liên hệ với bạn trong ít phút nữa nhé</strong>
+                        {{successMessage}}
+                    </div>
+                    {{/if}}
+                    <ul>
+                        <li>
+                            <a href="/user/upgrade/mocktest/{{this.enryTest._id}}">
+                            Link kiểm tra đầu vào dành cho người chưa từng học Ielts </a>
+                        </li>
+                        <li>
+                            <a href="">Link kiểm tra dành cho người đã học Ielts</a>
+                        </li>
+                    </ul>
 
+                    {{#unless this.empty}}
+                        Bạn đã làm bài test đầu vào 
+                        <br>
+                        với kết quả là: {{this.myEntryTest.percentGrade}}
+                        <br>
+                        <a href="/user/upgrade/mocktest/done/{{this.myEntryTest._id}}">
+                        XEM LẠI CHI TIẾT BÀI TEST ĐÃ LÀM </a>
+                        <br>
+                        Bạn có thể làm lại bài test đầu vào khác nhưng bài test lần trước đó sẽ bị xóa.
+                    {{/unless}}
+
+                </div>
 
             </div>
 

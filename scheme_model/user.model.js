@@ -94,6 +94,12 @@ const UserSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Course",
         },
+        
+        //id curri, đã xem xong status 
+        //thêm vào những thuọc tính cần thiết
+        //tâm thời suy nghĩ thêm cáchn bắt thời gian
+        //còn kết nối thì trong ngày mai t sẽ tạo những data cần thiết lên
+        //server cluster chung
     },],
     resetLink: {
         data: String,

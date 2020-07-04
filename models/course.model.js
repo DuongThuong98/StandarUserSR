@@ -18,6 +18,11 @@ module.exports = {
     return result;
   },
 
+  singleByCategory : async (cate) =>{
+    result = await db.Course.findOne({category: cate});
+    return result;
+  },
+
   allByIDTeacher: async (id) =>{
     result = await db.Course.find({ authorID: id })
    console.log(result);
