@@ -22,6 +22,12 @@ module.exports = {
     result = await db.Course.findOne({category: cate});
     return result;
   },
+  singleByName:async (anyName) =>{
+    anyNameFind = ".*" + anyName +".*";
+    result = await db.Course.findOne({"name" : {$regex : anyNameFind}});
+  //  console.log(result);
+    return result;
+  },
 
   allByIDTeacher: async (id) =>{
     result = await db.Course.find({ authorID: id })

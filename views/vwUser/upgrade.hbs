@@ -79,27 +79,36 @@
                         {{successMessage}}
                     </div>
                     {{/if}}
-                    <ul>
-                        <li>
-                            <a href="/user/upgrade/mocktest/{{this.enryTest._id}}">
-                            Link kiểm tra đầu vào dành cho người chưa từng học Ielts </a>
-                        </li>
-                        <li>
-                            <a href="">Link kiểm tra dành cho người đã học Ielts</a>
-                        </li>
-                    </ul>
+
 
                     {{#unless this.empty}}
-                        Bạn đã làm bài test đầu vào 
-                        <br>
-                        với kết quả là: {{this.myEntryTest.percentGrade}}
-                        <br>
-                        <a href="/user/upgrade/mocktest/done/{{this.myEntryTest._id}}">
+                    Bạn đã làm bài test đầu vào
+                    <br>
+                    với kết quả là: {{this.myEntryTest.percentGrade}}
+                    <br>
+                    <a href="/user/upgrade/mocktest/done/{{this.myEntryTest._id}}">
                         XEM LẠI CHI TIẾT BÀI TEST ĐÃ LÀM </a>
-                        <br>
-                        Bạn có thể làm lại bài test đầu vào khác nhưng bài test lần trước đó sẽ bị xóa.
+                    <br>
+                    Bạn có thể làm lại bài test đầu vào khác nhưng bài test lần trước đó sẽ bị xóa.
+                    <br>
+                    <button type="button" class="btn btn-primary"
+                      onclick=" $('.entryTestLinks').toggle(500) ">Link entry test</button>
                     {{/unless}}
+                    {{#if this.empty}}
+                    <ul>
+                        {{else}}
+                        <ul class="entryTestLinks" hidden>
+                            {{/if}}
 
+                            <li>
+                                <a href="/user/upgrade/mocktest/{{this.enryTest._id}}">
+                                    Link kiểm tra đầu vào dành cho người chưa từng học Ielts </a>
+                            </li>
+                            <li>
+                                <a href="/user/upgrade/mocktest/{{this.enryTestForTheExperienced._id}}">Link kiểm tra
+                                    dành cho người đã học Ielts</a>
+                            </li>
+                        </ul>
                 </div>
 
             </div>

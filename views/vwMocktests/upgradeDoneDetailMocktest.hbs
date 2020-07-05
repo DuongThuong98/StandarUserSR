@@ -6,14 +6,6 @@
     border-style: dotted;
   }
 
-  .bidder-name,
-  .seller-name,
-  .time-left {
-    font-size: 15px;
-    padding-top: 12px;
-    border-top: 1px solid #e5e5e5;
-    margin-bottom: 15px
-  }
 
   .created-day {
     font-size: 15px;
@@ -44,6 +36,12 @@
     user-select: none;
     /* Non-prefixed version, currently
                                   supported by Chrome, Edge, Opera and Firefox */
+  }
+
+  .flex-container {
+    display: flex;
+    flex-wrap: wrap;
+
   }
 </style>
 {{/section}}
@@ -179,10 +177,10 @@
                                 Your browser does not support the audio format.
                               </audio>
                             </div>
-                            <div class="col-sm-6" >
+                            <div class="col-sm-6">
                               <div style="padding-left: 50px;">
-                              <h3>Điểm số của bạn là: {{this.mocktest.percentGrade}} %</h3>
-                              <h4>Khóa học đề xuất <a href="/courses/{{this.suggestedCourse._id}}">CLICK</a> </h4>
+                                <h3>Điểm số của bạn là: {{this.mocktest.percentGrade}} %</h3>
+                                <h4>Khóa học đề xuất <a href="/courses/{{this.suggestedCourse._id}}">{{this.suggestedCourse.name}}</a> </h4>
                               </div>
                             </div>
 
@@ -231,13 +229,37 @@
 
                               {{!-- CHƯA LÀM CÁI NHIỀU SỰ LỰA CHỌN --}}
                               {{else}}
+
+                              {{#unless this.isRight}}
+                              <div class="flex-container" style="background-color: rgb(206, 117, 117);">
+                                {{#each this.keyABC}}
+                                {{#if this.chose}}
+                                <input type="checkbox" name="answerKeys_{{../number}}" id="track" value="{{this.alpha}}"
+                                  checked />
+                                {{else}}
+                                <input type="checkbox" name="answerKeys_{{../number}}" id="track" value="{{this.alpha}}"
+                                  disabled />
+                                {{/if}}
+                                <label for="track">{{this.alpha}} {{this.detail}}</label>
+                                {{/each}}
+                                 <span style="color: red; font-weight: bold;">Đáp án: {{this.realKey}}</span>
+                              </div>
+
+                              {{else}}
                               <div class="flex-container">
                                 {{#each this.keyABC}}
+                                {{#if this.chose}}
                                 <input type="checkbox" name="answerKeys_{{../number}}" id="track" value="{{this.alpha}}"
-                                  disabled /><label for="track">{{this.alpha}}
-                                  {{this.detail}}</label><br />
+                                  checked />
+                                {{else}}
+                                <input type="checkbox" name="answerKeys_{{../number}}" id="track" value="{{this.alpha}}"
+                                  disabled />
+                                {{/if}}
+                                <label for="track">{{this.alpha}} {{this.detail}}</label>
                                 {{/each}}
                               </div>
+                              {{/unless}}
+
                               {{/if}}
                               {{!-- CHƯA LÀM CÁI NHIỀU SỰ LỰA CHỌN --}}
 

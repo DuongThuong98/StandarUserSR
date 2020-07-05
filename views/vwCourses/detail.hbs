@@ -105,21 +105,23 @@
     <div class="row">
       <div class="col-xs-12 col-sm-9">
         {{#if this.empty}}
-         {{#if this.success_message}}
-          <div class="alert alert-success alert-dismissible" style="width:300px">
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <strong>Thành công!</strong> {{success_message}}
-          </div>
-          {{/if}}
+        {{#if this.success_message}}
+        <div class="alert alert-success alert-dismissible" style="width:600px">
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+          <strong>WELL DONE! Sẽ có tư vấn viên liên hệ với bạn trong ít phút nữa nhé</strong> 
+          <br>
+          {{success_message}}
+        </div>
+        {{/if}}
 
-          {{#if this.err_message}}
-          <div class="alert alert-danger alert-dismissible" style="width:300px">
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <strong>Lỗi!</strong> {{err_message}}
-          </div>
-          {{/if}}
-      
-{{else}}
+        {{#if this.err_message}}
+        <div class="alert alert-danger alert-dismissible" style="width:600px">
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+          <strong>Lỗi!</strong> {{err_message}}
+        </div>
+        {{/if}}
+
+        {{else}}
         <div class="entry-detail">
           <div class="page-title">
             <h2>Tên khóa học: {{course.name}}</h2>
@@ -131,7 +133,7 @@
             <button type="submit" form="frmCompletedTest" value="Submit">Đăng ký</button>
           </div>
 
-       
+
           <div class="entry-meta-data"> <span class="author"> <i class="fa fa-user"></i>&nbsp; by: <a
                 href="#">Admin</a></span>
             <span class="fa fa-eye" style="padding-top: 4px; "> </span>{{this.document.views}} &nbsp;&nbsp;
@@ -143,11 +145,9 @@
           </div>
           <div class="content-text clearfix">
 
-            {{{this.document.content}}}
+            {{{course.content}}}
 
           </div>
-
-
 
         </div>
         <!-- Related Posts -->
@@ -474,7 +474,7 @@
         <!-- ./Banner -->
       </aside>
       <!-- ./right colunm -->
-        {{/if}}
+      {{/if}}
     </div>
   </div>
 </section>

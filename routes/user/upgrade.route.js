@@ -12,19 +12,20 @@ const router = express.Router();
 router.get('/', async (req, res) => {
 
   enryTest = await mocktestModel.singleByName("PRE");
-  console.log(enryTest)
+  enryTestForTheExperienced = await mocktestModel.singleByName("ENTRY-LIS");
+  console.log(enryTestForTheExperienced)
 
   authUser = req.session.authUser;
   mockTests = authUser.tests;
   myEntryTest = {};
-  if(mockTests.length > 0)
-  {
+  if (mockTests.length > 0) {
     myEntryTest = mockTests[0];
     myEntryTest.percentGrade = (myEntryTest.grades / myEntryTest.answerKeys.length) * 100;
   }
 
   res.render('vwUser/upgrade', {
     enryTest: enryTest,
+    enryTestForTheExperienced,
     myEntryTest: myEntryTest,
     empty: mockTests.length === 0
   });
@@ -60,6 +61,7 @@ router.get('/mocktest/done/:id', async (req, res) => {
     mocktestData = mocktest.answerKeys;
 
     for (i = 0; i < answerKeys.length; i++) {
+      //câu dạng lý thuyết
       if (typeof mocktestData[i].key == "string") {
         //xét câu đó nếu đúng hay sai
         if (answerKeys[i].isRight == true) {
@@ -69,8 +71,8 @@ router.get('/mocktest/done/:id', async (req, res) => {
           answerKeys[i].realKey = mocktestData[i].key
         }
       }
-      else {
-        //alphabet = 'abcdefghijklmnopqrstuvwxyz'.toUpperCase().split('');
+      else {//câu dạng trắc nghiệm
+
         keyAlpha = 'abcdefghijklmnopqrstuvwxyz'.toUpperCase().split('', mocktestData[i].key.length);
         keyABC = []
         for (j = 0; j < mocktestData[i].key.length; j++) {
@@ -85,10 +87,8 @@ router.get('/mocktest/done/:id', async (req, res) => {
 
         if (typeof mocktestData[i].keySub == "string") {
           answerKeys[i].single = true;
-          for(z = 0;z < answerKeys[i].keyABC.length;z++)
-          {
-            if(answerKeys[i].keyABC[z].alpha == answerKeys[i].key)
-            {
+          for (z = 0; z < answerKeys[i].keyABC.length; z++) {
+            if (answerKeys[i].keyABC[z].alpha == answerKeys[i].key) {
               answerKeys[i].keyABC[z].chose = true;
             }
           }
@@ -96,11 +96,9 @@ router.get('/mocktest/done/:id', async (req, res) => {
         else {
           answerKeys[i].single = false;
 
-          for(z = 0;z < answerKeys[i].keyABC.length;z++)
-          {
+          for (z = 0; z < answerKeys[i].keyABC.length; z++) {
 
-            if(answerKeys[i].key.includes(answerKeys[i].keyABC[z].alpha ))
-            {
+            if (answerKeys[i].key.includes(answerKeys[i].keyABC[z].alpha)) {
               answerKeys[i].keyABC[z].chose = true;
             }
           }
@@ -125,11 +123,21 @@ router.get('/mocktest/done/:id', async (req, res) => {
     console.log("time start pending:", doneMock);
     console.log("Key ABC:", doneMock.answerKeys[24].keyABC);
 
-
+    //tính điẻm và đưa ra khóa học hợp lý
     doneMock.percentGrade = (doneMock.grades / doneMock.answerKeys.length) * 100;
     suggestedCourse = {}
-    if (doneMock.percentGrade > 10) {
-      suggestedCourse = await courseModel.singleByCategory("vỡ lòng")
+    if (mocktest.name.includes("PRE")) {
+      if (doneMock.percentGrade > 50) {
+        suggestedCourse = await courseModel.singleByCategory("vỡ lòng")
+      }
+    }
+    else{
+          if(mocktest.name.includes("ENTRY"))
+          {
+            if (doneMock.percentGrade > 50) {
+              suggestedCourse = await courseModel.singleByCategory("sơ cấp")
+            }
+          }
     }
 
     console.log(suggestedCourse)
@@ -146,8 +154,7 @@ router.get('/mocktest/:id', async (req, res) => {
   //nếu tồn tại thì xóa
   authUser = req.session.authUser;
   mockTests = authUser.tests;
-  if(mockTests.length > 0)
-  {
+  if (mockTests.length > 0) {
     entity = {
       _id: authUser._id,
       tests: []
@@ -247,7 +254,7 @@ router.post('/mocktest/submit', async (req, res) => {
     obj = {}
     //dạng điền lỗ
     if (typeof questionKey[i].key == "string") {
-      if ( helper.phraseIsAccepted(item[keyBro],questionKey[i].key)) {
+      if (helper.phraseIsAccepted(item[keyBro], questionKey[i].key)) {
 
         item.grades++;
         obj = {
