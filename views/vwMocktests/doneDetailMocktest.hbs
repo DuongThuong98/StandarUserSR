@@ -197,7 +197,7 @@
                     <div class="std" style="margin-left: 30px;">
 
 
-                      <div id="tab-a6bfee399f4791567a15c5309524f5ac" class="tab-content current">
+                       <div id="tab-a6bfee399f4791567a15c5309524f5ac" class="tab-content current">
 
 
                         <!--End-->
@@ -212,16 +212,19 @@
                                 {{/each}}
                               </select>
                             </div>
-                            <div class="col-sm-3 audio-area">
-                            
+                            <div class="col-sm-3 ">
+
                               <audio id="audio" controls="controls">
                                 <source id="audioSource" src="">
                                 </source>
                                 Your browser does not support the audio format.
                               </audio>
                             </div>
-                             <div class="col-sm-3">
-                              <h3>.    Điểm số của bạn là: {{this.mocktest.percentGrade}}</h3>
+                            <div class="col-sm-6">
+                              <div style="padding-left: 50px;">
+                                <h3>Điểm số của bạn là: {{this.mocktest.percentGrade}} %</h3>
+                              
+                              </div>
                             </div>
 
                           </li>
@@ -230,22 +233,103 @@
                             <div class="col-sm-3 answer-area" height="500" style=" height: 500px;
                                                                         overflow: scroll;">
                               {{!-- 40 CÂU TRẢ LỜI --}}
+                              {{#each mocktest.answerKeys}}
+                              <h5>{{this.number}}</h5>
 
-                              {{#each this.numberedAnswers}}
-                              {{index}}.
-                              <input type="text" class="input form-control my-form" name="answerKeys" id="answer-key"
-                                value="{{answer}}">
+                              {{#if this.keyABC}}
+
+                              {{#if this.single}}
+
+                              {{#unless this.isRight}}
+                              <div style="background-color: rgb(206, 117, 117);">
+                                {{#each this.keyABC}}
+                                {{#if this.chose}}
+                                <input type="radio" name="answerKeys_{{../number}}"
+                                  id="name{{../number}}_{{this.alpha}}" value="{{this.alpha}}" checked>
+                                {{else}}
+                                <input type="radio" name="answerKeys_{{../number}}"
+                                  id="name{{../number}}_{{this.alpha}}" value="{{this.alpha}}" disabled>
+                                {{/if}}
+                                <label for="name{{../number}}_{{this.alpha}}">{{this.alpha}} {{this.detail}} </label>
+                                {{/each}}
+                                <span style="color: red; font-weight: bold;">Đáp án: {{this.realKey}}</span>
+                              </div>
+
+                              {{else}}
+
+                              {{#each this.keyABC}}
+                              {{#if this.chose}}
+                              <input type="radio" name="answerKeys_{{../number}}" id="name{{../number}}_{{this.alpha}}"
+                                value="{{this.alpha}}" checked>
+                              {{else}}
+                              <input type="radio" name="answerKeys_{{../number}}" id="name{{../number}}_{{this.alpha}}"
+                                value="{{this.alpha}}" disabled>
+                              {{/if}}
+                              <label for="name{{../number}}_{{this.alpha}}">{{this.alpha}} {{this.detail}} </label>
                               {{/each}}
-                            </div>
+                              {{/unless}}
+
+                              {{!-- CHƯA LÀM CÁI NHIỀU SỰ LỰA CHỌN --}}
+                              {{else}}
+
+                              {{#unless this.isRight}}
+                              <div class="flex-container" style="background-color: rgb(206, 117, 117);">
+                                {{#each this.keyABC}}
+                                {{#if this.chose}}
+                                <input type="checkbox" name="answerKeys_{{../number}}" id="track" value="{{this.alpha}}"
+                                  checked />
+                                {{else}}
+                                <input type="checkbox" name="answerKeys_{{../number}}" id="track" value="{{this.alpha}}"
+                                  disabled />
+                                {{/if}}
+                                <label for="track">{{this.alpha}} {{this.detail}}</label>
+                                {{/each}}
+                                 <span style="color: red; font-weight: bold;">Đáp án: {{this.realKey}}</span>
+                              </div>
+
+                              {{else}}
+                              <div class="flex-container">
+                                {{#each this.keyABC}}
+                                {{#if this.chose}}
+                                <input type="checkbox" name="answerKeys_{{../number}}" id="track" value="{{this.alpha}}"
+                                  checked />
+                                {{else}}
+                                <input type="checkbox" name="answerKeys_{{../number}}" id="track" value="{{this.alpha}}"
+                                  disabled />
+                                {{/if}}
+                                <label for="track">{{this.alpha}} {{this.detail}}</label>
+                                {{/each}}
+                              </div>
+                              {{/unless}}
+
+                              {{/if}}
+                              {{!-- CHƯA LÀM CÁI NHIỀU SỰ LỰA CHỌN --}}
+
+                              {{else}}
+
+                              {{#if this.isRight}}
+                              <input type='text' class='input form-control my-form' value="{{this.key}}"
+                                name='answerKeys_{{this.number}}' disabled>
+                              {{else}}
+
+                              <input type='text' class='input form-control my-form'
+                                style="background-color: rgb(206, 117, 117);" value="{{this.key}}"
+                                name='answerKeys_{{this.number}}' disabled>
+
+                              <span style="color: red; font-weight: bold;"> {{this.realKey}}</span>
+                              {{/if}}
+
+                              {{/if}}
+
+                              {{/each}}
+
+
                           </form>
+                      </div>
+                    
 
-                          <div class="col-sm-9">
-                            <iframe src="/pdf/documents/{{this.mocktest.questionLink}}" height="500"
-                              width="100%"></iframe>
-                          </div>
-
-                        </ul>
-                        <!--End-->
+                     <div class="col-sm-9">
+                        <iframe src="/pdf/documents/{{this.mocktest.questionLink}}" height="500" width="100%"></iframe>
                       </div>
                     </div>
                   </div>

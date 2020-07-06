@@ -126,8 +126,10 @@ router.get('/mocktest/done/:id', async (req, res) => {
     //tính điẻm và đưa ra khóa học hợp lý
     doneMock.percentGrade = (doneMock.grades / doneMock.answerKeys.length) * 100;
     suggestedCourse = {}
+    console.log("Mocktest: ", mocktest)
     if (mocktest.name.includes("PRE")) {
       if (doneMock.percentGrade > 50) {
+        // console.log("vỡ lòng")
         suggestedCourse = await courseModel.singleByCategory("vỡ lòng")
       }
     }
