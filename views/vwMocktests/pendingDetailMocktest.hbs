@@ -6,25 +6,6 @@
     border-style: dotted;
   }
 
-  .my-price,
-  .bidder-name,
-  .seller-name {
-    display: flex;
-    justify-content: space-between !important;
-
-  }
-
-  .quick-price .price {
-    color: #777777 !important;
-    font-size: 17px !important;
-    font-weight: normal;
-    margin-left: 6px;
-  }
-
-  .quick-price {
-    margin-top: 4px;
-  }
-
   .bidder-name,
   .seller-name,
   .time-left {
@@ -34,57 +15,6 @@
     margin-bottom: 15px
   }
 
-  .created-day {
-    font-size: 15px;
-    margin-bottom: 15px
-  }
-
-  .product-cart-option {
-    border-top: 1px solid #e5e5e5;
-    display: inline-block;
-  }
-
-  .wishlist-group {
-    padding-top: 10px !important;
-  }
-
-  .bidder-name h2,
-  .seller-name h2,
-  .created-day h2 {
-    font-size: 15px;
-    text-transform: uppercase;
-    color: #333e48;
-    margin-bottom: 5px;
-    font-weight: bold
-  }
-
-  #customers {
-    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-  }
-
-  #customers td,
-  #customers th {
-    border: 1px solid #ddd;
-    padding: 8px;
-  }
-
-  #customers tr:nth-child(even) {
-    background-color: #f2f2f2;
-  }
-
-  #customers tr:hover {
-    background-color: #ddd;
-  }
-
-  #customers th {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    text-align: left;
-    background-color: #4CAF50;
-    color: white;
-  }
 </style>
 {{/section}}
 
@@ -105,14 +35,42 @@
 <script>
   jQuery(document).ready(function () {
     $('#save').click(function () {
-      var answerKeys = $('#answer-key').val();
+      //var answerKeys = $('#answer-key').val();
       //console.log(answers);
-      var l = $('.my-form').length;
-      //console.log(l)
       var result = [];
-      for (i = 0; i < l; i++) {
-        result.push($('.my-form').eq(i).val());
+      var amountQuiz = $('.amountQuiz').attr('content');
+      for (i = 0; i < amountQuiz; i++) {
+        key = "";
+        keyBro = ".my-form-" + String(i + 1);
+        //console.log($(keyBro).attr('type'))
+        if ($(keyBro).attr('type') == "checkbox") {
+          key = [];
+          //console.log("checkbox")
+          checkedBox = keyBro + ":checkbox:checked";
+          $(checkedBox).each(function () {
+            console.log($(this).val())
+            key.push($(this).val());
+          });
+          if(key.length == 0)
+          key = ""
+
+        }
+        else {
+          if ($(keyBro).attr('type') == "radio") {
+            checkedRadio = keyBro + ":checked";
+            if (typeof $(checkedRadio).val() != "undefined") {
+              key = $(checkedRadio).val();
+            }
+
+          }
+          else {
+            key = $(keyBro).val();
+            // result.push({ key: key });
+          }
+        }
+        result.push({ key: key });
       }
+
       console.log(result);
       var mockID = $(this).attr('mockID');
       var timeStart = $('#timeStart').val();
@@ -138,7 +96,7 @@
             $('.modal-title').text('Error!')
             $('.modal-body').text(response.message)
           }
-        // $('#myMessage').modal('show')
+          //$('#myMessage').modal('show')
           // $('.reload_page_button').click(function () { window.location = '/products/' + response.data; });
 
         }
@@ -155,7 +113,7 @@
   var timeStart = parseInt($('#timeStart').val());
   var timeLeft = $('.timeLeft').attr('content');
 
-  timer = setInterval(run, 10000);
+ // timer = setInterval(run, 10000);
   per = 60
   function run() {
     timeStart = timeStart + per;
@@ -192,7 +150,7 @@
     }
   }
   function submit() {
-    clearInterval(timer);
+    //clearInterval(timer);
     $('#frmCompletedTest').submit();
   }
 </script>
@@ -228,6 +186,8 @@
                 <ul id="product-detail-tab" class="nav nav-tabs product-tabs" style="  display: flex;">
                   <div hidden class="timeLeft" content="{{timeLeft}}"></div>
                   <input type="hidden" name="timeStart" value="{{timeStart}}" id="timeStart">
+                  <div hidden class="amountQuiz" content="{{amountQuiz}}"></div>
+
                   <li class="active"> <a href="#description" data-toggle="tab"> Bài làm</a>
                   </li>
 
@@ -263,8 +223,10 @@
                     <div class="std" style="margin-left: 30px;">
 
 
-                      <div id="tab-a6bfee399f4791567a15c5309524f5ac" class="tab-content current">
+                       <div id="tab-a6bfee399f4791567a15c5309524f5ac" class="tab-content current">
 
+
+                        <!--End-->
                         <ul class="questions col-md-12 col-sm-12 col-xs-12">
                           <li class="row">
 
@@ -276,7 +238,7 @@
                                 {{/each}}
                               </select>
                             </div>
-                            <div class="col-sm-3 audio-area">
+                            <div class="col-sm-3 ">
 
                               <audio id="audio" controls="controls">
                                 <source id="audioSource" src="">
@@ -284,36 +246,78 @@
                                 Your browser does not support the audio format.
                               </audio>
                             </div>
+                    
 
                           </li>
                           <h3><span>Questions</span></h3>
-                          <form method="POST" name="frmAddProduct" novalidate action="/user/mocktest/submit"
-                            id="frmCompletedTest">
-                            <input type="hidden" name="_id" value="{{this.mocktest._id}}">
+                          <form method="POST" name="frmCompletedTest" novalidate 
+                          action="/user/mocktest/submit" id="frmCompletedTest">
+                          <input type="hidden" name="_id" value="{{this.mocktest._id}}">
                             <input type="hidden" name="timeStart" value="{{timeStart}}" id="timeStart">
+                            
                             <div class="col-sm-3 answer-area" height="500" style=" height: 500px;
                                                                         overflow: scroll;">
                               {{!-- 40 CÂU TRẢ LỜI --}}
+                              {{#each mocktest.answerKeys}}
+                              <h5>{{this.number}}</h5>
 
-                              {{#each this.numberedAnswers}}
-                              {{index}}.
-                              <input type="text" class="input form-control my-form" name="answerKeys" id="answer-key"
-                                value="{{answer}}">
+                              {{#if this.keyABC}}
+
+                              {{#if this.single}}
+
+
+                              {{#each this.keyABC}}
+                              {{#if this.chose}}
+                              <input type="radio" name="answerKeys_{{../number}}" id="name{{../number}}_{{this.alpha}}"
+                                value="{{this.alpha}}" class="my-form-{{../number}}" checked>
+                              {{else}}
+                              <input type="radio" name="answerKeys_{{../number}}" id="name{{../number}}_{{this.alpha}}"
+                                value="{{this.alpha}}" class="my-form-{{../number}}">
+                              {{/if}}
+                              <label for="name{{../number}}_{{this.alpha}}">{{this.alpha}} {{this.detail}} </label>
                               {{/each}}
-                            </div>
+                             
+
+                              {{!-- CHƯA LÀM CÁI NHIỀU SỰ LỰA CHỌN --}}
+                              {{else}}
+
+                             
+                              <div class="flex-container">
+                                {{#each this.keyABC}}
+                                {{#if this.chose}}
+                                <input type="checkbox" name="answerKeys_{{../number}}" id="track" value="{{this.alpha}}"
+                                  checked class="my-form-{{../number}}"/>
+                                {{else}}
+                                <input type="checkbox" name="answerKeys_{{../number}}" id="track" value="{{this.alpha}}"
+                                 class="my-form-{{../number}}"/>
+                                {{/if}}
+                                <label for="track">{{this.alpha}} {{this.detail}}</label>
+                                {{/each}}
+                              </div>
+                           
+
+                              {{/if}}
+                              {{!-- CHƯA LÀM CÁI NHIỀU SỰ LỰA CHỌN --}}
+
+                              {{else}}
+
+                              <input type='text' class='input form-control my-form-{{this.number}}' value="{{this.key}}"
+                                name='answerKeys_{{this.number}}' >
+                         
+                              {{/if}}
+
+                              {{/each}}
+
+
                           </form>
-
-                          <div class="col-sm-9">
-                            <iframe src="/pdf/documents/{{this.mocktest.questionLink}}" height="500"
-                              width="100%"></iframe>
-                          </div>
-
-                        </ul>
-                        <!--End-->
                       </div>
+
+                       <div class="col-sm-9">
+                        <iframe src="/pdf/documents/{{this.mocktest.questionLink}}" height="500" width="100%"></iframe>
+                      </div>
+
                     </div>
                   </div>
-
 
 
                 </div>

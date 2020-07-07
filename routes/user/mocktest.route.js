@@ -105,7 +105,7 @@ router.get('/:id', async (req, res) => {
 
 router.get('/pending/:id', async (req, res) => {
   const mockId = req.params.id;
-  const row = await mocktestModel.single(mockId);
+  const mocktest = await mocktestModel.single(mockId);
 
   console.log(mockId);
 
@@ -119,6 +119,7 @@ router.get('/pending/:id', async (req, res) => {
     }
   }
 
+
   if (isEmpty(pendingMock)) {//mnếu là bài test CHƯA LÀM hoặc CHƯA LÀM XONG
     res.redirect("/");
   }
@@ -126,30 +127,65 @@ router.get('/pending/:id', async (req, res) => {
     timeLeft = pendingMock.timeLeft;
     timeStart = moment().unix();
 
+    amountQuiz = parseInt(pendingMock.answerKeys.length)
     //tạo list câu trả lời mà có số
-    numberedAnswers = [];
-    for (i = 0; i < 40; i++) {
-      temp = {
-        index: i + 1,
-        answer: pendingMock.answerKeys[i]
-      };
-      numberedAnswers.push(temp);
+    answerKeys = pendingMock.answerKeys;
+    mocktestData = mocktest.answerKeys;
+
+    for (i = 0; i < answerKeys.length; i++) {
+      //câu dạng lý thuyết
+      if (typeof mocktestData[i].key == "string") {
+        
+      }
+      else {//câu dạng trắc nghiệm
+        keyAlpha = 'abcdefghijklmnopqrstuvwxyz'.toUpperCase().split('', mocktestData[i].key.length);
+        keyABC = []
+        for (j = 0; j < mocktestData[i].key.length; j++) {
+          temp = {
+            alpha: keyAlpha[j],
+            detail: mocktestData[i].key[j]
+          }
+          keyABC.push(temp)
+        }
+
+        answerKeys[i].keyABC = keyABC
+
+        if (typeof mocktestData[i].keySub == "string") {
+          answerKeys[i].single = true;
+          for (z = 0; z < answerKeys[i].keyABC.length; z++) {
+            if (answerKeys[i].keyABC[z].alpha == answerKeys[i].key) {
+              answerKeys[i].keyABC[z].chose = true;
+            }
+          }
+        }
+        else {
+          answerKeys[i].single = false;
+          for (z = 0; z < answerKeys[i].keyABC.length; z++) {
+            if (answerKeys[i].key.includes(answerKeys[i].keyABC[z].alpha)) {
+              answerKeys[i].keyABC[z].chose = true;
+            }
+          }
+        }
+
+      }
+
+      answerKeys[i].number = i + 1;
     }
-    console.log(numberedAnswers)
 
-    pendingMock.questionLink = row.questionLink;
-    pendingMock.questionLink = row.questionLink;
-    pendingMock.audioLinks = row.audioLinks;
-    // console.log("time start pending:", pendingMock);
-
+    pendingMock.questionLink = mocktest.questionLink;
+    pendingMock.audioLinks = mocktest.audioLinks;
+    console.log("time start pending:", pendingMock);
+  
     res.render('vwMocktests/pendingDetailMocktest', {
       mocktest: pendingMock,
       empty: pendingMock === null,
+      amountQuiz: mocktest.answerKeys.length,// số câu trong bài kiểm tra
       timeLeft,
       timeStart,
-      numberedAnswers,
     });
   }
+
+
 });
 
 function isEmpty(obj) {
@@ -237,7 +273,6 @@ router.get('/done/:id', async (req, res) => {
     }
 
 
-
     doneMock.questionLink = mocktest.questionLink;
     doneMock.audioLinks = mocktest.audioLinks;
     console.log("time start pending:", doneMock);
@@ -245,31 +280,11 @@ router.get('/done/:id', async (req, res) => {
 
     //tính điẻm và đưa ra khóa học hợp lý
     doneMock.percentGrade = (doneMock.grades / doneMock.answerKeys.length) * 100;
-    suggestedCourse = {}
-    console.log("Mocktest: ", mocktest)
-    if (mocktest.name.includes("PRE")) {
-      if (doneMock.percentGrade > 50) {
-        // console.log("vỡ lòng")
-        suggestedCourse = await courseModel.singleByCategory("vỡ lòng")
-      }
-    }
-    else{
-          if(mocktest.name.includes("ENTRY"))
-          {
-            if (doneMock.percentGrade > 50) {
-              suggestedCourse = await courseModel.singleByCategory("sơ cấp")
-            }
-          }
-    }
 
-    console.log(suggestedCourse)
-
-  
   
     res.render('vwMocktests/doneDetailMocktest', {
       mocktest: doneMock,
       empty: doneMock === null,
-      suggestedCourse,
     });
   }
 });
@@ -462,42 +477,41 @@ router.post('/ajax', async (req, res) => {
       item.isExisted = true;
       oldTimeLeft = mockTests[index].timeLeft;
     }
-
   }
 
   if (item.action == "save") {
-    // timeStart = parseInt(item.timeStart);
-    // timeNow = moment().unix();
-    // timeUsed = timeNow - timeStart;
+    timeStart = parseInt(item.timeStart);
+    timeNow = moment().unix();
+    timeUsed = timeNow - timeStart;
 
-    // item.timeLeft = oldTimeLeft - timeUsed;
+    item.timeLeft = oldTimeLeft - timeUsed;
 
-    // item.status = 0; //1: DONE, 0: PENDING, -1:DELETED
+    item.status = 0; //1: DONE, 0: PENDING, -1:DELETED
 
-    // delete item.action;
-    // delete item.timeStart;
-    // console.log("Item", item);
-    // if (item.isExisted == false) {
-    //   authUser.tests.push(item);
-    // }
-    // else {
-    //   authUser.tests = authUser.tests.map(obj => {
-    //     if (obj._id === item._id)
-    //       return item
-    //     return obj;
-    //   });
+    delete item.action;
+    delete item.timeStart;
+    console.log("Item", item);
+    if (item.isExisted == false) {
+      authUser.tests.push(item);
+    }
+    else {
+      authUser.tests = authUser.tests.map(obj => {
+        if (obj._id === item._id)
+          return item
+        return obj;
+      });
 
-    //   // console.log("TEMP: ", temp);
+      // console.log("TEMP: ", temp);
 
-    // }
+    }
 
-    // console.log("TESTS ajax:", authUser.tests);
+    console.log("TESTS ajax:", authUser.tests);
 
-    // entity = {
-    //   _id: authUser._id,
-    //   tests: authUser.tests
-    // }
-    //temp = await userModel.patchMocktest(entity)
+    entity = {
+      _id: authUser._id,
+      tests: authUser.tests
+    }
+    temp = await userModel.patchMocktest(entity)
 
     // console.log(temp);
 
