@@ -52,8 +52,8 @@ mongoose.set('useCreateIndex', true);
 mongoose.Promise = global.Promise;
 mongoose
     .connect(
-     dbConfig.url, 
-     // dbConfig.urlCluster,
+     //dbConfig.url, 
+     dbConfig.urlCluster,
        {
         useNewUrlParser: true,
         useUnifiedTopology: true,
