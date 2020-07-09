@@ -22,6 +22,7 @@ module.exports = {
     result = await db.Course.findOne({category: cate});
     return result;
   },
+  
   singleByName:async (anyName) =>{
     anyNameFind = ".*" + anyName +".*";
     result = await db.Course.findOne({"name" : {$regex : anyNameFind}});

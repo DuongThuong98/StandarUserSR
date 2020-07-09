@@ -139,6 +139,11 @@ router.get('/mocktest/done/:id', async (req, res) => {
             if (doneMock.percentGrade > 50) {
               suggestedCourse = await courseModel.singleByCategory("sơ cấp")
             }
+            else{
+              if (doneMock.percentGrade > 70) {
+                suggestedCourse = await courseModel.singleByName("7.0")
+              }
+            }
           }
     }
 

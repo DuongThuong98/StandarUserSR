@@ -778,8 +778,8 @@
           <h4 class="modal-title"> message </h4>
         </div>
         <div class="modal-body">
-          <p> Sản phẩm <i>...</i> đã thêm vào danh sách yêu thích</p>
-          <p><a href="/bidder/wishlist"> Xem danh sách</a></p>
+          <p>  <i>...</i> đã thêm vào danh sách yêu thích</p>
+          <p><a href="/user/wishlist"> Xem danh sách</a></p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default reload_page_button" data-dismiss="modal">Đóng</button>
@@ -861,16 +861,17 @@
           success: function (response) {
             // response : obj
             console.log(response);
-            {{!-- if (response.success) {
+            if (response.success) {
               $('.modal-title').text(response.message)
-              $('.modal-body i').text(response.data.id)
-              $('.cart-total').text(response.data.count + ' Item(s)')
+              //$('.modal-body').text("Vào Wishlist")
+              $('.modal-body i').text("Tài liệu")
+              //$('.cart-total').text(response.data.count + ' Item(s)')
             }
             else {
               $('.modal-title').text('Error!')
               $('.modal-body').text(response.message)
             }
-            $('#myMessage').modal('show') --}}
+            $('#myMessage').modal('show')
           }
         })
      

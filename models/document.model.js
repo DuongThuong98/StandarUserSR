@@ -156,9 +156,8 @@ module.exports = {
     // return await db.Document.find({ categoryId: catId }).countDocuments()
    },
 
-  pageBySearch: async (searchKey,categoryId ,offset) => {
+  pageBySearch: async (searchKey, offset) => {
     result = [];
-
       await db.Document.find({ $text: { $search: searchKey } })
     .limit(config.paginate.limit)
     .skip(offset).then(data => result = data)
