@@ -199,7 +199,7 @@
                               {{#if this.single}}
 
                               {{#unless this.isRight}}
-                              <div style="background-color: rgb(206, 117, 117);">
+                              <div style="background-color: rgb(206, 117, 117);"></div>
                                 {{#each this.keyABC}}
                                 {{#if this.chose}}
                                 <input type="radio" name="answerKeys_{{../number}}"
@@ -231,7 +231,7 @@
                               {{else}}
 
                               {{#unless this.isRight}}
-                              <div class="flex-container" style="background-color: rgb(206, 117, 117);">
+                              <div class="flex-container" style="background-color: rgb(236, 177, 177);">
                                 {{#each this.keyABC}}
                                 {{#if this.chose}}
                                 <input type="checkbox" name="answerKeys_{{../number}}" id="track" value="{{this.alpha}}"

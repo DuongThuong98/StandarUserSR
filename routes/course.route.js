@@ -9,7 +9,17 @@ const config = require('../config/default.json');
 
 const router = express.Router();
 
-router.get('/',(req,res) => {res.send("kaka")})
+router.get('/', async (req,res) => {
+  row = await courseModel.all();
+
+  res.render('vwCourses/allCourses', 
+  {
+    courses: row,
+    empty: row == null,
+  }
+  );
+
+})
 //
 // xem ds sản phẩm thuộc danh mục :id
 

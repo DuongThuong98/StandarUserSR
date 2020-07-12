@@ -81,7 +81,7 @@
                 {{#if authUser}}
                 <div class="page-content checkout-page">
                     <div class="page-title">
-                        <h2>Checkout</h2>
+                        <h2>Thông tin tài khoản</h2>
                     </div>
                     <form onsubmit="return validate();" method="POST" id="frmEditInfo" name="frmEditInfo">
                         <div class="box-border">
@@ -105,7 +105,7 @@
                                     <div class="col-sm-6">
                                         <label for="company_name">ID USER</label>
                                         <input type="text" name="id" readonly class="input form-control"
-                                            id="phone_number" value="{{authUser.id}}">
+                                            id="phone_number" value="{{authUser._id}}">
                                     </div>
                                     <!--/ [col] -->
                                     <div class="col-sm-6">

@@ -33,7 +33,6 @@ const upload = multer({ storage });
 
 //const upload = multer({dest:'upload/'})
 
-
 const router = express.Router();
 
 
@@ -61,7 +60,6 @@ var cpUpload = upload.fields([{ name: 'fuMain', maxCount: 1 },
 ])
 
 router.post('/add', cpUpload, async (req, res) => {
-
     if (typeof (req.body.categoryId) == "undefined") {
         const entity = req.body;
         console.log(entity);

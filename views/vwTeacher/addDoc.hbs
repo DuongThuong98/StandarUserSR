@@ -104,26 +104,27 @@
             console.log(rows)
             for (var i = 1; i <= rows; i++) {
                 $('.answers-input').append(`<li class="row">
-                                                                <div class="col-sm-12 ">
-                                                                    <div class="col-sm-6 ">
+                                                               
+                                                                    <div class="col-sm-3 ">
                                                                         ${i}. <input type="checkbox" class="choices"
                                                                             value="choices" choice-id="${i}">
                                                                         <span for="choices">Trắc nghiệm</span><br>
                                                                     </div>
-                                                                    <div class="col-sm-3 ">
-                                                                        <input type="number" class="points-singleQuiz-${i} points-singleQuiz " 
+                                                                    <div class="col-sm-9 ">
+                                                                        <input type="number" class="points-singleQuiz-${i} points-singleQuiz" 
                                                                             step="1" min="0" value="0" hidden choice-id="${i}">
                                                                     </div>
-                                                                </div>
-                                                           <div class="col-sm-12 ">
+                                                              
+                                                          
                                                                 <div class="singleQuiz-${i}">
+                                                                    <div class="col-sm-6 ">
                                                                     <input type="text" class="input form-control"
-                                                                        style="width: auto;" name="answerKeys_${i}"
+                                                                        style="width: auto; " name="answerKeys_${i}"
                                                                         id="answer-key">
                                                                 </div>
-                                                                 </div>
+                                                             </div>
                                                             
-                                                            </li>`);
+                                                            </li> <br>`);
 
 
 
@@ -139,7 +140,7 @@
         $(code).empty();
         for (var i = 0; i < rows; i++) {
             $(code).append(`<div class="col-sm-2"> <input type="checkbox" name="answerKeys_${id}_sub" value="${alphabet[i]}">
-                <input type="text" class="input form-control" style="width: auto;"
+                <input type="text" class="input form-control" style="width: auto; padding-right:1px"
                                  name="answerKeys_${id}" id="answer-key" placeholder="${alphabet[i]}"> </div>`)
 
         }
@@ -148,7 +149,7 @@
     });
     jQuery(document).on('click', '.choices', function () {
         var id = $(this).attr('choice-id')
-       
+
         code = ".points-singleQuiz-" + id;
         console.log(code)
         singleQuiz = ".singleQuiz" + id;
@@ -194,7 +195,7 @@
                                         <div class="std" style="margin-left: 30px;">
 
                                             <div class="page-title">
-                                                <h2>Thêm sản phẩm đấu giá</h2>
+                                         
                                             </div>
                                             <form method="POST" name="frmAddProduct" novalidate
                                                 enctype="multipart/form-data">
@@ -278,7 +279,7 @@
                                     <div id="reviews" class="tab-pane fade">
                                         <div class="std" style="margin-left: 30px;">
                                             <div class="page-title">
-                                                <h2>Thêm sản phẩm đấu giá</h2>
+                                               
                                             </div>
                                             <form method="POST" name="frmAddProduct" novalidate
                                                 enctype="multipart/form-data">
@@ -328,12 +329,22 @@
 
 
                                                         </li>
+                                                        
+                                                        <li class="row">
+                                                        <div class="col-sm-2">
+                                                            <label for="points" class="required"> Số câu hỏi:
+                                                            </label>
 
-                                                        <input type="number" id="points" name="points" step="1" min="0"
-                                                            value="0">
+                                                            <input type="number" class="input form-control" id="points"
+                                                                name="points" step="1" min="0" value="0">
+
+                                                            <br>
+                                                        </div>
+                                                        </li>
+
                                                         <div class="answers-input">
                                                             {{!-- 40 câu hỏi --}}
-                                                        
+
 
 
                                                         </div>

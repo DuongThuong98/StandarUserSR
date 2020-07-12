@@ -124,13 +124,7 @@
         {{else}}
         <div class="entry-detail">
           <div class="page-title">
-            <h2>Tên khóa học: {{course.name}}</h2>
-
-            <form method="POST" name="frmAddProduct" novalidate action="/courses/" id="frmCompletedTest">
-              Mã khóa: <input type="text" name="courseID" value="{{course._id}}">
-
-            </form>
-            <button type="submit" form="frmCompletedTest" value="Submit">Đăng ký</button>
+            <h1>Tên khóa học: {{course.name}}</h1>
           </div>
 
 
@@ -148,7 +142,10 @@
             {{{course.content}}}
 
           </div>
-
+<form method="POST" name="frmAddProduct" novalidate action="/courses/" id="frmCompletedTest">
+             <input type="text" name="courseID" value="{{course._id}}" hidden>
+            </form>
+            <button type="submit" class="btn btn-primary btn-lg" form="frmCompletedTest" value="Submit">ĐĂNG KÝ NGAY</button>
         </div>
         <!-- Related Posts -->
         <div class="single-box">

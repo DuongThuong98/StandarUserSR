@@ -97,9 +97,15 @@ router.get('/mocktest/done/:id', async (req, res) => {
           answerKeys[i].single = false;
 
           for (z = 0; z < answerKeys[i].keyABC.length; z++) {
+            //chữa cháy lúc demo cho Thầy bị lỗi
+            if (typeof answerKeys[i].key == "undefined") {
+              answerKeys[i].keyABC[z].chose = false;
 
-            if (answerKeys[i].key.includes(answerKeys[i].keyABC[z].alpha)) {
-              answerKeys[i].keyABC[z].chose = true;
+            }
+            else {
+              if (answerKeys[i].key.includes(answerKeys[i].keyABC[z].alpha)) {
+                answerKeys[i].keyABC[z].chose = true;
+              }
             }
           }
         }
@@ -133,18 +139,17 @@ router.get('/mocktest/done/:id', async (req, res) => {
         suggestedCourse = await courseModel.singleByCategory("vỡ lòng")
       }
     }
-    else{
-          if(mocktest.name.includes("ENTRY"))
-          {
-            if (doneMock.percentGrade > 50) {
-              suggestedCourse = await courseModel.singleByCategory("sơ cấp")
-            }
-            else{
-              if (doneMock.percentGrade > 70) {
-                suggestedCourse = await courseModel.singleByName("7.0")
-              }
-            }
+    else {
+      if (mocktest.name.includes("ENTRY")) {
+        if (doneMock.percentGrade > 50) {
+          suggestedCourse = await courseModel.singleByCategory("sơ cấp")
+        }
+        else {
+          if (doneMock.percentGrade > 70) {
+            suggestedCourse = await courseModel.singleByName("7.0")
           }
+        }
+      }
     }
 
     console.log(suggestedCourse)
@@ -262,7 +267,6 @@ router.post('/mocktest/submit', async (req, res) => {
     //dạng điền lỗ
     if (typeof questionKey[i].key == "string") {
       if (helper.phraseIsAccepted(item[keyBro], questionKey[i].key)) {
-
         item.grades++;
         obj = {
           isRight: true,
@@ -286,9 +290,22 @@ router.post('/mocktest/submit', async (req, res) => {
           }
         }
         else
-          obj = {
-            isRight: false,
-            key: item[keyBro]
+          {
+            if(typeof item[keyBro] == "undefined")
+          {
+            //console.log("lala",i)
+            obj = {
+              isRight: false,
+              key: ''
+            }
+          }
+          else
+          {
+            obj = {
+              isRight: false,
+              key: item[keyBro]
+            }
+          }
           }
       }
       else {//trắc nghiệm nhiều đáp án
@@ -301,11 +318,21 @@ router.post('/mocktest/submit', async (req, res) => {
             key: item[keyBro]
           }
         }
-        else
-          obj = {
-            isRight: false,
-            key: item[keyBro]
+        else {
+          if (typeof item[keyBro] == "undefined") {
+            //console.log("lala",i)
+            obj = {
+              isRight: false,
+              key: ''
+            }
           }
+          else {
+            obj = {
+              isRight: false,
+              key: item[keyBro]
+            }
+          }
+        }
       }
     }
 

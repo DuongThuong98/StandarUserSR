@@ -5,6 +5,17 @@ const config = require('../config/default.json');
 
 module.exports = {
 
+  all: async () =>{
+    result = await db.Course.find()
+   console.log(result);
+    return result;
+  },
+
+  allByIDTeacher: async (id) =>{
+    result = await db.Course.find({ authorID: id })
+   console.log(result);
+    return result;
+  },
 
   findById: async (docId) =>{
     result = [];
@@ -30,11 +41,7 @@ module.exports = {
     return result;
   },
 
-  allByIDTeacher: async (id) =>{
-    result = await db.Course.find({ authorID: id })
-   console.log(result);
-    return result;
-  },
+  
 
   add: async (entity) => {
       const doc = new db.Course(entity)
