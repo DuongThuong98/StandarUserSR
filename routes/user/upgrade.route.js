@@ -20,7 +20,9 @@ router.get('/', async (req, res) => {
   myEntryTest = {};
   if (mockTests.length > 0) {
     myEntryTest = mockTests[0];
-    myEntryTest.percentGrade = (myEntryTest.grades / myEntryTest.answerKeys.length) * 100;
+    myEntryTest.percentGrade = ((myEntryTest.grades / myEntryTest.answerKeys.length) * 100).toFixed(3);
+  
+    myEntryTest.answersLength = myEntryTest.answerKeys.length;
   }
 
   res.render('vwUser/upgrade', {
@@ -130,7 +132,9 @@ router.get('/mocktest/done/:id', async (req, res) => {
     console.log("Key ABC:", doneMock.answerKeys[24].keyABC);
 
     //tính điẻm và đưa ra khóa học hợp lý
-    doneMock.percentGrade = (doneMock.grades / doneMock.answerKeys.length) * 100;
+
+    doneMock.percentGrade = ( (doneMock.grades / doneMock.answerKeys.length) * 100).toFixed(3);
+    doneMock.answersLength = doneMock.answerKeys.length;
     suggestedCourse = {}
     console.log("Mocktest: ", mocktest)
     if (mocktest.name.includes("PRE")) {

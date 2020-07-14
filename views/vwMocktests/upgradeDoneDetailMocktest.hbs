@@ -41,7 +41,12 @@
   .flex-container {
     display: flex;
     flex-wrap: wrap;
+  }
 
+  .multiplechoice {
+    background-color: rgb(250, 179, 179);
+    border-radius: 15px;
+    padding-left: 5px;
   }
 </style>
 {{/section}}
@@ -180,7 +185,8 @@
                             <div class="col-sm-6">
                               <div style="padding-left: 50px;">
                                 <h3>Điểm số của bạn là: {{this.mocktest.percentGrade}} %</h3>
-                                <h4>Khóa học đề xuất <a href="/courses/{{this.suggestedCourse._id}}">{{this.suggestedCourse.name}}</a> </h4>
+                                <h4>Khóa học đề xuất <a
+                                    href="/courses/{{this.suggestedCourse._id}}">{{this.suggestedCourse.name}}</a> </h4>
                               </div>
                             </div>
 
@@ -199,7 +205,7 @@
                               {{#if this.single}}
 
                               {{#unless this.isRight}}
-                              <div style="background-color: rgb(206, 117, 117);"></div>
+                              <div class="multiplechoice">
                                 {{#each this.keyABC}}
                                 {{#if this.chose}}
                                 <input type="radio" name="answerKeys_{{../number}}"
@@ -210,8 +216,9 @@
                                 {{/if}}
                                 <label for="name{{../number}}_{{this.alpha}}">{{this.alpha}} {{this.detail}} </label>
                                 {{/each}}
-                                <span style="color: red; font-weight: bold;">Đáp án: {{this.realKey}}</span>
+
                               </div>
+                              <span style="color: red; font-weight: bold;">Đáp án: {{this.realKey}}</span>
 
                               {{else}}
 
@@ -231,7 +238,7 @@
                               {{else}}
 
                               {{#unless this.isRight}}
-                              <div class="flex-container" style="background-color: rgb(236, 177, 177);">
+                              <div class="flex-container multiplechoice">
                                 {{#each this.keyABC}}
                                 {{#if this.chose}}
                                 <input type="checkbox" name="answerKeys_{{../number}}" id="track" value="{{this.alpha}}"
@@ -242,8 +249,9 @@
                                 {{/if}}
                                 <label for="track">{{this.alpha}} {{this.detail}}</label>
                                 {{/each}}
-                                 <span style="color: red; font-weight: bold;">Đáp án: {{this.realKey}}</span>
+
                               </div>
+                              <span style="color: red; font-weight: bold;">Đáp án: {{this.realKey}}</span>
 
                               {{else}}
                               <div class="flex-container">
@@ -271,7 +279,7 @@
                               {{else}}
 
                               <input type='text' class='input form-control my-form'
-                                style="background-color: rgb(206, 117, 117);" value="{{this.key}}"
+                                style="background-color: rgb(247, 187, 187);" value="{{this.key}}"
                                 name='answerKeys_{{this.number}}' disabled>
 
                               <span style="color: red; font-weight: bold;"> {{this.realKey}}</span>

@@ -82,56 +82,85 @@
 
 
                     {{#unless this.empty}}
-                    Bạn đã làm bài test đầu vào
+                    <h3>Bạn đã làm bài test đầu vào</h3>
+                   
+                    Với kết quả là: {{this.myEntryTest.percentGrade}}% <br>
+                    ĐÚNG: {{this.myEntryTest.grades}}/{{this.myEntryTest.answersLength}} câu
+                  
                     <br>
-                    với kết quả là: {{this.myEntryTest.percentGrade}}
-                    <br>
-                    <a href="/user/upgrade/mocktest/done/{{this.myEntryTest._id}}">
-                        XEM LẠI CHI TIẾT BÀI TEST ĐÃ LÀM </a>
-                    <br>
+                    <h4><a href="/user/upgrade/mocktest/done/{{this.myEntryTest._id}}">
+                    >>>>  XEM LẠI CHI TIẾT BÀI TEST ĐÃ LÀM </a></h4>
+                
                     Bạn có thể làm lại bài test đầu vào khác nhưng bài test lần trước đó sẽ bị xóa.
                     <br>
-                    <button type="button" class="btn btn-primary"
-                      onclick=" $('.entryTestLinks').toggle(500) ">Link entry test</button>
+                    <button type="button" class="btn btn-primary" onclick=" $('.entryTestLinks').toggle(500)">Link
+                        entry test</button>
                     {{/unless}}
-                    {{#if this.empty}}
-                    <ul>
-                        {{else}}
-                        <ul class="entryTestLinks" hidden>
-                            {{/if}}
+              
 
-                            <li>
-                                <a href="/user/upgrade/mocktest/{{this.enryTest._id}}">
-                                    Link kiểm tra đầu vào dành cho người chưa từng học Ielts </a>
-                            </li>
-                            <li>
-                                <a href="/user/upgrade/mocktest/{{this.enryTestForTheExperienced._id}}">Link kiểm tra
-                                    dành cho người đã học Ielts</a>
-                            </li>
-                        </ul>
+                        {{#if this.empty}}
+                        <div class="container ">
+                            {{else}}
+                            <div class="container entryTestLinks" hidden>
+                                {{/if}}
+
+                                <div class="row">
+                                    <div class="col-sm-2 col-xs-12">
+                                        <div class="jtv-banner-box banner-inner">
+                                            <div class="image" > <a class="jtv-banner-opacity" href="#"><img
+                                                        src="/images/top-banner2.jpg" alt="html template"></a> </div>
+                                            <div class="jtv-content-text">
+                                                <h3 class="title">MẤT GỐC</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2 col-xs-12">
+                                        <div class="jtv-banner-box banner-inner">
+                                            <div class="image"> <a class="jtv-banner-opacity" href="/user/upgrade/mocktest/{{this.enryTest._id}}"><img
+                                                        src="/images/top-banner4.jpg" alt="html template"></a> </div>
+                                            <div class="jtv-content-text">
+                                                <h3 class="title">PRE IELTS</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2 col-xs-12">
+                                        <div class="jtv-banner-box banner-inner">
+                                            <div class="image"> <a class="jtv-banner-opacity" href="/user/upgrade/mocktest/{{this.enryTestForTheExperienced._id}}"><img
+                                                        src="/images/top-banner3.jpg" alt="html template"></a> </div>
+                                            <div class="jtv-content-text">
+                                                <h3 class="title"> IELTS CANIDATE </h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    
+
+                                </div>
+                            </div>
+
+                        </div>
+
                 </div>
 
+
+                <aside class="right sidebar col-sm-3 col-xs-12">
+                    <div class="sidebar-account block">
+                        <div class="sidebar-bar-title">
+                            <h3>Tài khoản cá nhân</h3>
+                        </div>
+                        <div class="block-content">
+                            <ul>
+                                <li><a href="info">Thông tin tài khoản</a></li>
+                                <li><a href="wishlist">Danh sách yêu thích</a></li>
+                                <li><a href="mocktest">Các bài kiểm tra thử </a></li>
+                                <li><a href="questions"> Câu hỏi trong forum</a></li>
+                                <li class="current last"><a>Nâng cấp học viên</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </aside>
             </div>
-
-
-            <aside class="right sidebar col-sm-3 col-xs-12">
-                <div class="sidebar-account block">
-                    <div class="sidebar-bar-title">
-                        <h3>Tài khoản cá nhân</h3>
-                    </div>
-                    <div class="block-content">
-                        <ul>
-                            <li><a href="info">Thông tin tài khoản</a></li>
-                            <li><a href="wishlist">Danh sách yêu thích</a></li>
-                            <li><a href="mocktest">Các bài kiểm tra thử </a></li>
-                            <li><a href="questions"> Câu hỏi trong forum</a></li>
-                            <li class="current last"><a>Nâng cấp học viên</a></li>
-                        </ul>
-                    </div>
-                </div>
-
-            </aside>
         </div>
-    </div>
 </section>
 <!-- Main Container End -->
