@@ -90,7 +90,7 @@
     $('.audiolinks').change(function () {
       //console.log("lala")
       //console.log($('.audiolinks').val())
-      url = "/mp3/documents/" + $('.audiolinks').val()
+      url = "https://mielts.s3.ap-southeast-1.amazonaws.com/" + $('.audiolinks').val()
       var audio = document.getElementById('audio');
       var source = document.getElementById('audioSource');
       source.src = url
@@ -296,7 +296,7 @@
                           </form>
 
                           <div class="col-sm-9">
-                            <iframe src="/pdf/documents/{{this.mocktest.questionLink}}" height="500"
+                            <iframe src="https://mielts.s3.ap-southeast-1.amazonaws.com/{{this.mocktest.questionLink}}" height="500"
                               width="100%"></iframe>
                           </div>
 

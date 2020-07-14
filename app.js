@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const exphbs = require('express-handlebars');
 const hbs_sections = require('express-handlebars-sections');
@@ -73,7 +74,7 @@ require('./middlewares/routes.mdw')(app);
 
 const documentModel = require('./models/document.model');
 app.get('/', async (req, res) => {
-
+console.log(process.env.AWS_S3_BUCKET)
   documents = await documentModel.mostViews();
 
   for(i=0;i<documents.length;i++)

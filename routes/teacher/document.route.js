@@ -2,34 +2,70 @@ const express = require('express');
 const bcrypt = require('bcryptjs');
 const moment = require('moment');
 const multer = require('multer');
+const aws = require('aws-sdk')
+const multerS3 = require('multer-s3')
 const userModel = require('../../models/user.model');
 const documentModel = require('../../models/document.model');
 const mocktestModel = require('../../models/mocktest.model');
 const categoryModel = require('../../models/category.model');
 
 
-const storage = multer.diskStorage({
-    filename: function (req, file, cb) {
-        var duoi = file.originalname.substr(file.originalname.indexOf("."), 5);
-        var fname = file.originalname.substr(0, file.originalname.indexOf(".")) + '-' + Date.now() + duoi;
-        cb(null, fname);
-    },
-    destination: function (req, file, cb) {
+// const storage = multer.diskStorage({
+//     filename: function (req, file, cb) {
+//         var duoi = file.originalname.substr(file.originalname.indexOf("."), 5);
+//         var fname = file.originalname.substr(0, file.originalname.indexOf(".")) + '-' + Date.now() + duoi;
+//         cb(null, fname);
+//     },
+//     destination: function (req, file, cb) {
+//         var duoi = file.originalname.substr(file.originalname.indexOf("."), 5);
+//         if (duoi == ".mp3") {
+//             cb(null, `public/mp3/documents`);
+//         }
+//         else {
+//             if (duoi == ".pdf") {
+//                 cb(null, `public/pdf/documents`);
+//             }
+//             else {
+//                 cb(null, `public/images/documents`);
+//             }
+//         }
+//     },
+// });
+// const upload = multer({ storage });
+
+const s3 = new aws.S3({
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+    region: process.env.AWS_DEFAULT_REGION
+  })
+
+const upload = multer({
+    storage: multerS3({
+      s3: s3,
+      bucket: process.env.AWS_S3_BUCKET,
+      contentType: multerS3.AUTO_CONTENT_TYPE,
+      acl: 'public-read',
+      metadata: (req, file, cb) => {
+        cb(null, { fieldName: file.fieldname })
+      },
+      key: (req, file, cb) => {
+
         var duoi = file.originalname.substr(file.originalname.indexOf("."), 5);
         if (duoi == ".mp3") {
-            cb(null, `public/mp3/documents`);
+            cb(null, 'mp3_files/' + Date.now().toString() + file.originalname);
         }
         else {
             if (duoi == ".pdf") {
-                cb(null, `public/pdf/documents`);
+                cb(null, 'pdf_files/' + Date.now().toString() + file.originalname);
             }
             else {
-                cb(null, `public/images/documents`);
+                cb(null, 'images_files/' + Date.now().toString() + file.originalname);
             }
         }
-    },
-});
-const upload = multer({ storage });
+      }
+    })
+  })
+
 
 //const upload = multer({dest:'upload/'})
 
@@ -63,13 +99,14 @@ router.post('/add', cpUpload, async (req, res) => {
     if (typeof (req.body.categoryId) == "undefined") {
         const entity = req.body;
         console.log(entity);
-        entity.questionLink = req.files['fuMain-ques'][0].filename;
-        entity.answerKeyLink = req.files['fuMain-key'][0].filename;
+        console.log(req.files)
+        entity.questionLink = req.files['fuMain-ques'][0].key;
+        entity.answerKeyLink = req.files['fuMain-key'][0].key;
 
         if (entity.mocktest_type == 1) {
             entity.audioLinks = [];
             req.files['fuMain-audio'].forEach(element => {
-                entity.audioLinks.push(element.filename)
+                entity.audioLinks.push(element.key)
             });
             entity.mocktestType = "listening";
         }
