@@ -52,14 +52,14 @@ const upload = multer({
 
         var duoi = file.originalname.substr(file.originalname.indexOf("."), 5);
         if (duoi == ".mp3") {
-            cb(null, 'mp3_files/' + Date.now().toString() + file.originalname);
+            cb(null, 'mp3_files/' + Date.now().toString() + "-" + file.originalname);
         }
         else {
             if (duoi == ".pdf") {
-                cb(null, 'pdf_files/' + Date.now().toString() + file.originalname);
+                cb(null, 'pdf_files/' + Date.now().toString() + "-"  + file.originalname);
             }
             else {
-                cb(null, 'images_files/' + Date.now().toString() + file.originalname);
+                cb(null, 'images_files/' + Date.now().toString() + "-"  + file.originalname);
             }
         }
       }

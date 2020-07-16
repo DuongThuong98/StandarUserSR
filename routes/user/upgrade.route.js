@@ -17,6 +17,7 @@ router.get('/', async (req, res) => {
 
   authUser = req.session.authUser;
   mockTests = authUser.tests;
+  //if already did an entry test
   myEntryTest = {};
   if (mockTests.length > 0) {
     myEntryTest = mockTests[0];
