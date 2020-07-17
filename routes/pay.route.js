@@ -106,12 +106,21 @@ router.get("/success", function (req, res, next) {
       const course = await db.Course.findById({ _id: item.courseID });
 
       if (course.studentList.length > 0) {
-        const found = course.studentList.find((x) => x.toString() === item.userID.toString());
-        console.log(found)
-        if (!found) {
-          course.studentList.push(item.userID);
-          await course.save();
+        const found = course.studentList.find(
+          (x) => x.toString() === item.userID.toString()
+        );
+        console.log(found);
+        if (found) {
+          err_message = "Đã đăng ký khóa học";
+          row = null;
+          res.render("vwCourses/detail", {
+            course: row,
+            empty: row == null,
+            err_message,
+          });
         }
+        course.studentList.push(item.userID);
+        await course.save();
       } else {
         course.studentList.push(item.userID);
         await course.save();
