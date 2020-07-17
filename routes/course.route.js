@@ -21,7 +21,7 @@ router.get('/', async (req,res) => {
 
 })
 //
-// xem ds sản phẩm thuộc danh mục :id
+// xem ds Tài liệu thuộc danh mục :id
 
 router.get('/:id', async (req, res) => {
   const id = req.params.id;

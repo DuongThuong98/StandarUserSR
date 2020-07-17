@@ -121,7 +121,7 @@
     }
     else {
       if ($('.product-name').attr('data-pro-status') != 1) {
-        alert("Sản phẩm đã hết phiên đấu giá");
+        alert("Tài liệu đã hết phiên đấu giá");
         return false;
       }
       if ($('.fa-user').attr('data-id') == $('.bidder-user').attr('data-id')) {
@@ -130,7 +130,7 @@
       }
       else {
         if ($('.fa-user').attr('data-id') == $('.seller-user').attr('data-id')) {
-          alert("Bạn không được ra giá giá cho sản phẩm của mình");
+          alert("Bạn không được ra giá giá cho Tài liệu của mình");
           return false
         }
         else {
@@ -527,7 +527,7 @@
       <div class="col-xs-12">
 
         <div class="page-header">
-          <h2>Sản phẩm liên quan</h2>
+          <h2>Tài liệu liên quan</h2>
         </div>
         <div class="slider-items-products">
           <div id="upsell-product-slider" class="product-flexslider hidden-buttons">

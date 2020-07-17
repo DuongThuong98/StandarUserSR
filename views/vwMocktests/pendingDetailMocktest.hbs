@@ -109,12 +109,12 @@
 </script>
 
 <script>
-  var mockID = $('#save').attr('mockID');
+ var mockID = $('#save').attr('mockID');
   var timeStart = parseInt($('#timeStart').val());
   var timeLeft = $('.timeLeft').attr('content');
 
- // timer = setInterval(run, 10000);
-  per = 60
+  timer = setInterval(run, 10000);
+  per = 10
   function run() {
     timeStart = timeStart + per;
     timeLeft = timeLeft - per;
@@ -126,11 +126,6 @@
     }
     else {
       $('#timeStart').attr('value', timeStart);
-      var l = $('.my-form').length;
-      var result = [];
-      for (i = 0; i < l; i++) {
-        result.push($('.my-form').eq(i).val());
-      }
 
       $.ajax({
         url: '/user/mocktest/ajax',
@@ -138,7 +133,6 @@
         data: {
           _id: mockID, // $_POST['id'] = 22
           action: 'changeTimeLeft',
-          answerKeys: result,
           timeLeft: timeLeft
         },
         dataType: 'JSON',
@@ -149,8 +143,9 @@
       });
     }
   }
+
   function submit() {
-    clearInterval(timer);
+    //clearInterval(timer);
     $('#frmCompletedTest').submit();
   }
 </script>
@@ -321,16 +316,12 @@
 
 
                 </div>
-                <button type="submit" class="btn btn-warning" style="margin-top: 10px;">
-                  <i class="fa fa-check" aria-hidden="true"></i>ĐĂNG KÝ
+                     <button type="submit" class="btn btn-warning" style="margin-top: 10px;">
+                  <i class="fa fa-check" aria-hidden="true"></i>Trở về
                 </button>
 
-                <button type="button" class="btn btn-primary" style="margin-top: 10px;">Primary</button>
-                <button type="button" class="btn btn-secondary" style="margin-top: 10px;">Secondary</button>
-                <button type="button" class="btn btn-success" style="margin-top: 10px;">Success</button>
-                <button type="button" class="btn btn-danger" style="margin-top: 10px;">Danger</button>
-                <button type="button" class="btn btn-warning" style="margin-top: 10px;">Warning</button>
-                <button type="button" class="btn btn-info" style="margin-top: 10px;">Info</button>
+           
+                <button type="button" class="btn btn-danger" style="margin-top: 10px;">Thoát</button>
               </div>
             </div>
           </div>
@@ -357,7 +348,7 @@
       <div class="col-xs-12">
 
         <div class="page-header">
-          <h2>Sản phẩm liên quan</h2>
+          <h2>Tài liệu liên quan</h2>
         </div>
         <div class="slider-items-products">
           <div id="upsell-product-slider" class="product-flexslider hidden-buttons">

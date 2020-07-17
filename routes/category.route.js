@@ -9,7 +9,7 @@ const router = express.Router();
 
 router.get('/',(req,res) => {res.send("kaka")})
 //
-// xem ds sản phẩm thuộc danh mục :id
+// xem ds Tài liệu thuộc danh mục :id
 
 router.get('/:id/documents', async (req, res) => {
   if (typeof (req.session.arrange) === 'undefined' ) {

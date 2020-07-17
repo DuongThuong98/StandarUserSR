@@ -6,33 +6,6 @@
     border-style: dotted;
   }
 
-  .my-price,
-  .bidder-name,
-  .seller-name {
-    display: flex;
-    justify-content: space-between !important;
-
-  }
-
-  .quick-price .price {
-    color: #777777 !important;
-    font-size: 17px !important;
-    font-weight: normal;
-    margin-left: 6px;
-  }
-
-  .quick-price {
-    margin-top: 4px;
-  }
-
-  .bidder-name,
-  .seller-name,
-  .time-left {
-    font-size: 15px;
-    padding-top: 12px;
-    border-top: 1px solid #e5e5e5;
-    margin-bottom: 15px
-  }
 
   .created-day {
     font-size: 15px;
@@ -48,42 +21,32 @@
     padding-top: 10px !important;
   }
 
-  .bidder-name h2,
-  .seller-name h2,
-  .created-day h2 {
-    font-size: 15px;
-    text-transform: uppercase;
-    color: #333e48;
-    margin-bottom: 5px;
-    font-weight: bold
+
+  .noselect {
+    -webkit-touch-callout: none;
+    /* iOS Safari */
+    -webkit-user-select: none;
+    /* Safari */
+    -khtml-user-select: none;
+    /* Konqueror HTML */
+    -moz-user-select: none;
+    /* Old versions of Firefox */
+    -ms-user-select: none;
+    /* Internet Explorer/Edge */
+    user-select: none;
+    /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
   }
 
-  #customers {
-    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
+  .flex-container {
+    display: flex;
+    flex-wrap: wrap;
   }
 
-  #customers td,
-  #customers th {
-    border: 1px solid #ddd;
-    padding: 8px;
-  }
-
-  #customers tr:nth-child(even) {
-    background-color: #f2f2f2;
-  }
-
-  #customers tr:hover {
-    background-color: #ddd;
-  }
-
-  #customers th {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    text-align: left;
-    background-color: #4CAF50;
-    color: white;
+  .multiplechoice {
+    background-color: rgb(250, 179, 179);
+    border-radius: 5px;
+    padding-left: 5px;
   }
 </style>
 {{/section}}
@@ -183,21 +146,18 @@
                   <li class="active"> <a href="#description" data-toggle="tab"> Bài làm</a>
                   </li>
 
-                  <li><button type="button" class="btn btn-primary" id="save" mockID="{{this.mocktest._id}}">Điểm
-                      số</button></li>
                   <li><button type="button" class="btn btn-primary"
-                      onclick="window.open('http://localhost:3001/user/mocktest/key/{{this.mocktest._id}}');">Bài giải
+                      onclick="window.open('/user/mocktest/key/{{this.mocktest._id}}');">Bài giải
                       chi tiết</button></li>
-                  
 
                 </ul>
 
                 <div id="productTabContent" class="tab-content">
                   <div class="tab-pane fade in active" id="description">
-                    <div class="std" style="margin-left: 30px;">
+                    <div class="std noselect" style="margin-left: 30px;">
 
 
-                       <div id="tab-a6bfee399f4791567a15c5309524f5ac" class="tab-content current">
+                      <div id="tab-a6bfee399f4791567a15c5309524f5ac" class="tab-content current">
 
 
                         <!--End-->
@@ -223,8 +183,7 @@
                             <div class="col-sm-6">
                               <div style="padding-left: 50px;">
                                 <h3>Điểm số của bạn là: {{this.mocktest.percentGrade}} %</h3>
-                              
-                              </div>
+                                
                             </div>
 
                           </li>
@@ -233,6 +192,7 @@
                             <div class="col-sm-3 answer-area" height="500" style=" height: 500px;
                                                                         overflow: scroll;">
                               {{!-- 40 CÂU TRẢ LỜI --}}
+
                               {{#each mocktest.answerKeys}}
                               <h5>{{this.number}}</h5>
 
@@ -241,7 +201,7 @@
                               {{#if this.single}}
 
                               {{#unless this.isRight}}
-                              <div style="background-color: rgb(206, 117, 117);">
+                              <div class="multiplechoice">
                                 {{#each this.keyABC}}
                                 {{#if this.chose}}
                                 <input type="radio" name="answerKeys_{{../number}}"
@@ -252,8 +212,9 @@
                                 {{/if}}
                                 <label for="name{{../number}}_{{this.alpha}}">{{this.alpha}} {{this.detail}} </label>
                                 {{/each}}
-                                <span style="color: red; font-weight: bold;">Đáp án: {{this.realKey}}</span>
+
                               </div>
+                              <span style="color: red; font-weight: bold;">Đáp án: {{this.realKey}}</span>
 
                               {{else}}
 
@@ -273,7 +234,7 @@
                               {{else}}
 
                               {{#unless this.isRight}}
-                              <div class="flex-container" style="background-color: rgb(206, 117, 117);">
+                              <div class="flex-container multiplechoice">
                                 {{#each this.keyABC}}
                                 {{#if this.chose}}
                                 <input type="checkbox" name="answerKeys_{{../number}}" id="track" value="{{this.alpha}}"
@@ -284,8 +245,9 @@
                                 {{/if}}
                                 <label for="track">{{this.alpha}} {{this.detail}}</label>
                                 {{/each}}
-                                 <span style="color: red; font-weight: bold;">Đáp án: {{this.realKey}}</span>
+
                               </div>
+                              <span style="color: red; font-weight: bold;">Đáp án: {{this.realKey}}</span>
 
                               {{else}}
                               <div class="flex-container">
@@ -313,7 +275,7 @@
                               {{else}}
 
                               <input type='text' class='input form-control my-form'
-                                style="background-color: rgb(206, 117, 117);" value="{{this.key}}"
+                                style="background-color: rgb(247, 187, 187);" value="{{this.key}}"
                                 name='answerKeys_{{this.number}}' disabled>
 
                               <span style="color: red; font-weight: bold;"> {{this.realKey}}</span>
@@ -326,41 +288,40 @@
 
                           </form>
                       </div>
-                    
 
-                     <div class="col-sm-9">
+                      <div class="col-sm-9">
                         <iframe src="https://mielts.s3.ap-southeast-1.amazonaws.com/{{this.mocktest.questionLink}}" height="500" width="100%"></iframe>
                       </div>
+
+                      </ul>
+                      <!--End-->
                     </div>
                   </div>
-
-
-
                 </div>
-                <button type="submit" class="btn btn-warning" style="margin-top: 10px;">
-                  <i class="fa fa-check" aria-hidden="true"></i>ĐĂNG KÝ
+
+
+
+              </div>
+                   <button type="submit" class="btn btn-warning" style="margin-top: 10px;">
+                  <i class="fa fa-check" aria-hidden="true"></i>Trở về
                 </button>
 
-                <button type="button" class="btn btn-primary" style="margin-top: 10px;">Primary</button>
-                <button type="button" class="btn btn-secondary" style="margin-top: 10px;">Secondary</button>
-                <button type="button" class="btn btn-success" style="margin-top: 10px;">Success</button>
-                <button type="button" class="btn btn-danger" style="margin-top: 10px;">Danger</button>
-                <button type="button" class="btn btn-warning" style="margin-top: 10px;">Warning</button>
-                <button type="button" class="btn btn-info" style="margin-top: 10px;">Info</button>
-              </div>
+           
+                <button type="button" class="btn btn-danger" style="margin-top: 10px;">Thoát</button>
             </div>
           </div>
         </div>
       </div>
-
-
-
-
-
-
-
     </div>
+
+
+
+
+
+
+
   </div>
+</div>
 </div>
 
 <!-- Main Container End -->
@@ -373,7 +334,7 @@
       <div class="col-xs-12">
 
         <div class="page-header">
-          <h2>Sản phẩm liên quan</h2>
+          <h2>Tài liệu liên quan</h2>
         </div>
         <div class="slider-items-products">
           <div id="upsell-product-slider" class="product-flexslider hidden-buttons">
