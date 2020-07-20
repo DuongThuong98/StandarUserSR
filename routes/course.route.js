@@ -26,7 +26,7 @@ router.get('/', async (req,res) => {
 router.get('/:id', async (req, res) => {
   const id = req.params.id;
   row = await courseModel.singleById(id);
-
+  row.created_at = moment(row.createdAt, 'YYYY-MM-DDTHH:mm:ss[Z]').format('MMMM Do YYYY, h:mm:ss a');
   res.render('vwCourses/detail', 
   {
     course: row,

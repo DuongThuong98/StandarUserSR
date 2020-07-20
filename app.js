@@ -82,7 +82,8 @@ console.log(process.env.AWS_S3_BUCKET)
     documents[i].created_at = moment(documents[i].createdAt, 'YYYY-MM-DDTHH:mm:ss[Z]').format('MMMM Do YYYY, h:mm:ss a');
   }
 
-  console.log(documents);
+  // console.log(documents);
+  console.log("REQ: ", req);
   res.render('home',{
     documents,
     empty: documents.length == 0

@@ -29,6 +29,33 @@
       pointer-events: none;
       color: #aaa;
     }
+
+    .btn-info {
+      color: rgb(12, 11, 11);
+      background-color: #f1db13;
+      border-color: #f1db13;
+    }
+
+    .btn-outline-info {
+      color: rgb(12, 11, 11);
+      border-color: #f1db13;
+    }
+
+    .btn-info1 {
+
+
+      border-color: #f1db13;
+      border-radius: 25px;
+      border: 2px solid #207cf5;
+      padding: 5px;
+     width: fit-content;
+    }
+    .logo{
+
+     margin-right:20px ;
+      margin-bottom: 30px;
+     width: fit-content;
+    }
   </style>
 </head>
 
@@ -36,6 +63,8 @@
   <div class="container-fluid h-100">
     <div class="row justify-content-center align-items-center h-100">
       <div class="col-sm-4 col-md-3">
+        <div class="logo"><a title="e-commerce" href="/"><img alt="responsive theme logo"
+                    src="/images/logos/my_logo.png" ></a> </div>
         {{#if err_message}}
         <div class="alert alert-warning alert-dismissible fade show" role="alert">
           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -83,7 +112,9 @@
             </div>
           </div>
         </form>
-        <a href="/account/register">Chưa có tài khoản?</a>
+        <div class="btn-info1">
+          <a href="/account/register">Chưa có tài khoản?</a>
+        </div>
       </div>
     </div>
   </div>
