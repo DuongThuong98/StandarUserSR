@@ -100,7 +100,9 @@
 
 
 <!-- Main Container -->
+
 <section class="blog_post">
+
   <div class="container">
     <div class="row">
       <div class="col-xs-12 col-sm-9">
@@ -108,7 +110,7 @@
         {{#if this.success_message}}
         <div class="alert alert-success alert-dismissible" style="width:600px">
           <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-          <strong>WELL DONE! Sẽ có tư vấn viên liên hệ với bạn trong ít phút nữa nhé</strong> 
+          <strong>WELL DONE! Sẽ có tư vấn viên liên hệ với bạn trong ít phút nữa nhé</strong>
           <br>
           {{success_message}}
         </div>
@@ -140,10 +142,17 @@
             {{{course.content}}}
 
           </div>
-<form method="POST" name="frmAddProduct" novalidate action="/courses/" id="frmCompletedTest">
-             <input type="text" name="courseID" value="{{course._id}}" hidden>
-            </form>
-            <button type="submit" class="btn btn-primary btn-lg" form="frmCompletedTest" value="Submit">ĐĂNG KÝ NGAY</button>
+          <form method="POST" name="frmAddProduct" novalidate action="/courses/" id="frmCompletedTest">
+            <input type="text" name="courseID" value="{{course._id}}" hidden>
+          </form>
+          <button type="submit" class="btn btn-primary btn-lg" form="frmCompletedTest" value="Submit">ĐĂNG KÝ
+            NGAY</button>
+
+          <form method="POST" name="frmAddProduct" novalidate
+            action="/pay?courseName={{course.name}}&tuition={{course.tuition}}" id="frmCheckout">
+            <input type="text" name="courseID" value="{{course._id}}" hidden>
+          </form>
+          <button type="submit" class="btn btn-primary btn-lg" form="frmCheckout" value="Submit">Checkout</button>
         </div>
         <!-- Related Posts -->
         <div class="single-box">
@@ -244,6 +253,9 @@
         <!-- Comment -->
         <div class="single-box">
           <h2 class="">Comments</h2>
+          <div class="fb-comments" style="width: 100%;" data-href="http://localhost:3001/courses/{{course._id}}"
+            data-numposts="5" data-width="100%" data-colorscheme="light"></div>
+
           <div class="comment-list">
             <ul>
 

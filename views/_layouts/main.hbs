@@ -67,7 +67,10 @@
 {{{_sections.css}}}
 
 <body class="single_post_page">
-
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous"
+    src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v7.00&appId=692612921596559&autoLogAppEvents=1"
+    nonce="vV6MDXaa"></script>
   <!-- mobile menu -->
   <div id="mobile-menu">
     <ul>
@@ -638,7 +641,7 @@
           <h4 class="modal-title"> message </h4>
         </div>
         <div class="modal-body">
-          <p>  <i>...</i> đã thêm vào danh sách yêu thích</p>
+          <p> <i>...</i> đã thêm vào danh sách yêu thích</p>
           <p><a href="/user/wishlist"> Xem danh sách</a></p>
         </div>
         <div class="modal-footer">
@@ -696,12 +699,12 @@
     window.addEventListener("beforeunload", function (e) {
       var confirmationMessage = "\o/";
       console.log(confirmationMessage)
-      (e || window.event).returnValue = confirmationMessage; //Gecko + IE
+        (e || window.event).returnValue = confirmationMessage; //Gecko + IE
       return confirmationMessage;                            //Webkit, Safari, Chrome
     });
   </script>
 
-<script>
+  <script>
     jQuery(document).ready(function () {
       $('.add_to_wishlist').click(function () {
         var idProduct = $(this).attr('data-id');
@@ -709,7 +712,7 @@
           url: '/user/wishlist/ajax',
           type: 'POST',
           data: {
-            _id: idProduct, 
+            _id: idProduct,
             action: 'add'
           },
           dataType: 'JSON',
@@ -726,11 +729,11 @@
             $('#myMessage').modal('show')
           }
         })
-     
-      
+
+
       });
     })
-    
+
   </script>
 
 

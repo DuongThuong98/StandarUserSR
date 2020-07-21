@@ -60,7 +60,7 @@ router.post('/', async (req, res) => {
     }
     );
   }
-  else
+  else  
   {
     err_message = "Đăng ký thất bại";
     res.render('vwCourses/detail', 
