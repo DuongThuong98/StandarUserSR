@@ -68,20 +68,19 @@ router.get('/:id', async (req, res) => {
       //alphabet = 'abcdefghijklmnopqrstuvwxyz'.toUpperCase().split('');
       keyAlpha = 'abcdefghijklmnopqrstuvwxyz'.toUpperCase().split('', answerKeys[i].key.length);
       keyABC = []
-      for(j=0;j< answerKeys[i].key.length;j++)
-      {
-        temp = {alpha: keyAlpha[j],
-                detail: answerKeys[i].key[j] }
+      for (j = 0; j < answerKeys[i].key.length; j++) {
+        temp = {
+          alpha: keyAlpha[j],
+          detail: answerKeys[i].key[j]
+        }
         keyABC.push(temp)
       }
 
       answerKeys[i].keyABC = keyABC
-      if (typeof answerKeys[i].keySub == "string")
-      {
+      if (typeof answerKeys[i].keySub == "string") {
         answerKeys[i].single = true;
       }
-      else
-      {
+      else {
         answerKeys[i].single = false;
       }
     }
@@ -107,7 +106,7 @@ router.get('/pending/:id', async (req, res) => {
   const mockId = req.params.id;
   const mocktest = await mocktestModel.single(mockId);
 
-  console.log(mockId);
+  console.log(mocktest);
 
   authUser = req.session.authUser;
   mockTests = authUser.tests;
@@ -120,7 +119,7 @@ router.get('/pending/:id', async (req, res) => {
   }
 
 
-  if (isEmpty(pendingMock)) {//mnếu là bài test CHƯA LÀM hoặc CHƯA LÀM XONG
+  if (isEmpty(pendingMock)) {//mnếu là bài test CHƯA LÀM
     res.redirect("/");
   }
   else {
@@ -131,11 +130,11 @@ router.get('/pending/:id', async (req, res) => {
     //tạo list câu trả lời mà có số
     answerKeys = pendingMock.answerKeys;
     mocktestData = mocktest.answerKeys;
-
+console.log(mocktestData);
     for (i = 0; i < answerKeys.length; i++) {
       //câu dạng lý thuyết
       if (typeof mocktestData[i].key == "string") {
-        
+
       }
       else {//câu dạng trắc nghiệm
         keyAlpha = 'abcdefghijklmnopqrstuvwxyz'.toUpperCase().split('', mocktestData[i].key.length);
@@ -175,7 +174,7 @@ router.get('/pending/:id', async (req, res) => {
     pendingMock.questionLink = mocktest.questionLink;
     pendingMock.audioLinks = mocktest.audioLinks;
     console.log("time start pending:", pendingMock);
-  
+
     res.render('vwMocktests/pendingDetailMocktest', {
       mocktest: pendingMock,
       empty: pendingMock === null,
@@ -276,12 +275,12 @@ router.get('/done/:id', async (req, res) => {
     doneMock.questionLink = mocktest.questionLink;
     doneMock.audioLinks = mocktest.audioLinks;
     console.log("time start pending:", doneMock);
-  
+
 
     //tính điẻm và đưa ra khóa học hợp lý
     doneMock.percentGrade = (doneMock.grades / doneMock.answerKeys.length) * 100;
 
-  
+
     res.render('vwMocktests/doneDetailMocktest', {
       mocktest: doneMock,
       empty: doneMock === null,
@@ -350,8 +349,7 @@ router.post('/submit', async (req, res) => {
           key: item[keyBro]
         }
       }
-      else
-      {
+      else {
         //console.log("lalla",i);
         obj = {
           isRight: false,
@@ -369,18 +367,16 @@ router.post('/submit', async (req, res) => {
             key: item[keyBro]
           }
         }
-        else{
+        else {
           //console.log("lalla1",i);
-          if(typeof item[keyBro] == "undefined")
-          {
+          if (typeof item[keyBro] == "undefined") {
             //console.log("lala",i)
             obj = {
               isRight: false,
               key: ''
             }
           }
-          else
-          {
+          else {
             obj = {
               isRight: false,
               key: item[keyBro]
@@ -398,24 +394,22 @@ router.post('/submit', async (req, res) => {
             key: item[keyBro]
           }
         }
-        else{
-          if(typeof item[keyBro] == "undefined")
-          {
+        else {
+          if (typeof item[keyBro] == "undefined") {
             //console.log("lala",i)
             obj = {
               isRight: false,
               key: ''
             }
           }
-          else
-          {
+          else {
             obj = {
               isRight: false,
               key: item[keyBro]
             }
           }
         }
-        
+
       }
     }
 
@@ -460,23 +454,28 @@ router.post('/submit', async (req, res) => {
 router.post('/ajax', async (req, res) => {
 
   item = req.body;
-  console.log("Item: ",item);
-  const row = await mocktestModel.single(item._id);
-  // console.log(row);
+  timeLeft = req.body.timeLeft;
+  const mocktest = await mocktestModel.single(item._id);
+  console.log("Item: ", item);
 
   authUser = req.session.authUser;
 
   mockTests = authUser.tests;
+ 
   oldTimeLeft = 3600;
+
+  tempMock = {};
 
   item.isExisted = false;
   if (mockTests.length > 0) {//nếu có tồn tại bài đã làm rồi
     index = mockTests.findIndex(mock => mock._id == item._id && mock.status == 0);
     if (index != -1) {
+      tempMock = mockTests[index];
       item.grades = mockTests[index].grades;
       item.isExisted = true;
       oldTimeLeft = mockTests[index].timeLeft;
     }
+ 
   }
 
   if (item.action == "save") {
@@ -500,9 +499,7 @@ router.post('/ajax', async (req, res) => {
           return item
         return obj;
       });
-
       // console.log("TEMP: ", temp);
-
     }
 
     console.log("TESTS ajax:", authUser.tests);
@@ -522,17 +519,24 @@ router.post('/ajax', async (req, res) => {
   }
   else {
     if (item.action == "changeTimeLeft") {
-      item.timeLeft
+      
+      item.timeLeft = timeLeft;
 
       item.status = 0; //1: DONE, 0: PENDING, -1:DELETED
-
-      delete item.action;
-
-      // console.log("Item",item);
+     
       if (item.isExisted == false) {
+        var data = [];
+        var length = mocktest.answerKeys.length; // user defined length
+
+        for (var i = 0; i < length; i++) {
+          data.push({ key: "" });
+        }
+        item.answerKeys = data;
         authUser.tests.push(item);
       }
       else {
+        item = tempMock;
+        item.timeLeft = timeLeft;
         authUser.tests = authUser.tests.map(obj => {
           if (obj._id === item._id)
             return item
@@ -549,7 +553,7 @@ router.post('/ajax', async (req, res) => {
       }
       temp = await userModel.patchMocktest(entity)
 
-      // console.log(temp);
+      console.log("TEMP 1",temp);
 
       res.json({
         success: true,

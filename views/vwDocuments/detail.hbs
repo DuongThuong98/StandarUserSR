@@ -121,7 +121,7 @@
     }
     else {
       if ($('.product-name').attr('data-pro-status') != 1) {
-        alert("Sản phẩm đã hết phiên đấu giá");
+        alert("Tài liệu đã hết phiên Tài liệu");
         return false;
       }
       if ($('.fa-user').attr('data-id') == $('.bidder-user').attr('data-id')) {
@@ -130,7 +130,7 @@
       }
       else {
         if ($('.fa-user').attr('data-id') == $('.seller-user').attr('data-id')) {
-          alert("Bạn không được ra giá giá cho sản phẩm của mình");
+          alert("Bạn không được ra giá giá cho Tài liệu của mình");
           return false
         }
         else {
@@ -154,22 +154,32 @@
 {{/section}}
 
 <!-- Main Container -->
-<section class="blog_post">
-  <div class="container">
-    <div class="row">
-
-      <div class="col-xs-12 col-sm-9">
-        <div class="entry-detail">
-          <div class="page-title">
-            <h1>{{this.document.name}}
-            </h1>
-          </div>
-          <div class="entry-photo">
-            <figure><img src="/images/documents/{{this.document.image}}" alt="Blog"></figure>
-          </div>
-          <div class="entry-meta-data"> <span class="author"> <i class="fa fa-user"></i>&nbsp; by: <a
-                href="#">Admin</a></span>
-            <span class="fa fa-eye" style="padding-top: 4px; "> </span>{{this.document.views}} &nbsp;&nbsp;
+    <section class="blog_post">
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-12 col-sm-9">
+            <div class="entry-detail">
+              <div class="page-title">
+                <h1>{{this.document.name}}
+                </h1>
+              </div>
+              <div class="entry-photo">
+                <figure><img src="https://mielts.s3.ap-southeast-1.amazonaws.com/{{this.document.image}}" alt="Blog"></figure>
+              </div>
+              <div class="entry-meta-data"> <span class="author"> <i class="fa fa-user"></i>&nbsp; by: <a
+                    href="#">Admin</a></span> 
+                  <span class="fa fa-eye" style="padding-top: 4px; "> </span>{{this.document.views}} &nbsp;&nbsp;
+                  
+                  <span class="comment-count"> <i
+                    class="fa fa-comment"></i>&nbsp; {{this.document.views}} </span> <span class="date"><i
+                    class="fa fa-calendar">&nbsp;</i>&nbsp; {{this.document.created_at}} </span>
+                <div class="rating"> Thêm vào danh sách <i class="fa fa-heart fa-lg" aria-hidden="true"></i></div>
+              </div>
+              <div class="content-text clearfix">
+                
+             {{{this.document.content}}}
+             
+              </div>
 
             <span class="comment-count"> <i class="fa fa-comment"></i>&nbsp; {{this.document.views}} </span> <span
               class="date"><i class="fa fa-calendar">&nbsp;</i>&nbsp; {{this.document.created_at}} </span>
@@ -525,7 +535,7 @@
       <div class="col-xs-12">
 
         <div class="page-header">
-          <h2>Sản phẩm liên quan</h2>
+          <h2>Tài liệu liên quan</h2>
         </div>
         <div class="slider-items-products">
           <div id="upsell-product-slider" class="product-flexslider hidden-buttons">
