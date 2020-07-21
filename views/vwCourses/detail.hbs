@@ -122,6 +122,14 @@
           <strong>Lỗi!</strong> {{err_message}}
         </div>
         {{/if}}
+      
+       {{#if this.success_checkout_message}}
+        <div class="alert alert-success alert-dismissible" style="width:600px">
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+          <strong><a href="http://localhost:3000/my-courses-detail/{{courseID}}">WELL DONE! Nhấp vào để đến khoa học của bạn</a></strong>
+          <br>
+          {{success_checkout_message}}
+        {{/if}}
 
         {{else}}
         <div class="entry-detail">
@@ -147,12 +155,20 @@
           </form>
           <button type="submit" class="btn btn-primary btn-lg" form="frmCompletedTest" value="Submit">ĐĂNG KÝ
             NGAY</button>
-
+        {{#if this.authUserID}}
+        {{#if this.isRegister}}
           <form method="POST" name="frmAddProduct" novalidate
-            action="/pay?courseName={{course.name}}&tuition={{course.tuition}}" id="frmCheckout">
+            action="/pay?courseName={{course.name}}&tuition={{course.tuition}}&authUser={{authUserID}}" id="frmCheckout">
             <input type="text" name="courseID" value="{{course._id}}" hidden>
           </form>
-          <button type="submit" class="btn btn-primary btn-lg" form="frmCheckout" value="Submit">Checkout</button>
+          <button type="submit" class="btn btn-primary btn-lg" form="frmCheckout" value="Submit">THANH TOÁN</button>
+         {{else}}
+          <form method="GET" name="frmAddProduct" novalidate
+            action="http://localhost:3000/my-courses-detail/{{course._id}}" id="frmEnroll">
+      
+          <button type="submit" class="btn btn-primary btn-lg" onclick="window.location.href = 'http://localhost:3000/my-courses-detail/{{course._id}}';" form="frmEnroll" value="Submit">VÀO HỌC</button>
+         {{/if}}
+         {{/if}}
         </div>
         <!-- Related Posts -->
         <div class="single-box">

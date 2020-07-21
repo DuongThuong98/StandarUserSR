@@ -6,7 +6,6 @@ const EUserTypes = require("../enums/EUserTypes");
 
 var tuition;
 var item;
-var authUser;
 
 //sb-hdnzg2593851@personal.example.com
 //EWG3&u}7
@@ -23,9 +22,8 @@ router.post("/", function (req, res, next) {
   console.log(req.query);
   const courseName = req.query.courseName;
   tuition = req.query.tuition;
-  authUser = req.session.authUser;
   item = req.body;
-  item.userID = authUser._id;
+  item.userID = req.session.authUser._id || req.query.authUser;
 
   const create_payment_json = {
     intent: "sale",
@@ -96,7 +94,7 @@ router.get("/success", function (req, res, next) {
       console.log(error.response);
       err_message = "Đăng ký thất bại";
       row = null;
-      res.render("vwCourses/detail", {
+      return res.render("vwCourses/detail", {
         course: row,
         empty: row == null,
         err_message,
@@ -111,12 +109,13 @@ router.get("/success", function (req, res, next) {
         );
         console.log(found);
         if (found) {
-          err_message = "Đã đăng ký khóa học";
+          success_checkout_message = "Đăng ký khóa học thành công";
           row = null;
-          res.render("vwCourses/detail", {
+          return res.render("vwCourses/detail", {
             course: row,
             empty: row == null,
-            err_message,
+            success_checkout_message,
+            courseID: item.courseID
           });
         }
         course.studentList.push(item.userID);
@@ -133,15 +132,16 @@ router.get("/success", function (req, res, next) {
             role: EUserTypes.STUDENT,
           },
         }
-      );
+      ).exec();
 
       console.log(JSON.stringify(payment));
-      success_message = "Đăng ký khóa học thành công";
+      success_checkout_message = "Đăng ký khóa học thành công";
       row = null;
-      res.render("vwCourses/detail", {
+      return res.render("vwCourses/detail", {
         course: row,
         empty: row == null,
-        success_message,
+        success_checkout_message,
+        courseID: item.courseID
       });
     }
   });
