@@ -1,4 +1,72 @@
-{{#section 'css'}}
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Mirrored from htmlmystore.justthemevalley.com/single_post.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 03 Mar 2020 08:37:58 GMT -->
+
+<head>
+  <!-- Basic page needs -->
+  <meta charset="utf-8">
+  <!--[if IE]>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <![endif]-->
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>MyStore premium HTML5 &amp; CSS3 template</title>
+  <meta name="description"
+    content="best template, template free, responsive theme, fashion store, responsive theme, responsive html theme, Premium website templates, web templates, Multi-Purpose Responsive HTML5 Template">
+  <meta name="keywords"
+    content="bootstrap, ecommerce, fashion, layout, responsive, responsive template, responsive template download, responsive theme, retail, shop, shopping, store, Premium website templates, web templates, Multi-Purpose Responsive HTML5 Template" />
+
+  <!-- Mobile specific metas  -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Favicon  -->
+  <link rel="shortcut icon" type="/image/x-icon" href="/favicon.ico">
+
+  <!-- Google Fonts -->
+  <link href='https://fonts.googleapis.com/css?family=PT+Sans:400,700italic,700,400italic' rel='stylesheet'
+    type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i' rel='stylesheet'
+    type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Dosis:400,300,200,500,600,700,800' rel='stylesheet'
+    type='text/css'>
+
+  <!-- CSS Style -->
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+
+  <!-- font-awesome & simple line icons CSS -->
+  <link rel="stylesheet" type="text/css" href="/css/font-awesome.css" media="all">
+  <link rel="stylesheet" type="text/css" href="/css/simple-line-icons.css" media="all">
+
+  <!-- owl.carousel CSS -->
+  <link rel="stylesheet" type="text/css" href="/css/owl.carousel.css">
+  <link rel="stylesheet" type="text/css" href="/css/owl.theme.css">
+  <link rel="stylesheet" type="text/css" href="/css/owl.transitions.css">
+  <!-- animate CSS  -->
+  <link rel="stylesheet" type="text/css" href="/css/animate.css" media="all">
+
+  <!-- flexslider CSS -->
+  <link rel="stylesheet" type="text/css" href="/css/flexslider.css">
+
+  <!-- Revolution Slider CSS -->
+  <link href="/css/revolution-slider.css" rel="stylesheet">
+  <!-- jquery-ui.min CSS  -->
+  <link rel="stylesheet" type="text/css" href="/css/jquery-ui.css">
+
+
+
+  <!-- blog CSS -->
+  <link rel="stylesheet" type="text/css" href="/css/blog.css" media="all">
+
+  <!-- style CSS -->
+  <link rel="stylesheet" type="text/css" href="/css/style.css" media="all">
+
+  <script src="https://kit.fontawesome.com/166a70ea35.js" crossorigin="anonymous"></script>
+</head>
 <style>
   .rounded {
     height: 80px;
@@ -22,14 +90,237 @@
 
   }
 </style>
-{{/section}}
 
-{{#section 'js'}}
+<body class="single_post_page">
 
-<!-- flexslider js -->
-<script type="text/javascript" src="/js/jquery.flexslider.js"></script>
 
-<script>
+  <div id="page">
+
+
+
+    <!-- Main Container -->
+    <div class="main-container col1-layout">
+      <div class="container">
+        <div class="row">
+          <div class="col-main">
+
+          </div>
+          <div class="product-overview-tab">
+            <div class="container">
+              <div class="row">
+                <div class="col-xs-12">
+                  <div class="product-tab-inner">
+                    <ul id="product-detail-tab" class="nav nav-tabs product-tabs" style="  display: flex;">
+                      <div hidden class="timeLeft" content="{{timeLeft}}"></div>
+                      <div hidden class="amountQuiz" content="{{amountQuiz}}"></div>
+
+                      <li class="active"> <a href="#description" data-toggle="tab"> Bài làm</a>
+                      </li>
+
+                      <li><button type="button" class="btn btn-primary" id="save" mockID="{{this.mocktest._id}}">Lưu
+                          lại</button></li>
+                      <li><button type="button" class="btn btn-primary" onclick="javascript: 
+                            {{!-- clearInterval(timer); --}}
+                            $('#frmCompletedTest').submit();">Nộp
+                          bài</button></li>
+
+
+
+                      <!-- thời gian còn lại/ -->
+                      <li>
+                        <div class="upload-date" style="display: grid;">
+                          <div class="countbox_1 jtv-timer-grid count_2" value="count_2"
+                            timerun="01/03/2020 12:00:00 AM" style="  display: flex;
+                                                            flex-direction: row;
+                                                            justify-content: space-around;
+                                                            margin-bottom: 10px;
+                                                            width: 200px; 
+                                                            float: left;
+                                                            background-color: pink;">
+
+                            <div class="hour box-time-date"><span class="time-num">00</span>Hrs</div>
+                            <div class="min box-time-date"><span class="time-num">00</span>Mins</div>
+                            <div class="sec box-time-date"><span class="time-num">00</span>Secs</div>
+                          </div>
+                        </div>
+
+                      </li>
+
+                    </ul>
+
+                    <div id="productTabContent" class="tab-content">
+                      <div class="tab-pane fade in active" id="description">
+                        <div class="std" style="margin-left: 30px;">
+
+
+                          <div id="tab-a6bfee399f4791567a15c5309524f5ac" class="tab-content current">
+
+                            <ul class="questions col-md-12 col-sm-12 col-xs-12">
+                              <li class="row">
+
+                                <div class="col-sm-3">
+                                  <select class="input form-control audiolinks" name="audiolinks">
+                                    <option selected="true" disabled="disabled">Chọn </option>
+                                    {{#each this.mocktest.audioLinks}}
+                                    <option value="{{this}}">{{this}}</option>
+                                    {{/each}}
+                                  </select>
+                                </div>
+                                <div class="col-sm-3 audio-area">
+
+                                  <audio id="audio" controls="controls">
+                                    <source id="audioSource" src="">
+                                    </source>
+                                    Your browser does not support the audio format.
+                                  </audio>
+                                </div>
+
+                              </li>
+                              <h3><span>Questions</span></h3>
+                              <form method="POST" name="frmAddProduct" novalidate action="/user/mocktest/submit"
+                                id="frmCompletedTest">
+                                <input type="hidden" name="_id" value="{{this.mocktest._id}}">
+                                <input type="hidden" name="timeStart" value="{{timeStart}}" id="timeStart">
+                                <div class="col-sm-3 answer-area" height="500" style=" height: 500px;
+                                                                        overflow: scroll;">
+                                  {{!-- 40 CÂU TRẢ LỜI --}}
+                                  {{!-- 40 CÂU TRẢ LỜI --}}
+                                  {{#each mocktest.answerKeys}}
+                                  <h5>{{this.number}}</h5>
+
+                                  {{#if this.keySub}}
+
+                                  {{#if this.single}}
+
+                                  {{#each this.keyABC}}
+                                  <input type="radio" name="answerKeys_{{../number}}"
+                                    id="name{{../number}}_{{this.alpha}}" value="{{this.alpha}}"
+                                    class="my-form-{{../number}}">
+                                  <label for="name{{../number}}_{{this.alpha}}">{{this.alpha}} {{this.detail}} </label>
+                                  {{/each}}
+
+
+                                  {{else}}
+                                  <div class="flex-container">
+                                    {{#each this.keyABC}}
+                                    <input type="checkbox" name="answerKeys_{{../number}}" value="{{this.alpha}}"
+                                      class="my-form-{{../number}}" /><label for="track">{{this.alpha}}
+                                      {{this.detail}}</label><br />
+                                    {{/each}}
+                                  </div>
+                                  {{/if}}
+
+                                  {{else}}
+                                  <input type='text' class='input form-control my-form-{{this.number}}'
+                                    name='answerKeys_{{this.number}}'>
+                                  {{/if}}
+                                  {{/each}}
+
+                                </div>
+                              </form>
+
+                              <div class="col-sm-9">
+                                <iframe
+                                  src="https://mielts.s3.ap-southeast-1.amazonaws.com/{{this.mocktest.questionLink}}"
+                                  height="500" width="100%"></iframe>
+                              </div>
+
+                            </ul>
+                            <!--End-->
+                          </div>
+                        </div>
+                      </div>
+
+
+
+                    </div>
+                    <button type="submit" class="btn btn-warning" style="margin-top: 10px;"
+                    onclick="window.location = '/user/mocktest';">
+                      <i class="fa fa-check" aria-hidden="true"></i>Trở về
+                    </button>
+
+
+                    <button type="button" class="btn btn-danger" style="margin-top: 10px;">Thoát</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+
+
+
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Container End -->
+    <div id="myMessage" class="modal fade" role="dialog">
+      <div class="modal-dialog modal-md">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title"> message </h4>
+          </div>
+          <div class="modal-body">
+            <p> <i>...</i> đã thêm vào danh sách yêu thích</p>
+            <p><a href="/user/wishlist"> Xem danh sách</a></p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default reload_page_button" data-dismiss="modal">Đóng</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- JS -->
+
+    <!-- jquery js -->
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+
+    {{!-- jquery validate --}}
+    <script type="text/javascript"
+      src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
+
+    <!-- bootstrap js -->
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+
+
+    <!-- owl.carousel.min js -->
+    <script type="text/javascript" src="/js/owl.carousel.min.js"></script>
+
+    <!-- bxslider js -->
+    <script type="text/javascript" src="/js/jquery.bxslider.js"></script>
+
+    <!-- Slider Js -->
+    <script type="text/javascript" src="/js/revolution-slider.js"></script>
+
+    <!-- megamenu js -->
+    <script type="text/javascript" src="/js/megamenu.js"></script>
+    <script type="text/javascript">
+      /* <![CDATA[ */
+      var mega_menu = '0';
+
+      /* ]]> */
+    </script>
+
+    <!-- jquery.mobile-menu js -->
+    <script type="text/javascript" src="/js/mobile-menu.js"></script>
+
+    <!--jquery-ui.min js -->
+    <script type="text/javascript" src="/js/jquery-ui.js"></script>
+
+    <!-- main js -->
+    <script type="text/javascript" src="/js/main.js"></script>
+
+    <!-- countdown js -->
+    <script type="text/javascript" src="/js/countdown.js"></script>
+
+    <script>
 
   var timeLeft = $('.timeLeft').attr('content');
   gsecs1 = parseInt(timeLeft);
@@ -168,248 +459,22 @@
 
 </script>
 
-{{/section}}
-
-<!-- Main Container -->
-<div class="main-container col1-layout">
-  <div class="container">
-    <div class="row">
-      <div class="col-main">
-
-      </div>
-      <div class="product-overview-tab">
-        <div class="container">
-          <div class="row">
-            <div class="col-xs-12">
-              <div class="product-tab-inner">
-                <ul id="product-detail-tab" class="nav nav-tabs product-tabs" style="  display: flex;">
-                  <div hidden class="timeLeft" content="{{timeLeft}}"></div>
-                  <div hidden class="amountQuiz" content="{{amountQuiz}}"></div>
-
-                  <li class="active"> <a href="#description" data-toggle="tab"> Bài làm</a>
-                  </li>
-
-                  <li><button type="button" class="btn btn-primary" id="save" mockID="{{this.mocktest._id}}">Lưu
-                      lại</button></li>
-                  <li><button type="button" class="btn btn-primary" onclick="javascript: 
-                            {{!-- clearInterval(timer); --}}
-                            $('#frmCompletedTest').submit();">Nộp
-                      bài</button></li>
 
 
 
-                  <!-- thời gian còn lại/ -->
-                  <li>
-                    <div class="upload-date" style="display: grid;">
-                      <div class="countbox_1 jtv-timer-grid count_2" value="count_2" timerun="01/03/2020 12:00:00 AM"
-                        style="  display: flex;
-                                                            flex-direction: row;
-                                                            justify-content: space-around;
-                                                            margin-bottom: 10px;
-                                                            width: 200px; 
-                                                            float: left;
-                                                            background-color: pink;">
-
-                        <div class="hour box-time-date"><span class="time-num">00</span>Hrs</div>
-                        <div class="min box-time-date"><span class="time-num">00</span>Mins</div>
-                        <div class="sec box-time-date"><span class="time-num">00</span>Secs</div>
-                      </div>
-                    </div>
-
-                  </li>
-
-                </ul>
-
-                <div id="productTabContent" class="tab-content">
-                  <div class="tab-pane fade in active" id="description">
-                    <div class="std" style="margin-left: 30px;">
-
-
-                      <div id="tab-a6bfee399f4791567a15c5309524f5ac" class="tab-content current">
-
-                        <ul class="questions col-md-12 col-sm-12 col-xs-12">
-                          <li class="row">
-
-                            <div class="col-sm-3">
-                              <select class="input form-control audiolinks" name="audiolinks">
-                                <option selected="true" disabled="disabled">Chọn </option>
-                                {{#each this.mocktest.audioLinks}}
-                                <option value="{{this}}">{{this}}</option>
-                                {{/each}}
-                              </select>
-                            </div>
-                            <div class="col-sm-3 audio-area">
-
-                              <audio id="audio" controls="controls">
-                                <source id="audioSource" src="">
-                                </source>
-                                Your browser does not support the audio format.
-                              </audio>
-                            </div>
-
-                          </li>
-                          <h3><span>Questions</span></h3>
-                          <form method="POST" name="frmAddProduct" novalidate action="/user/mocktest/submit"
-                            id="frmCompletedTest">
-                            <input type="hidden" name="_id" value="{{this.mocktest._id}}">
-                            <input type="hidden" name="timeStart" value="{{timeStart}}" id="timeStart">
-                            <div class="col-sm-3 answer-area" height="500" style=" height: 500px;
-                                                                        overflow: scroll;">
-                              {{!-- 40 CÂU TRẢ LỜI --}}
-                              {{!-- 40 CÂU TRẢ LỜI --}}
-                              {{#each mocktest.answerKeys}}
-                              <h5>{{this.number}}</h5>
-
-                              {{#if this.keySub}}
-
-                              {{#if this.single}}
-
-                              {{#each this.keyABC}}
-                              <input type="radio" name="answerKeys_{{../number}}" id="name{{../number}}_{{this.alpha}}"
-                                value="{{this.alpha}}" class="my-form-{{../number}}">
-                              <label for="name{{../number}}_{{this.alpha}}">{{this.alpha}} {{this.detail}} </label>
-                              {{/each}}
-
-
-                              {{else}}
-                              <div class="flex-container">
-                                {{#each this.keyABC}}
-                                <input type="checkbox" name="answerKeys_{{../number}}" value="{{this.alpha}}"
-                                  class="my-form-{{../number}}" /><label for="track">{{this.alpha}}
-                                  {{this.detail}}</label><br />
-                                {{/each}}
-                              </div>
-                              {{/if}}
-
-                              {{else}}
-                              <input type='text' class='input form-control my-form-{{this.number}}'
-                                name='answerKeys_{{this.number}}'>
-                              {{/if}}
-                              {{/each}}
-
-                            </div>
-                          </form>
-
-                          <div class="col-sm-9">
-                            <iframe src="https://mielts.s3.ap-southeast-1.amazonaws.com/{{this.mocktest.questionLink}}" height="500"
-                              width="100%"></iframe>
-                          </div>
-
-                        </ul>
-                        <!--End-->
-                      </div>
-                    </div>
-                  </div>
+    <script type="text/javascript">
+      window.addEventListener("beforeunload", function (e) {
+        var confirmationMessage = "\o/";
+        console.log(confirmationMessage)
+          (e || window.event).returnValue = confirmationMessage; //Gecko + IE
+        return confirmationMessage;                            //Webkit, Safari, Chrome
+      });
+    </script>
 
 
 
-                </div>
-                    <button type="submit" class="btn btn-warning" style="margin-top: 10px;">
-                  <i class="fa fa-check" aria-hidden="true"></i>Trở về
-                </button>
+</body>
 
-           
-                <button type="button" class="btn btn-danger" style="margin-top: 10px;">Thoát</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+<!-- Mirrored from htmlmystore.justthemevalley.com/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 03 Mar 2020 08:13:18 GMT -->
 
-
-
-
-
-
-
-    </div>
-  </div>
-</div>
-
-<!-- Main Container End -->
-
-
-<!-- Related Product Slider -->
-<section class="upsell-product-area">
-  <div class="container">
-    <div class="row">
-      <div class="col-xs-12">
-
-        <div class="page-header">
-          <h2>Tài liệu liên quan</h2>
-        </div>
-        <div class="slider-items-products">
-          <div id="upsell-product-slider" class="product-flexslider hidden-buttons">
-            <div class="slider-items slider-width-col4">
-              {{#each this.relevantPro}}
-
-              <div class="product-item">
-                <div class="item-inner">
-                  <div class="product-thumbnail">
-                    {{#if is_new}}
-                    <div class="icon-hot-label hot-right">NEW</div>
-                    {{/if}}
-                    <div class="pr-img-area"> <a title="Ipsums Dolors Untra" href="/products/{{id}}">
-                        <figure> <img class="first-img" src="/images/products-images/{{image}}" alt="html template">
-                          <img class="hover-img" src="/images/products-images/{{image}}" alt="html template"></figure>
-                      </a>
-
-                    </div>
-                    <div class="jtv-box-timer">
-                      <div class="countbox_1 jtv-timer-grid count_{{id}}" value="count_{{id}}"
-                        timerun="{{f_expired_at}}" style="margin-bottom: 50px;">
-                        <div class="day box-time-date"><span class="time-num time-day">00</span>Days</div>
-                        <div class="hour box-time-date"><span class="time-num">00</span>Hrs</div>
-                        <div class="min box-time-date"><span class="time-num">00</span>Mins</div>
-                        <div class="sec box-time-date"><span class="time-num">00</span>Secs</div>
-                      </div>
-                    </div>
-                    <div class="pr-info-area">
-                      <div class="pr-button">
-                        <div class="mt-button add_to_compare" style="visibility: hidden;"> <a href="compare.html"> <i
-                              class="fa fa-signal"></i>
-                          </a> </div>
-                        <div class="mt-button add_to_wishlist wish_{{id}}" data-id="{{id}}"> <a href="javascript:;"> <i
-                              class="fa fa-heart"></i>
-                          </a> </div>
-
-                      </div>
-                    </div>
-                  </div>
-                  <div class="item-info">
-                    <div class="info-inner">
-                      <div class="item-title">
-                        <a title="Ipsums Dolors Untra" href="/products/{{id}}"> {{p_name}} </a> </div>
-                      <div class="item-content">
-
-                        <div class="item-price">
-                          <div class="price-box"> <span class="regular-price"><label>Giá cao nhất: </label> <span
-                                class="price">{{format current_bid}} đ</span>
-                            </span> </div>
-                        </div>
-                      </div>
-                      <div class="item-brief" style="text-align: left;">
-                        <label>MBidder: </label>
-                        <span>{{bidder_name}}</span>
-                        {{#if purchase_bid}}
-                        <br>
-                        <label>Mua ngay: </label>
-                        <span class="price">{{purchase_bid}} đ</span>
-                        {{/if}}
-                        <br>
-                        <label>Số lượt ra giá: &nbsp; </label><span style="font-weight: bold;">{{bid_count}}</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              {{/each}}
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </div>
-</section>
-<!-- Related Product Slider End -->
+</html>

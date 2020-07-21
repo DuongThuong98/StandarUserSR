@@ -18,155 +18,104 @@
 </style>
 {{/section}}
 
-{{#section 'js'}}
+<!DOCTYPE html>
+<html lang="en">
 
-<!-- flexslider js -->
-<script type="text/javascript" src="/js/jquery.flexslider.js"></script>
+<!-- Mirrored from htmlmystore.justthemevalley.com/single_post.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 03 Mar 2020 08:37:58 GMT -->
 
-<script>
+<head>
+  <!-- Basic page needs -->
+  <meta charset="utf-8">
+  <!--[if IE]>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <![endif]-->
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>MyStore premium HTML5 &amp; CSS3 template</title>
+  <meta name="description"
+    content="best template, template free, responsive theme, fashion store, responsive theme, responsive html theme, Premium website templates, web templates, Multi-Purpose Responsive HTML5 Template">
+  <meta name="keywords"
+    content="bootstrap, ecommerce, fashion, layout, responsive, responsive template, responsive template download, responsive theme, retail, shop, shopping, store, Premium website templates, web templates, Multi-Purpose Responsive HTML5 Template" />
 
-  var timeLeft = $('.timeLeft').attr('content');
-  gsecs1 = parseInt(timeLeft);
-  var iid1 = "countbox_1";
-  CountBack_slider(gsecs1, "countbox_1", 1);
-</script>
+  <!-- Mobile specific metas  -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
+  <!-- Favicon  -->
+  <link rel="shortcut icon" type="/image/x-icon" href="/favicon.ico">
 
-<script>
-  jQuery(document).ready(function () {
-    $('#save').click(function () {
-      //var answerKeys = $('#answer-key').val();
-      //console.log(answers);
-      var result = [];
-      var amountQuiz = $('.amountQuiz').attr('content');
-      for (i = 0; i < amountQuiz; i++) {
-        key = "";
-        keyBro = ".my-form-" + String(i + 1);
-        //console.log($(keyBro).attr('type'))
-        if ($(keyBro).attr('type') == "checkbox") {
-          key = [];
-          //console.log("checkbox")
-          checkedBox = keyBro + ":checkbox:checked";
-          $(checkedBox).each(function () {
-            console.log($(this).val())
-            key.push($(this).val());
-          });
-          if(key.length == 0)
-          key = ""
+  <!-- Google Fonts -->
+  <link href='https://fonts.googleapis.com/css?family=PT+Sans:400,700italic,700,400italic' rel='stylesheet'
+    type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i' rel='stylesheet'
+    type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Dosis:400,300,200,500,600,700,800' rel='stylesheet'
+    type='text/css'>
 
-        }
-        else {
-          if ($(keyBro).attr('type') == "radio") {
-            checkedRadio = keyBro + ":checked";
-            if (typeof $(checkedRadio).val() != "undefined") {
-              key = $(checkedRadio).val();
-            }
+  <!-- CSS Style -->
 
-          }
-          else {
-            key = $(keyBro).val();
-            // result.push({ key: key });
-          }
-        }
-        result.push({ key: key });
-      }
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
 
-      console.log(result);
-      var mockID = $(this).attr('mockID');
-      var timeStart = $('#timeStart').val();
-      console.log(timeStart)
-      $.ajax({
-        url: '/user/mocktest/ajax',
-        type: 'POST',
-        data: {
-          _id: mockID, // $_POST['id'] = 22
-          action: 'save',
-          answerKeys: result,
-          timeStart: timeStart
-        },
-        dataType: 'JSON',
-        success: function (response) {
-          // response : obj
-          console.log(response);
-          if (response.success) {
-            $('.modal-title').text(response.message)
-            $('.modal-body ').html(response.data + "<p>Lưu thành công</p>")
-          }
-          else {
-            $('.modal-title').text('Error!')
-            $('.modal-body').text(response.message)
-          }
-          //$('#myMessage').modal('show')
-          // $('.reload_page_button').click(function () { window.location = '/products/' + response.data; });
+  <!-- font-awesome & simple line icons CSS -->
+  <link rel="stylesheet" type="text/css" href="/css/font-awesome.css" media="all">
+  <link rel="stylesheet" type="text/css" href="/css/simple-line-icons.css" media="all">
 
-        }
-      });
-    })
+  <!-- owl.carousel CSS -->
+  <link rel="stylesheet" type="text/css" href="/css/owl.carousel.css">
+  <link rel="stylesheet" type="text/css" href="/css/owl.theme.css">
+  <link rel="stylesheet" type="text/css" href="/css/owl.transitions.css">
+  <!-- animate CSS  -->
+  <link rel="stylesheet" type="text/css" href="/css/animate.css" media="all">
+
+  <!-- flexslider CSS -->
+  <link rel="stylesheet" type="text/css" href="/css/flexslider.css">
+
+  <!-- Revolution Slider CSS -->
+  <link href="/css/revolution-slider.css" rel="stylesheet">
+  <!-- jquery-ui.min CSS  -->
+  <link rel="stylesheet" type="text/css" href="/css/jquery-ui.css">
 
 
-  });
 
-</script>
+  <!-- blog CSS -->
+  <link rel="stylesheet" type="text/css" href="/css/blog.css" media="all">
 
-<script>
- var mockID = $('#save').attr('mockID');
-  var timeStart = parseInt($('#timeStart').val());
-  var timeLeft = $('.timeLeft').attr('content');
+  <!-- style CSS -->
+  <link rel="stylesheet" type="text/css" href="/css/style.css" media="all">
 
-  timer = setInterval(run, 10000);
-  per = 10
-  function run() {
-    timeStart = timeStart + per;
-    timeLeft = timeLeft - per;
-    console.log(timeLeft)
-
-    if (timeLeft <= 0) {
-      clearInterval(timer);
-      $('#frmCompletedTest').submit();
-    }
-    else {
-      $('#timeStart').attr('value', timeStart);
-
-      $.ajax({
-        url: '/user/mocktest/ajax',
-        type: 'POST',
-        data: {
-          _id: mockID, // $_POST['id'] = 22
-          action: 'changeTimeLeft',
-          timeLeft: timeLeft
-        },
-        dataType: 'JSON',
-        success: function (response) {
-
-          console.log(response);
-        }
-      });
-    }
+  <script src="https://kit.fontawesome.com/166a70ea35.js" crossorigin="anonymous"></script>
+</head>
+<style>
+  .rounded {
+    height: 80px;
+    width: 80px;
+    border-style: dotted;
   }
 
-  function submit() {
-    //clearInterval(timer);
-    $('#frmCompletedTest').submit();
+  .created-day {
+    font-size: 15px;
+    margin-bottom: 15px
   }
-</script>
+
+  .product-cart-option {
+    border-top: 1px solid #e5e5e5;
+    display: inline-block;
+  }
+
+  .flex-container {
+    display: flex;
+    flex-wrap: wrap;
+
+  }
+</style>
+
+<body class="single_post_page">
 
 
-<script>
-  jQuery(document).ready(function () {
-    $('.audiolinks').change(function () {
-      //console.log("lala")
-      //console.log($('.audiolinks').val())
-      url = "https://mielts.s3.ap-southeast-1.amazonaws.com/" + $('.audiolinks').val()
-      var audio = document.getElementById('audio');
-      var source = document.getElementById('audioSource');
-      source.src = url
-      audio.load();
-    })
-  });
-</script>
-{{/section}}
+  <div id="page">
 
-<!-- Main Container -->
+
+
+ <!-- Main Container -->
 <div class="main-container col1-layout">
   <div class="container">
     <div class="row">
@@ -316,7 +265,8 @@
 
 
                 </div>
-                     <button type="submit" class="btn btn-warning" style="margin-top: 10px;">
+                     <button type="submit" class="btn btn-warning" style="margin-top: 10px;"
+                     onclick="window.location = '/user/mocktest';">
                   <i class="fa fa-check" aria-hidden="true"></i>Trở về
                 </button>
 
@@ -341,87 +291,226 @@
 <!-- Main Container End -->
 
 
-<!-- Related Product Slider -->
-<section class="upsell-product-area">
-  <div class="container">
-    <div class="row">
-      <div class="col-xs-12">
+    <div id="myMessage" class="modal fade" role="dialog">
+      <div class="modal-dialog modal-md">
 
-        <div class="page-header">
-          <h2>Tài liệu liên quan</h2>
-        </div>
-        <div class="slider-items-products">
-          <div id="upsell-product-slider" class="product-flexslider hidden-buttons">
-            <div class="slider-items slider-width-col4">
-              {{#each this.relevantPro}}
-
-              <div class="product-item">
-                <div class="item-inner">
-                  <div class="product-thumbnail">
-                    {{#if is_new}}
-                    <div class="icon-hot-label hot-right">NEW</div>
-                    {{/if}}
-                    <div class="pr-img-area"> <a title="Ipsums Dolors Untra" href="/products/{{id}}">
-                        <figure> <img class="first-img" src="/images/products-images/{{image}}" alt="html template">
-                          <img class="hover-img" src="/images/products-images/{{image}}" alt="html template"></figure>
-                      </a>
-
-                    </div>
-                    <div class="jtv-box-timer">
-                      <div class="countbox_1 jtv-timer-grid count_{{id}}" value="count_{{id}}"
-                        timerun="{{f_expired_at}}" style="margin-bottom: 50px;">
-                        <div class="day box-time-date"><span class="time-num time-day">00</span>Days</div>
-                        <div class="hour box-time-date"><span class="time-num">00</span>Hrs</div>
-                        <div class="min box-time-date"><span class="time-num">00</span>Mins</div>
-                        <div class="sec box-time-date"><span class="time-num">00</span>Secs</div>
-                      </div>
-                    </div>
-                    <div class="pr-info-area">
-                      <div class="pr-button">
-                        <div class="mt-button add_to_compare" style="visibility: hidden;"> <a href="compare.html"> <i
-                              class="fa fa-signal"></i>
-                          </a> </div>
-                        <div class="mt-button add_to_wishlist wish_{{id}}" data-id="{{id}}"> <a href="javascript:;"> <i
-                              class="fa fa-heart"></i>
-                          </a> </div>
-
-                      </div>
-                    </div>
-                  </div>
-                  <div class="item-info">
-                    <div class="info-inner">
-                      <div class="item-title">
-                        <a title="Ipsums Dolors Untra" href="/products/{{id}}"> {{p_name}} </a> </div>
-                      <div class="item-content">
-
-                        <div class="item-price">
-                          <div class="price-box"> <span class="regular-price"><label>Giá cao nhất: </label> <span
-                                class="price">{{format current_bid}} đ</span>
-                            </span> </div>
-                        </div>
-                      </div>
-                      <div class="item-brief" style="text-align: left;">
-                        <label>MBidder: </label>
-                        <span>{{bidder_name}}</span>
-                        {{#if purchase_bid}}
-                        <br>
-                        <label>Mua ngay: </label>
-                        <span class="price">{{purchase_bid}} đ</span>
-                        {{/if}}
-                        <br>
-                        <label>Số lượt ra giá: &nbsp; </label><span style="font-weight: bold;">{{bid_count}}</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              {{/each}}
-            </div>
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title"> message </h4>
+          </div>
+          <div class="modal-body">
+            <p> <i>...</i> đã thêm vào danh sách yêu thích</p>
+            <p><a href="/user/wishlist"> Xem danh sách</a></p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default reload_page_button" data-dismiss="modal">Đóng</button>
           </div>
         </div>
-
       </div>
     </div>
-  </div>
-</section>
-<!-- Related Product Slider End -->
+    <!-- JS -->
+
+    <!-- jquery js -->
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+
+    {{!-- jquery validate --}}
+    <script type="text/javascript"
+      src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
+
+    <!-- bootstrap js -->
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+
+
+    <!-- owl.carousel.min js -->
+    <script type="text/javascript" src="/js/owl.carousel.min.js"></script>
+
+    <!-- bxslider js -->
+    <script type="text/javascript" src="/js/jquery.bxslider.js"></script>
+
+    <!-- Slider Js -->
+    <script type="text/javascript" src="/js/revolution-slider.js"></script>
+
+    <!-- megamenu js -->
+    <script type="text/javascript" src="/js/megamenu.js"></script>
+    <script type="text/javascript">
+      /* <![CDATA[ */
+      var mega_menu = '0';
+
+      /* ]]> */
+    </script>
+
+    <!-- jquery.mobile-menu js -->
+    <script type="text/javascript" src="/js/mobile-menu.js"></script>
+
+    <!--jquery-ui.min js -->
+    <script type="text/javascript" src="/js/jquery-ui.js"></script>
+
+    <!-- main js -->
+    <script type="text/javascript" src="/js/main.js"></script>
+
+    <!-- countdown js -->
+    <script type="text/javascript" src="/js/countdown.js"></script>
+
+<script>
+
+  var timeLeft = $('.timeLeft').attr('content');
+  gsecs1 = parseInt(timeLeft);
+  var iid1 = "countbox_1";
+  CountBack_slider(gsecs1, "countbox_1", 1);
+</script>
+
+
+<script>
+  jQuery(document).ready(function () {
+    $('#save').click(function () {
+      //var answerKeys = $('#answer-key').val();
+      //console.log(answers);
+      var result = [];
+      var amountQuiz = $('.amountQuiz').attr('content');
+      for (i = 0; i < amountQuiz; i++) {
+        key = "";
+        keyBro = ".my-form-" + String(i + 1);
+        //console.log($(keyBro).attr('type'))
+        if ($(keyBro).attr('type') == "checkbox") {
+          key = [];
+          //console.log("checkbox")
+          checkedBox = keyBro + ":checkbox:checked";
+          $(checkedBox).each(function () {
+            console.log($(this).val())
+            key.push($(this).val());
+          });
+          if(key.length == 0)
+          key = ""
+
+        }
+        else {
+          if ($(keyBro).attr('type') == "radio") {
+            checkedRadio = keyBro + ":checked";
+            if (typeof $(checkedRadio).val() != "undefined") {
+              key = $(checkedRadio).val();
+            }
+
+          }
+          else {
+            key = $(keyBro).val();
+            // result.push({ key: key });
+          }
+        }
+        result.push({ key: key });
+      }
+
+      console.log(result);
+      var mockID = $(this).attr('mockID');
+      var timeStart = $('#timeStart').val();
+      console.log(timeStart)
+      $.ajax({
+        url: '/user/mocktest/ajax',
+        type: 'POST',
+        data: {
+          _id: mockID, // $_POST['id'] = 22
+          action: 'save',
+          answerKeys: result,
+          timeStart: timeStart
+        },
+        dataType: 'JSON',
+        success: function (response) {
+          // response : obj
+          console.log(response);
+          if (response.success) {
+            $('.modal-title').text(response.message)
+            $('.modal-body ').html(response.data + "<p>Lưu thành công</p>")
+          }
+          else {
+            $('.modal-title').text('Error!')
+            $('.modal-body').text(response.message)
+          }
+          //$('#myMessage').modal('show')
+          // $('.reload_page_button').click(function () { window.location = '/products/' + response.data; });
+
+        }
+      });
+    })
+
+
+  });
+
+</script>
+
+<script>
+ var mockID = $('#save').attr('mockID');
+  var timeStart = parseInt($('#timeStart').val());
+  var timeLeft = $('.timeLeft').attr('content');
+
+  timer = setInterval(run, 10000);
+  per = 10
+  function run() {
+    timeStart = timeStart + per;
+    timeLeft = timeLeft - per;
+    console.log(timeLeft)
+
+    if (timeLeft <= 0) {
+      clearInterval(timer);
+      $('#frmCompletedTest').submit();
+    }
+    else {
+      $('#timeStart').attr('value', timeStart);
+
+      $.ajax({
+        url: '/user/mocktest/ajax',
+        type: 'POST',
+        data: {
+          _id: mockID, // $_POST['id'] = 22
+          action: 'changeTimeLeft',
+          timeLeft: timeLeft
+        },
+        dataType: 'JSON',
+        success: function (response) {
+
+          console.log(response);
+        }
+      });
+    }
+  }
+
+  function submit() {
+    //clearInterval(timer);
+    $('#frmCompletedTest').submit();
+  }
+</script>
+
+
+<script>
+  jQuery(document).ready(function () {
+    $('.audiolinks').change(function () {
+      //console.log("lala")
+      //console.log($('.audiolinks').val())
+      url = "https://mielts.s3.ap-southeast-1.amazonaws.com/" + $('.audiolinks').val()
+      var audio = document.getElementById('audio');
+      var source = document.getElementById('audioSource');
+      source.src = url
+      audio.load();
+    })
+  });
+</script>
+
+
+
+
+    <script type="text/javascript">
+      window.addEventListener("beforeunload", function (e) {
+        var confirmationMessage = "\o/";
+        console.log(confirmationMessage)
+          (e || window.event).returnValue = confirmationMessage; //Gecko + IE
+        return confirmationMessage;                            //Webkit, Safari, Chrome
+      });
+    </script>
+
+
+
+</body>
+
+<!-- Mirrored from htmlmystore.justthemevalley.com/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 03 Mar 2020 08:13:18 GMT -->
+
+</html>

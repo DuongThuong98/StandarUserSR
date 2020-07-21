@@ -5,8 +5,8 @@ let request = require('request');
 const userModel = require('../models/user.model');
 // const wishlistModel = require('../models/wishlist.model');
 const restrict = require('../middlewares/auth.mdw');
-// const mailingSystemModel = require('../models/mailingSystem.model');
-// const emailHelper = require('../helpers/email.helper');
+const mailingModel = require('../models/mailing.model');
+const emailHelper = require('../helpers/email.helper');
 const functionHelper = require('../helpers/function.helper');
 
 const router = express.Router();
@@ -28,7 +28,19 @@ router.post('/register', async (req, res) => {
   }
   else
   {
-  userModel.add(data).then(data => console.log(data));
+  result = await userModel.add(data);
+  var tokenEmail = functionHelper.createToken();
+  console.log("RESULT11: ",result);
+   
+  entityEmail = {
+    id_receiver: result._id,
+    type: "register",
+    status_mail: 0,
+    token_email: tokenEmail
+  };
+  await mailingModel.add(entityEmail);
+  content =  '<h1>Link: <a href="http://localhost:3001/account/' + tokenEmail +'">vào đây</a></h1>',
+  emailHelper.sendmail(data.email, '[Standard] Xác nhận tài khoản', content);
   res.render('vwAccount/register',
     { success_message: "Tạo tk thành công, vào email xác nhận" });
   }

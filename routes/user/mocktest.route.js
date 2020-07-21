@@ -98,7 +98,8 @@ router.get('/:id', async (req, res) => {
     empty: row === null,
     amountQuiz: row.answerKeys.length,// số câu trong bài kiểm tra
     timeLeft,
-    timeStart
+    timeStart, 
+    layout: false 
   });
 });
 
@@ -181,6 +182,7 @@ console.log(mocktestData);
       amountQuiz: mocktest.answerKeys.length,// số câu trong bài kiểm tra
       timeLeft,
       timeStart,
+      layout: false 
     });
   }
 
@@ -284,6 +286,7 @@ router.get('/done/:id', async (req, res) => {
     res.render('vwMocktests/doneDetailMocktest', {
       mocktest: doneMock,
       empty: doneMock === null,
+      layout: false 
     });
   }
 });

@@ -11,6 +11,7 @@ module.exports = {
     Feedback: require("./feedback.model"),
     FeedbackDetail: require("./feedbackdetail.model"),
     MockingTest: require("./mockingtest.model"),
+    Mailing: require("./mailing.model") ,
     Question: require("./question.model"),
     Response: require("./response.model"),
     Schedule: require("./schedule.model"),
