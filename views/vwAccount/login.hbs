@@ -49,12 +49,13 @@
       border: 2px solid #207cf5;
       padding: 5px;
      width: fit-content;
+     margin-bottom: 5px;
     }
     .logo{
 
      margin-right:20px ;
       margin-bottom: 30px;
-     width: fit-content;
+     width: 220px;
     }
   </style>
 </head>
@@ -63,7 +64,7 @@
   <div class="container-fluid h-100">
     <div class="row justify-content-center align-items-center h-100">
       <div class="col-sm-4 col-md-3">
-        <div class="logo"><a title="e-commerce" href="/"><img alt="responsive theme logo"
+        <div class="logo" style="width: 220px"><a title="e-commerce" href="/"><img alt="responsive theme logo"
                     src="/images/logos/my_logo.png" ></a> </div>
         {{#if err_message}}
         <div class="alert alert-warning alert-dismissible fade show" role="alert">
@@ -71,6 +72,11 @@
             <span aria-hidden="true">&times;</span>
           </button>
           {{err_message}}
+        </div>
+        {{/if}}
+        {{#if remailLink}}
+  <div class="btn-info1">
+          <a href="/account/remail">Gửi lại link</a>
         </div>
         {{/if}}
 

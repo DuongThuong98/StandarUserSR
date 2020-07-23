@@ -121,7 +121,6 @@ router.get('/mocktest/done/:id', async (req, res) => {
           answerKeys[i].realKey = mocktestData[i].keySub
         }
       }
-
       answerKeys[i].number = i + 1;
     }
 
@@ -129,35 +128,58 @@ router.get('/mocktest/done/:id', async (req, res) => {
 
     doneMock.questionLink = mocktest.questionLink;
     doneMock.audioLinks = mocktest.audioLinks;
-    console.log("time start pending:", doneMock);
-    console.log("Key ABC:", doneMock.answerKeys[24].keyABC);
+    // console.log("time start pending:", doneMock);
+    // console.log("Key ABC:", doneMock.answerKeys[24].keyABC);
 
     //tính điẻm và đưa ra khóa học hợp lý
 
-    doneMock.percentGrade = ( (doneMock.grades / doneMock.answerKeys.length) * 100).toFixed(3);
+    doneMock.percentGrade = ( (doneMock.grades / doneMock.answerKeys.length) * 100).toFixed(2);
     doneMock.answersLength = doneMock.answerKeys.length;
     suggestedCourse = {}
     console.log("Mocktest: ", mocktest)
     if (mocktest.name.includes("PRE")) {
-      if (doneMock.percentGrade > 50) {
-        // console.log("vỡ lòng")
-        suggestedCourse = await courseModel.singleByCategory("vỡ lòng")
+      // console.log("PRE")
+      if (doneMock.percentGrade < 70) {
+        suggestedCourse = await courseModel.singleByName("[Beginner]")
       }
-    }
-    else {
-      if (mocktest.name.includes("ENTRY")) {
-        if (doneMock.percentGrade > 50) {
-          suggestedCourse = await courseModel.singleByCategory("sơ cấp")
+      else
+      {
+        if (doneMock.percentGrade >= 70 && doneMock.percentGrade <= 89) {
+          suggestedCourse = await courseModel.singleByName("[5.0]")
         }
-        else {
-          if (doneMock.percentGrade > 70) {
-            suggestedCourse = await courseModel.singleByName("7.0")
+        else
+        {
+          if (doneMock.percentGrade >= 90) {
+            suggestedCourse = await courseModel.singleByName("[5.0]")
           }
         }
       }
     }
+    else {
+      if (mocktest.name.includes("ENTRY")) {
+        console.log("qwerty: ", doneMock.percentGrade)
+        if (doneMock.percentGrade < parseFloat(30)) {
+          suggestedCourse = await courseModel.singleByName("[Beginner]")
+        }
+        if (doneMock.percentGrade > parseFloat(30) && doneMock.percentGrade < parseFloat(50)) {
+          console.log("qwerty: ", doneMock.percentGrade)
+          suggestedCourse = await courseModel.singleByName("[5.0]")
+        }
+        if (doneMock.percentGrade >= parseFloat(50) && doneMock.percentGrade < parseFloat(60)) {
+          console.log("6.0");
+          suggestedCourse = await courseModel.singleByName("[6.0]")
+        }
+        if (doneMock.percentGrade >= parseFloat(60) && doneMock.percentGrade < parseFloat(70)) {
+          console.log("7.0");
+          suggestedCourse = await courseModel.singleByName("[7.0]")
+        }
+        if (doneMock.percentGrade >= 70) {
+          suggestedCourse = await courseModel.singleByName("[Intensive]")
+        }
+      }
+    }
 
-    console.log(suggestedCourse)
+    // console.log(suggestedCourse)
 
     res.render('vwMocktests/upgradeDoneDetailMocktest', {
       mocktest: doneMock,
@@ -170,16 +192,6 @@ router.get('/mocktest/done/:id', async (req, res) => {
 router.get('/mocktest/:id', async (req, res) => {
   //nếu tồn tại thì xóa
   authUser = req.session.authUser;
-  mockTests = authUser.tests;
-  if (mockTests.length > 0) {
-    entity = {
-      _id: authUser._id,
-      tests: []
-    }
-    temp = await userModel.patchMocktest(entity)
-  }
-
-  authUser.tests = [];
 
   alphabet = 'abcdefghijklmnopqrstuvwxyz'.toUpperCase().split('');
   const mockId = req.params.id;
@@ -244,11 +256,9 @@ router.post('/mocktest/submit', async (req, res) => {
   item.grades = 0; //mặc định 
   item.isExisted = false;
   if (mockTests.length > 0) {//nếu có tồn tại bài đã làm rồi thì lấy bài đó
-    index = mockTests.findIndex(mock => mock._id == item._id && mock.status == 0);
-    if (index != -1) {
+    
       item.isExisted = true;
-      oldTimeLeft = mockTests[index].timeLeft;
-    }
+    
   }
 
 
@@ -353,12 +363,7 @@ router.post('/mocktest/submit', async (req, res) => {
     authUser.tests.push(item);
   }
   else {
-    authUser.tests = authUser.tests.map(obj => {
-      if (obj._id === item._id)
-        return item;
-      return obj
-    });
-    // console.log("TEMP: ", temp);
+    authUser.tests[0] = item;
   }
 
   console.log("AnswerKey: ", answerKeys);

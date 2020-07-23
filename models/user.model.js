@@ -28,7 +28,24 @@ module.exports = {
     return result;
   },
 
-  
+  singleByUsernameIsactive: async (username) => {
+    result = [];
+    await db.User.findOne({$and: [{ username: username}, {isActive: true}] })
+      .then(data => result = data)
+    console.log("MOdel User : ", result)
+    if (result.length === 0)
+      return null
+    return result;
+  },
+
+  singleByEmail: async (email) => {
+    result = {};
+    await db.User.findOne({ email: email })
+      .then(data => result = data)
+    // console.log("MOdel User : ", result)
+    return result;
+  },
+
   add: async entity => {
     const user = new db.User({
       username: entity.username,
@@ -54,6 +71,26 @@ module.exports = {
                               { username: username || user.username,
                                 email: email || user.email,
                                 passwordHash: passwordHash || user.passwordHash,
+                                                                    })
+        if (result) {
+            const data = await db.User.findOne({ _id: result._id })
+            if (data) {
+                return data;
+            }
+            else{
+              return null;
+            }
+        }
+    }
+    return null;
+  },
+
+  patchStatus:async entity => {
+    const { _id, isActive} = entity
+    const user = await db.User.findOne({ _id })
+    if (user) {
+        const result = await db.User.findOneAndUpdate({ _id }, 
+                              { isActive: isActive || user.isActive,
                                                                     })
         if (result) {
             const data = await db.User.findOne({ _id: result._id })

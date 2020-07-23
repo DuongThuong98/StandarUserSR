@@ -12,6 +12,9 @@ const router = express.Router();
 router.get('/', async (req,res) => {
   row = await courseModel.all();
 
+  row.forEach(element => {
+    element.createdDay = moment(element.createdAt, 'YYYY-MM-DDTHH:mm:ss[Z]').format('M-D-YYYY');
+  });
   res.render('vwCourses/allCourses', 
   {
     courses: row,

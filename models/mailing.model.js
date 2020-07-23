@@ -12,6 +12,13 @@ module.exports = {
     return result;
   },
 
+  findByToken: async (token) =>{
+    result = {};
+   await db.Mailing.findOne({token_email: token})
+          .then(data => result = data)
+    return result;
+  },
+
   singleById: async (docId) =>{
     result = await db.Mailing.findOne({_id: docId});
     return result;

@@ -83,7 +83,7 @@ console.log(process.env.AWS_S3_BUCKET)
   }
 
   // console.log(documents);
-  console.log("REQ: ", req);
+  // console.log("REQ: ", req);
   res.render('home',{
     documents,
     empty: documents.length == 0
