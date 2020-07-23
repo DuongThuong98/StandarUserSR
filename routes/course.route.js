@@ -58,6 +58,10 @@ router.get("/:id", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
+  if(typeof req.session.authUser == "undefined")
+  {
+    return res.redirect("/account/login")
+  }
   authUser = req.session.authUser;
   const item = req.body;
   item.userID = authUser._id;
