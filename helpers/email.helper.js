@@ -3,13 +3,14 @@ var nodemailer = require('nodemailer');
 module.exports = {
     sendmail: (e_sendingEmail,e_subject,e_html) => {
         const option = {
-            service: 'gmail',
+            service: 'Gmail',
             auth: {
               user: 'swjames240598@gmail.com', // email hoặc username
               pass: 'etherwallet98' // password
             }
           };
           var transporter = nodemailer.createTransport(option);
+          console.log('created');
           transporter.verify(function (error, success) {
             // Nếu có lỗi.
             if (error) {
