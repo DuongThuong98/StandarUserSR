@@ -26,7 +26,7 @@ router.post('/register', async (req, res) => {
       url: 'https://www.google.com/recaptcha/api/siteverify',
       method: 'POST',
       form: {
-        secret: '6LcjNswUAAAAAIx5wwucHDcdI1lxIaVhhmHw1emv',
+        secret: '6LcgV8QUAAAAAGqKirsENVEKBwbunZYc0vIBnfnD',
         response: captchaResponse
       }
     }, function (error, response, body) {
