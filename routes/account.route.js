@@ -106,16 +106,17 @@ router.get('/otp/:token', async (req, res) => {
     timeThen = parseInt(moment(ota.createdAt, 'YYYY-MM-DDTHH:mm:ss[Z]').format('X'));
     sec = timeNow - timeThen
     console.log("sec: ", sec);
-    if (sec > 60) {
-      ota.overtime = true;
+    if (ota.status_mail == 1) {
+      ota.overdo  = true;
     }
     else {
-      if (ota.status == 1) {
-        ota.overdo = true;
+      if (sec > 60 ) {
+        ota.overtime = true;
       }
       else {
         ota.done = true
         entity = { _id: ota.id_receiver, isActive: true };
+        await mailingModel.patchStatus({token_email: token, status_mail: 1})
         result = await userModel.patchStatus(entity)
         console.log(result);
       }

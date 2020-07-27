@@ -34,8 +34,26 @@ module.exports = {
     } else {
         return null;
     }
-  }
+  },
   
-  
+  patchStatus:async entity => {
+    const { token, status_mail} = entity
+    const user = await db.Mailing.findOne({ token_email: token })
+    if (user) {
+        const result = await db.Mailing.findOneAndUpdate({ token_email: token }, 
+                              { status_mail: status_mail || user.status_mail,
+                                                                    })
+        if (result) {
+            const data = await db.Mailing.findOne({ token_email: token})
+            if (data) {
+                return data;
+            }
+            else{
+              return null;
+            }
+        }
+    }
+    return null;
+  },
 };
 
