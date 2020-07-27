@@ -65,12 +65,14 @@ module.exports = {
   },
   // del: u_id => db.del('users', { id: u_id }),
   patch: async entity => {
-    const { _id, username, email, passwordHash } = entity
+    const { _id, username, email, passwordHash, address, fullname } = entity
     const user = await db.User.findOne({ _id })
     if (user) {
         const result = await db.User.findOneAndUpdate({ _id }, 
                               { username: username || user.username,
                                 email: email || user.email,
+                                address: address || user.address,
+                                fullname: fullname || user.fullname,
                                 passwordHash: passwordHash || user.passwordHash,
                                                                     })
         if (result) {

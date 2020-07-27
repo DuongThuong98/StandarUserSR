@@ -1,6 +1,6 @@
 {{#section 'css'}}
-  <!-- style CSS -->
-  <link rel="stylesheet" type="text/css" href="/css/blog.css" media="all">
+<!-- style CSS -->
+<link rel="stylesheet" type="text/css" href="/css/blog.css" media="all">
 <style>
   .item-brief {
     padding-left: 3px;
@@ -53,49 +53,51 @@
           <div class="page-title">
             <h2>Quản lý Tài liệu</h2>
             <a class="btn btn-success" href="/teacher/documents/add" role="button" style="margin-left: 1px;">
-            <i class="fa fa-plus" aria-hidden="true"></i>
-            Add Product
-          </a>
+              <i class="fa fa-plus" aria-hidden="true"></i>
+              Add Product
+            </a>
           </div>
           <br>
           {{#if this.empty}}
           <div class="card-body">
-           <p style="color:#fed700; font-size:25px">Danh sách rỗng</p>
-              <a class="continue-btn" href="/"><i class="fa fa-arrow-left"> </i>&nbsp; Về trang chủ</a>
+            <p style="color:#fed700; font-size:25px">Danh sách rỗng</p>
+            <a class="continue-btn" href="/"><i class="fa fa-arrow-left"> </i>&nbsp; Về trang chủ</a>
           </div>
           {{else}}
 
-        
-        <div class="order-detail-content">
-              <div class="table-responsive">
-                <table class="table table-bordered cart_summary">
-                  <thead>
-                    <tr>
-              
-                      <th>Tên</th>
-                      <th>Loại</th>
-                      <th  class="action">Sửa</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                      {{#each this.mocktests}}
-                    <tr>
-                      
-                      <td class="cart_description"><p class="product-name"><a href="#"> {{name}} </a></p></td>
-                     
-                      <td class="availability in-stock"><span class="label">{{mocktestType}}</span></td>
-                    
-                      <td class="action"><a href="/seller/product/edit/{{id}}"><i class="fa fa-edit"></i></a></td>
-                    </tr>
-                   {{/each}}
-                  </tbody>
-                 
-                </table>
-              </div>
-            </div>
 
-        {{/if}}
-         </div>
+          <div class="order-detail-content">
+            <div class="table-responsive">
+              <table class="table table-bordered cart_summary">
+                <thead>
+                  <tr>
+
+                    <th>Tên</th>
+                    <th>Loại</th>
+                    <th class="action">Sửa</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {{#each this.mocktests}}
+                  <tr>
+
+                    <td class="cart_description">
+                      <p class="product-name"><a href="#"> {{name}} </a></p>
+                    </td>
+
+                    <td class="availability in-stock"><span class="label">{{mocktestType}}</span></td>
+
+                    <td class="action"><a href="/seller/product/edit/{{id}}"><i class="fa fa-edit"></i></a></td>
+                  </tr>
+                  {{/each}}
+                </tbody>
+
+              </table>
+            </div>
+          </div>
+
+          {{/if}}
+        </div>
       </div>
       <aside class="right sidebar col-sm-3 col-xs-12">
         <div class="sidebar-account block">
@@ -104,10 +106,11 @@
           </div>
           <div class="block-content">
             <ul>
-              <li class="current"><a href="javascript:;">Tài liệu Tài liệu</a></li>
-              <li class="last"><a href="/seller/soldlist">Danh sách Tài liệu đã có người mua</a></li>
-             
-           
+              <li ><a href="info">Thông tin tài khoản</a></li>
+
+              <li class="last current"><a href="javascript:;">Quản lý tài liệu</a></li>
+
+
             </ul>
           </div>
         </div>
@@ -117,4 +120,3 @@
   </div>
 </section>
 <!-- Main Container End -->
-

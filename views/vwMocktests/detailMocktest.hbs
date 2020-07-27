@@ -1,6 +1,3 @@
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -117,7 +114,8 @@
                       <li class="active"> <a href="#description" data-toggle="tab"> Bài làm</a>
                       </li>
 
-                      <li style="margin-right: 3px;"><button type="button" class="btn btn-primary" id="save" mockID="{{this.mocktest._id}}">Lưu
+                      <li style="margin-right: 3px;"><button type="button" class="btn btn-primary" id="save"
+                          mockID="{{this.mocktest._id}}">Lưu
                           lại</button></li>
                       <li style="margin-right: 5px;"><button type="button" class="btn btn-primary" onclick="javascript: 
                             {{!-- clearInterval(timer); --}}
@@ -127,7 +125,7 @@
 
 
                       <!-- thời gian còn lại/ -->
-                      <li>
+                      {{!-- <li>
                         <div class="upload-date" style="display: grid;">
                           <div class="countbox_1 jtv-timer-grid count_2" value="count_2"
                             timerun="01/03/2020 12:00:00 AM" style="  display: flex;
@@ -144,7 +142,7 @@
                           </div>
                         </div>
 
-                      </li>
+                      </li> --}}
 
                     </ul>
 
@@ -166,7 +164,7 @@
                                     {{/each}}
                                   </select>
                                 </div>
-                                <div class="col-sm-3 audio-area">
+                                <div class="col-sm-3 ">
 
                                   <audio id="audio" controls="controls">
                                     <source id="audioSource" src="">
@@ -174,7 +172,23 @@
                                     Your browser does not support the audio format.
                                   </audio>
                                 </div>
+                                <div class="col-sm-3 audio-area">
+                                  <div class="upload-date" style="display: grid; margin-left:80px">
+                                    <div class="countbox_1 jtv-timer-grid count_2" value="count_2"
+                                      timerun="01/03/2020 12:00:00 AM" style="  display: flex;
+                                                            flex-direction: row;
+                                                            justify-content: space-around;
+                                                            margin-bottom: 10px;
+                                                            width: 200px; 
+                                                            float: left;
+                                                            background-color: pink;">
 
+                                      <div class="hour box-time-date"><span class="time-num">00</span>Hrs</div>
+                                      <div class="min box-time-date"><span class="time-num">00</span>Mins</div>
+                                      <div class="sec box-time-date"><span class="time-num">00</span>Secs</div>
+                                    </div>
+                                  </div>
+                                </div>
                               </li>
                               <h3><span>Questions</span></h3>
                               <form method="POST" name="frmAddProduct" novalidate action="/user/mocktest/submit"
@@ -235,12 +249,12 @@
 
                     </div>
                     <button type="submit" class="btn btn-warning" style="margin-top: 10px;"
-                    onclick="window.location = '/user/mocktest';">
+                      onclick="window.location = '/user/mocktest';">
                       <i class="fa fa-check" aria-hidden="true"></i>Trở về
                     </button>
 
 
-               
+
                   </div>
                 </div>
               </div>
@@ -322,142 +336,142 @@
 
     <script>
 
-  var timeLeft = $('.timeLeft').attr('content');
-  gsecs1 = parseInt(timeLeft);
-  var iid1 = "countbox_1";
-  CountBack_slider(gsecs1, "countbox_1", 1);
-</script>
-
-
-
-
-<script>
-  var mockID = $('#save').attr('mockID');
-  var timeStart = parseInt($('#timeStart').val());
-  var timeLeft = $('.timeLeft').attr('content');
-
-  timer = setInterval(run, 10000);
-  per = 10
-  function run() {
-    timeStart = timeStart + per;
-    timeLeft = timeLeft - per;
-    console.log(timeLeft)
-
-    if (timeLeft <= 0) {
-      clearInterval(timer);
-      $('#frmCompletedTest').submit();
-    }
-    else {
-      $('#timeStart').attr('value', timeStart);
-
-      $.ajax({
-        url: '/user/mocktest/ajax',
-        type: 'POST',
-        data: {
-          _id: mockID, // $_POST['id'] = 22
-          action: 'changeTimeLeft',
-          timeLeft: timeLeft
-        },
-        dataType: 'JSON',
-        success: function (response) {
-
-          console.log(response);
-        }
-      });
-    }
-  }
-
-</script>
-
-<script>
-
-  jQuery(document).ready(function () {
-    $('.audiolinks').change(function () {
-      //console.log("lala")
-      //console.log($('.audiolinks').val())
-      url = "https://mielts.s3.ap-southeast-1.amazonaws.com/" + $('.audiolinks').val()
-      var audio = document.getElementById('audio');
-      var source = document.getElementById('audioSource');
-      source.src = url
-      audio.load();
-    })
-  });
-
-  jQuery(document).ready(function () {
-    $('#save').click(function () {
-      //var answerKeys = $('#answer-key').val();
-      //console.log(answers);
       var timeLeft = $('.timeLeft').attr('content');
-      var result = [];
-      var amountQuiz = $('.amountQuiz').attr('content');
-      for (i = 0; i < amountQuiz; i++) {
-        key = "";
-        keyBro = ".my-form-" + String(i + 1);
-        //console.log($(keyBro).attr('type'))
-        if ($(keyBro).attr('type') == "checkbox") {
-          key = [];
-          //console.log("checkbox")
-          checkedBox = keyBro + ":checkbox:checked";
-          $(checkedBox).each(function () {
-            console.log($(this).val())
-            key.push($(this).val());
-          });
-          if(key.length == 0)
-          key = ""
+      gsecs1 = parseInt(timeLeft);
+      var iid1 = "countbox_1";
+      CountBack_slider(gsecs1, "countbox_1", 1);
+    </script>
 
+
+
+
+    <script>
+      var mockID = $('#save').attr('mockID');
+      var timeStart = parseInt($('#timeStart').val());
+      var timeLeft = $('.timeLeft').attr('content');
+
+      timer = setInterval(run, 10000);
+      per = 10
+      function run() {
+        timeStart = timeStart + per;
+        timeLeft = timeLeft - per;
+        console.log(timeLeft)
+
+        if (timeLeft <= 0) {
+          clearInterval(timer);
+          $('#frmCompletedTest').submit();
         }
         else {
-          if ($(keyBro).attr('type') == "radio") {
-            checkedRadio = keyBro + ":checked";
-            if (typeof $(checkedRadio).val() != "undefined") {
-              key = $(checkedRadio).val();
-            }
+          $('#timeStart').attr('value', timeStart);
 
-          }
-          else {
-            key = $(keyBro).val();
-            // result.push({ key: key });
-          }
+          $.ajax({
+            url: '/user/mocktest/ajax',
+            type: 'POST',
+            data: {
+              _id: mockID, // $_POST['id'] = 22
+              action: 'changeTimeLeft',
+              timeLeft: timeLeft
+            },
+            dataType: 'JSON',
+            success: function (response) {
+
+              console.log(response);
+            }
+          });
         }
-        result.push({ key: key });
       }
 
-      console.log(result);
-      var mockID = $(this).attr('mockID');
-      var timeStart = $('#timeStart').val();
-      console.log(timeStart)
-      $.ajax({
-        url: '/user/mocktest/ajax',
-        type: 'POST',
-        data: {
-          _id: mockID, // $_POST['id'] = 22
-          action: 'save',
-          answerKeys: result,
-          timeStart: timeStart
-        },
-        dataType: 'JSON',
-        success: function (response) {
-          // response : obj
-          console.log(response);
-          if (response.success) {
-            $('.modal-title').text(response.message)
-            $('.modal-body ').html(response.data + "<p>Lưu thành công</p>")
-          }
-          else {
-            $('.modal-title').text('Error!')
-            $('.modal-body').text(response.message)
-          }
-          //$('#myMessage').modal('show')
-          // $('.reload_page_button').click(function () { window.location = '/products/' + response.data; });
+    </script>
 
-        }
+    <script>
+
+      jQuery(document).ready(function () {
+        $('.audiolinks').change(function () {
+          //console.log("lala")
+          //console.log($('.audiolinks').val())
+          url = "https://mielts.s3.ap-southeast-1.amazonaws.com/" + $('.audiolinks').val()
+          var audio = document.getElementById('audio');
+          var source = document.getElementById('audioSource');
+          source.src = url
+          audio.load();
+        })
       });
-    })
+
+      jQuery(document).ready(function () {
+        $('#save').click(function () {
+          //var answerKeys = $('#answer-key').val();
+          //console.log(answers);
+          var timeLeft = $('.timeLeft').attr('content');
+          var result = [];
+          var amountQuiz = $('.amountQuiz').attr('content');
+          for (i = 0; i < amountQuiz; i++) {
+            key = "";
+            keyBro = ".my-form-" + String(i + 1);
+            //console.log($(keyBro).attr('type'))
+            if ($(keyBro).attr('type') == "checkbox") {
+              key = [];
+              //console.log("checkbox")
+              checkedBox = keyBro + ":checkbox:checked";
+              $(checkedBox).each(function () {
+                console.log($(this).val())
+                key.push($(this).val());
+              });
+              if (key.length == 0)
+                key = ""
+
+            }
+            else {
+              if ($(keyBro).attr('type') == "radio") {
+                checkedRadio = keyBro + ":checked";
+                if (typeof $(checkedRadio).val() != "undefined") {
+                  key = $(checkedRadio).val();
+                }
+
+              }
+              else {
+                key = $(keyBro).val();
+                // result.push({ key: key });
+              }
+            }
+            result.push({ key: key });
+          }
+
+          console.log(result);
+          var mockID = $(this).attr('mockID');
+          var timeStart = $('#timeStart').val();
+          console.log(timeStart)
+          $.ajax({
+            url: '/user/mocktest/ajax',
+            type: 'POST',
+            data: {
+              _id: mockID, // $_POST['id'] = 22
+              action: 'save',
+              answerKeys: result,
+              timeStart: timeStart
+            },
+            dataType: 'JSON',
+            success: function (response) {
+              // response : obj
+              console.log(response);
+              if (response.success) {
+                $('.modal-title').text(response.message)
+                $('.modal-body ').html(response.data + "<p>Lưu thành công</p>")
+              }
+              else {
+                $('.modal-title').text('Error!')
+                $('.modal-body').text(response.message)
+              }
+              //$('#myMessage').modal('show')
+              // $('.reload_page_button').click(function () { window.location = '/products/' + response.data; });
+
+            }
+          });
+        })
 
 
-  });
+      });
 
-</script>
+    </script>
 
 
 

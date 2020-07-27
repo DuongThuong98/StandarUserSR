@@ -11,6 +11,8 @@ const router = express.Router();
 
 router.get('/', async (req, res) => {
 
+  zeroCourse = await courseModel.singleByName("Mất gốc");
+  console.log("Mất gốc:  ", zeroCourse);
   enryTest = await mocktestModel.singleByName("PRE");
   enryTestForTheExperienced = await mocktestModel.singleByName("ENTRY-LIS");
   console.log(enryTestForTheExperienced)
@@ -30,6 +32,7 @@ router.get('/', async (req, res) => {
     enryTest: enryTest,
     enryTestForTheExperienced,
     myEntryTest: myEntryTest,
+    zeroCourse,
     empty: mockTests.length === 0
   });
 

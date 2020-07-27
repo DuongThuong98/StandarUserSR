@@ -73,22 +73,33 @@ require('./middlewares/locals.mdw')(app);
 require('./middlewares/routes.mdw')(app);
 
 const documentModel = require('./models/document.model');
+const { newDocuments } = require('./models/document.model');
 app.get('/', async (req, res) => {
 console.log(process.env.AWS_S3_BUCKET)
   documents = await documentModel.mostViews();
-  newDocuments = await documentModel.newDocuments();
-
+  newDocs = await documentModel.newDocuments();
+  recommendedDocs = await documentModel.isRecommended();
+  console.log(newDocuments);
   for(i=0;i<documents.length;i++)
   {
     documents[i].created_at = moment(documents[i].createdAt, 'YYYY-MM-DDTHH:mm:ss[Z]').format('DD-MM-YYYY, h:mm:ss a');
-    newDocuments[i].created_at = moment(newDocuments[i].createdAt, 'YYYY-MM-DDTHH:mm:ss[Z]').format('DD-MM-YYYY, h:mm:ss a');
+    
+  }
+  for(i=0;i<newDocs.length;i++)
+  {
+    newDocs[i].created_at = moment(newDocs[i].createdAt, 'YYYY-MM-DDTHH:mm:ss[Z]').format('DD-MM-YYYY, h:mm:ss a');
+  }
+  for(i=0;i<recommendedDocs.length;i++)
+  {
+    recommendedDocs[i].created_at = moment(recommendedDocs[i].createdAt, 'YYYY-MM-DDTHH:mm:ss[Z]').format('DD-MM-YYYY, h:mm:ss a');
   }
 
   // console.log(documents);
   // console.log("REQ: ", req);
   res.render('home',{
     documents,
-    newDocuments,
+    newDocs,
+    recommendedDocs,
     empty: documents.length == 0
   });
 })

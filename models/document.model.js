@@ -168,12 +168,18 @@ module.exports = {
 
   mostViews:async () => {
     result = await db.Document.find().sort({views: -1})
-    .limit(config.paginate.limit )
+    .limit(config.paginate.limit +1 )
     return result;
   },
 
   newDocuments:async () => {
     result = await db.Document.find({isNovel: true}).sort({createdAt: -1})
+    .limit(config.paginate.limit + 1)
+    return result;
+  },
+
+  isRecommended:async () => {
+    result = await db.Document.find({isRecommended: true}).sort({createdAt: -1})
     .limit(config.paginate.limit + 1)
     return result;
   },
