@@ -25,7 +25,8 @@ router.post("/", function (req, res, next) {
   item = req.body;
   item.userID = req.session.authUser._id || req.query.authUser;
 
-  const create_payment_json = {
+
+  let create_payment_json = {
     intent: "sale",
     payer: {
       payment_method: "paypal",
@@ -54,6 +55,39 @@ router.post("/", function (req, res, next) {
       },
     ],
   };
+
+  if( process.env.PORT)
+  {
+    create_payment_json = {
+      intent: "sale",
+      payer: {
+        payment_method: "paypal",
+      },
+      redirect_urls: {
+        return_url: "https://mielts.herokuapp.com/pay/success",
+        cancel_url: "https://mielts.herokuapp.com/pay/cancel",
+      },
+      transactions: [
+        {
+          item_list: {
+            items: [
+              {
+                name: courseName,
+                price: tuition,
+                currency: "USD",
+                quantity: 1,
+              },
+            ],
+          },
+          amount: {
+            currency: "USD",
+            total: tuition,
+          },
+          description: courseName,
+        },
+      ],
+    };
+  }
 
   console.log("item: ", item);
   paypal.payment.create(create_payment_json, function (error, payment) {
