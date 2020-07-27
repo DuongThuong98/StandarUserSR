@@ -173,7 +173,7 @@ module.exports = {
   },
 
   newDocuments:async () => {
-    result = await db.Document.find({isNovel: true})
+    result = await db.Document.find({isNovel: true}).sort({createdAt: -1})
     .limit(config.paginate.limit + 1)
     return result;
   },

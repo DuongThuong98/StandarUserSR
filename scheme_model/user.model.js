@@ -25,6 +25,7 @@ const UserSchema = mongoose.Schema({
     },
     password: { type: String, required: true, minLength: 7 },
     passwordHash: String,
+    fullname: String,
     avatar: String,
     phone: String,
     birthdate: Date,

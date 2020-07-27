@@ -51,7 +51,8 @@ module.exports = {
       username: entity.username,
       email: entity.email,
       passwordHash: bcrypt.hashSync(entity.password, 8),
-      password: entity.password
+      password: entity.password,
+      fullname: entity.fullname
     });
 
     const result = await user.save();

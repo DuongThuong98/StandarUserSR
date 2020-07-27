@@ -70,6 +70,7 @@ router.post('/register', async (req, res) => {
       return res.render('vwAccount/register', { err_message: 'Username hoặc email đã có người dùng' });
     }
     else {
+      
       result = await userModel.add(data);
       var tokenEmail = functionHelper.createToken();
       console.log("RESULT11: ", result);
