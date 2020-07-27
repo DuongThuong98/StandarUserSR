@@ -167,7 +167,7 @@ module.exports = {
 
 
   mostViews:async () => {
-    result = await db.Document.find().sort({views: -1})
+    result = await db.Document.find().sort({views: 1})
     .limit(config.paginate.limit + 1)
     return result;
   },
