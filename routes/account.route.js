@@ -83,7 +83,7 @@ router.post('/register', async (req, res) => {
       await mailingModel.add(entityEmail);
       content = '<h1>Link: <a href="http://localhost:3001/account/ota/' + tokenEmail + '">vào đây</a></h1>';
       if (process.env.PORT) {
-        content = '<h1>Link: <a href="https://mielts.herokuapp.com/account/ota' + tokenEmail + '">vào đây</a></h1>';
+        content = '<h1>Link: <a href="https://mielts.herokuapp.com/account/ota/' + tokenEmail + '">vào đây</a></h1>';
       }
 
 
