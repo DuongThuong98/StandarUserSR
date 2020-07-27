@@ -151,6 +151,10 @@
 
             </div>
             {{#if this.isRegister}}
+            <div class="price-box">
+                      <p class="special-price">  HỌC PHÍ: <span class="price-label"> </span> <span class="price"> {{format this.course.tuition}} đ</span> </p>
+                      <p class="old-price"> <span class="price-label"></span> <span class="price">  </span> </p>
+                    </div>
             <form method="POST" name="frmAddProduct" novalidate action="/courses/" id="frmCompletedTest">
               <input type="text" name="courseID" value="{{course._id}}" hidden>
             </form>
