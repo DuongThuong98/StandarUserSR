@@ -155,7 +155,7 @@ router.post('/add', cpUpload, async (req, res) => {
     else {
         const entity = req.body;
         entity.authorID = req.session.authUser._id;
-        entity.image = req.files['fuMain'][0].filename;
+        entity.image = req.files['fuMain'][0].key;
 
          result = await documentModel.add(entity);
         console.log("Thêm được chưa?: ", entity);
