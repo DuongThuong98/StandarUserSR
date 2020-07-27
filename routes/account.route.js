@@ -81,9 +81,9 @@ router.post('/register', async (req, res) => {
         token_email: tokenEmail
       };
       await mailingModel.add(entityEmail);
-      content = '<h1>Link: <a href="http://localhost:3001/account/ota/' + tokenEmail + '">vào đây</a></h1>';
+      content = '<h1>Link: <a href="http://localhost:3001/account/otp/' + tokenEmail + '">vào đây</a></h1>';
       if (process.env.PORT) {
-        content = '<h1>Link: <a href="https://mielts.herokuapp.com/account/ota/' + tokenEmail + '">vào đây</a></h1>';
+        content = '<h1>Link: <a href="https://mielts.herokuapp.com/account/otp/' + tokenEmail + '">vào đây</a></h1>';
       }
 
 
@@ -95,7 +95,7 @@ router.post('/register', async (req, res) => {
 });
 
 
-router.get('/ota/:token', async (req, res) => {
+router.get('/otp/:token', async (req, res) => {
   const token = req.params.token;
   ota = await mailingModel.findByToken(token);
   if (ota) {
@@ -115,7 +115,8 @@ router.get('/ota/:token', async (req, res) => {
       else {
         ota.done = true
         entity = { _id: ota.id_receiver, isActive: true };
-        userModel.patchStatus(entity)
+        result = await userModel.patchStatus(entity)
+        console.log(result);
       }
     }
 
@@ -148,9 +149,9 @@ router.post('/remail', async (req, res) => {
     token_email: tokenEmail
   };
   await mailingModel.add(entityEmail);
-  content = '<h1>Link: <a href="http://localhost:3001/account/ota/' + tokenEmail + '">vào đây</a></h1>';
+  content = '<h1>Link: <a href="http://localhost:3001/account/otp/' + tokenEmail + '">vào đây</a></h1>';
   if (process.env.PORT) {
-    content = '<h1>Link: <a href="https://mielts.herokuapp.com/account/ota' + tokenEmail + '">vào đây</a></h1>';
+    content = '<h1>Link: <a href="https://mielts.herokuapp.com/account/otp/' + tokenEmail + '">vào đây</a></h1>';
   }
 
 

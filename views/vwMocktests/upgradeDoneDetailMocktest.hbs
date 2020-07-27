@@ -182,7 +182,8 @@
                             </div>
                             <div class="col-sm-6">
                               <div style="padding-left: 50px;">
-                                <h3>Điểm số của bạn là: {{this.mocktest.percentGrade}} %</h3>
+                                <h3>Điểm số của bạn là: {{this.mocktest.grades}}/{{this.mocktest.answersLength}} ({{this.mocktest.percentGrade}}%)</h3>
+
                                 <h4>Khóa học đề xuất <a
                                     href="/courses/{{this.suggestedCourse._id}}">{{this.suggestedCourse.name}}</a> </h4>
                               </div>
@@ -309,7 +310,7 @@
                 </button>
 
            
-                <button type="button" class="btn btn-danger" style="margin-top: 10px;">Thoát</button>
+               
             </div>
           </div>
         </div>

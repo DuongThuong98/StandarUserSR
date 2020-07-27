@@ -76,6 +76,7 @@ const documentModel = require('./models/document.model');
 app.get('/', async (req, res) => {
 console.log(process.env.AWS_S3_BUCKET)
   documents = await documentModel.mostViews();
+  newDocuments = await documentModel.newDocuments();
 
   for(i=0;i<documents.length;i++)
   {
@@ -86,6 +87,7 @@ console.log(process.env.AWS_S3_BUCKET)
   // console.log("REQ: ", req);
   res.render('home',{
     documents,
+    newDocuments,
     empty: documents.length == 0
   });
 })

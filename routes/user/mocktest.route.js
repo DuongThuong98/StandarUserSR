@@ -280,8 +280,8 @@ router.get('/done/:id', async (req, res) => {
 
 
     //tính điẻm và đưa ra khóa học hợp lý
-    doneMock.percentGrade = (doneMock.grades / doneMock.answerKeys.length) * 100;
-
+    doneMock.percentGrade = ((doneMock.grades / doneMock.answerKeys.length) * 100).toFixed(2);
+    doneMock.answersLength = doneMock.answerKeys.length;
 
     res.render('vwMocktests/doneDetailMocktest', {
       mocktest: doneMock,
