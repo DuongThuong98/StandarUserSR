@@ -84,7 +84,7 @@ module.exports = {
         {
           if (!isLevelOne||
             (isLevelOne && !haveChildren)) {
-            await db.Document.find({ categoryId: catId }).sort({views: 1})
+            await db.Document.find({ categoryId: catId }).sort({views: -1})
               .limit(config.paginate.limit)
               .skip(offset).then(data => result = data)
               // console.log("test: ",result);
@@ -95,7 +95,7 @@ module.exports = {
             cateChildren.forEach(child => {
               temp.push(child._id)
             });
-            await db.Document.find({ categoryId: { $in: temp } }).sort({views: 1})
+            await db.Document.find({ categoryId: { $in: temp } }).sort({views: -1})
               .limit(config.paginate.limit)
               .skip(offset).then(data => result = data)
             console.log("test: ",result);
@@ -167,8 +167,8 @@ module.exports = {
 
 
   mostViews:async () => {
-    result = await db.Document.find().sort({views: 1})
-    .limit(config.paginate.limit + 1)
+    result = await db.Document.find().sort({views: -1})
+    .limit(config.paginate.limit )
     return result;
   },
 
