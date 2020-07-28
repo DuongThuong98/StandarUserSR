@@ -195,10 +195,15 @@ router.get('/mocktest/done/:id', async (req, res) => {
 router.get('/mocktest/:id', async (req, res) => {
   //nếu tồn tại thì xóa
   authUser = req.session.authUser;
-
+  timeLeft = 3600;
   alphabet = 'abcdefghijklmnopqrstuvwxyz'.toUpperCase().split('');
   const mockId = req.params.id;
   const row = await mocktestModel.single(mockId);
+  if(row.name.includes("PRE",0))
+  {
+    timeLeft = 1800;
+    console.log("lala")
+  }
   // console.log(row);
   // console.log("lala")
   answerKeys = row.answerKeys;
@@ -233,7 +238,7 @@ router.get('/mocktest/:id', async (req, res) => {
   row.answerKeys = answerKeys;
 
   console.log(answerKeys)
-  timeLeft = 3600;
+  
   timeStart = moment().unix();
   console.log("time start:", timeStart);
   res.render('vwMocktests/upgradeDetailMocktest', {
